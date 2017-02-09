@@ -1,0 +1,11 @@
+"AddonInfo"
+{
+	"name"				"CityRP"
+	"version"			"1"
+	"up_date"			"00/00/00"
+	"author_name"		"Sir Francis Billard"
+	"author_email"		"wiki.darkrp.com"
+	"author_url"		"wiki.darkrp.com"
+	"info"				"The best fucking addon ever."
+	"override"			"0"
+}

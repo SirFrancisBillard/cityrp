@@ -1,0 +1,15 @@
+"VertexLitGeneric"
+{
+	
+	"$additive" 1
+	"$baseTexture" "katharsmodels/syringe_out/syringe_body"
+	"$envmap" "env_cubemap"
+	"$envmapcontrast" "1"
+	"$model" 1
+	"$halflambert" 1
+        "$envmapcontrast" 1
+	"$envmapsaturation" .2
+	"$envmaptint" "[ .56 .56 .56 ]"
+
+	
+}

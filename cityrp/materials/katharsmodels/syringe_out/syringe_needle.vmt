@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "katharsmodels/syringe_out/syringe_needle"
+	"envmap" "env_cubemap"
+}
