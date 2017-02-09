@@ -59,16 +59,7 @@ EasyEntity("zig_printer_diamond", 15000, "diamondprinter", "Printers")
 EasyEntity("zig_battery", 2000, "battery", "Printer Accessories")
 EasyEntity("zig_ink", 1000, "ink", "Printer Accessories")
 
-m_Max = 1
-
-EasyEntity("cityrp_spraycan", 12, "spraycan", "Other")
-EasyEntity("cityrp_battery", 24, "flashlightbattery", "Other")
-EasyEntity("cityrp_radio", 1200, "radio", "Other")
-
-m_Max = 4
-
 EasyEntity("ent_bleach", 600, "bleach", "Other")
-
 EasyEntity("ent_kevlar", 12000, "kevlar", "Black Market", TEAM_BLACKMARKET)
 
 end

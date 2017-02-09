@@ -87,23 +87,16 @@ DarkRP.createAmmoType("SMG1", {
 	amountGiven = 60
 })
 
-DarkRP.createAmmoType("AR2", {
+DarkRP.createAmmoType("Rifle", {
 	name = "Rifle Ammo",
 	model = "models/Items/combine_rifle_cartridge01.mdl",
 	price = 80,
 	amountGiven = 60
 })
 
-DarkRP.createAmmoType("SniperPenetratedRound", {
+DarkRP.createAmmoType("Sniper Rifle", {
 	name = "Sniper Ammo",
 	model = "models/items/boxsniperroundz.mdl",
 	price = 400,
 	amountGiven = 10
-})
-
-DarkRP.createAmmoType("357", {
-	name = "357 Ammo",
-	model = "models/Items/357ammo.mdl",
-	price = 160,
-	amountGiven = 12
 })
