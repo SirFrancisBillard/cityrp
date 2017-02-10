@@ -96,7 +96,7 @@ DarkRP.createAmmoType("Rifle", {
 
 DarkRP.createAmmoType("Sniper Rifle", {
 	name = "Sniper Ammo",
-	model = "models/items/boxsniperroundz.mdl",
+	model = "models/items/357ammo.mdl",
 	price = 200,
 	amountGiven = 10
 })
