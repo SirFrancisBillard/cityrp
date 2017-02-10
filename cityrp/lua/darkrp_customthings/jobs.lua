@@ -31,11 +31,8 @@ Add jobs under the following line:
 CITIZENS
 ---------------------------------------------------------------------------]]
 
-RegisterJobCategory("Citizens", Color(0, 255, 0))
-
-TEAM_CITIZEN = DarkRP.createJob("Citizen", {
-	color = g_RegisterJobWithColor,
-	model = {
+local Models = {
+	Citizens = {
 		"models/player/Group01/Female_01.mdl",
 		"models/player/Group01/Female_02.mdl",
 		"models/player/Group01/Female_03.mdl",
@@ -51,6 +48,29 @@ TEAM_CITIZEN = DarkRP.createJob("Citizen", {
 		"models/player/Group01/Male_08.mdl",
 		"models/player/Group01/Male_09.mdl"
 	},
+	Gangsters = {
+		"models/player/Group03/Female_01.mdl",
+		"models/player/Group03/Female_02.mdl",
+		"models/player/Group03/Female_03.mdl",
+		"models/player/Group03/Female_04.mdl",
+		"models/player/Group03/Female_06.mdl",
+		"models/player/group03/male_01.mdl",
+		"models/player/Group03/Male_02.mdl",
+		"models/player/Group03/male_03.mdl",
+		"models/player/Group03/Male_04.mdl",
+		"models/player/Group03/Male_05.mdl",
+		"models/player/Group03/Male_06.mdl",
+		"models/player/Group03/Male_07.mdl",
+		"models/player/Group03/Male_08.mdl",
+		"models/player/Group03/Male_09.mdl"
+	}
+}
+
+RegisterJobCategory("Citizens", Color(0, 255, 0))
+
+TEAM_CITIZEN = DarkRP.createJob("Citizen", {
+	color = g_RegisterJobWithColor,
+	model = Models.Citizens,
 	description = [[The Citizen is the most basic level of society you can hold besides being a hobo. You have no specific role in city life.]],
 	weapons = {},
 	command = "citizen",
@@ -164,21 +184,7 @@ RegisterJobCategory("Criminals", Color(75, 75, 75))
 
 TEAM_MAFIA = DarkRP.createJob("Mafia", {
 	color = g_RegisterJobWithColor,
-	model = {
-		"models/player/Group03/Female_01.mdl",
-		"models/player/Group03/Female_02.mdl",
-		"models/player/Group03/Female_03.mdl",
-		"models/player/Group03/Female_04.mdl",
-		"models/player/Group03/Female_06.mdl",
-		"models/player/group03/male_01.mdl",
-		"models/player/Group03/Male_02.mdl",
-		"models/player/Group03/male_03.mdl",
-		"models/player/Group03/Male_04.mdl",
-		"models/player/Group03/Male_05.mdl",
-		"models/player/Group03/Male_06.mdl",
-		"models/player/Group03/Male_07.mdl",
-		"models/player/Group03/Male_08.mdl",
-		"models/player/Group03/Male_09.mdl"},
+	model = Models.Gangsters,
 	description = [[The lowest person of crime.
 		The Mafia must work for the Godfather who runs the crime family.
 		The Godfather sets your agenda and you follow it or you might be punished.]],
