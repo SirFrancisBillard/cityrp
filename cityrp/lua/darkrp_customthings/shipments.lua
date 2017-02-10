@@ -118,6 +118,7 @@ WeaponShipment(TEAM_BLACKMARKET, "Black Market", "weapon_c4", 12000)
 
 WeaponShipment(TEAM_VAPE, "Vapes", "weapon_vape", 1000)
 WeaponShipment(TEAM_VAPE, "Vapes", "weapon_vape_juicy", 5000)
+WeaponShipment(TEAM_VAPE, "Vapes", "weapon_vape_american", 7500)
 WeaponShipment(TEAM_VAPE, "Vapes", "weapon_vape_medicinal", 10000)
 WeaponShipment(TEAM_VAPE, "Vapes", "weapon_vape_mega", 1000000)
 

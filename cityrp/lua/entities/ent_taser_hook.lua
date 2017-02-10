@@ -10,7 +10,6 @@ local time = {
 	miss = 3,
 	remove = 8
 }
-	
 
 local MissTime = 3
 local TaseTime = 5
@@ -55,14 +54,6 @@ function ENT:PhysicsCollide( data, physnum )
 		})
 		
 		if ( ent:IsPlayer() and not ent.IsTased ) then
-			if ( not ent:IsWanted() ) then
-				if ( SERVER and IsValid( self.Weapon ) and IsValid( self.Weapon.Owner ) ) then
-					rp.Notify(self.Weapon.Owner, NOTIFY_ERROR, rp.Term('PlayerNotWanted'))
-				end
-				self:Remove()
-				return
-			end
-			
 			ent:ConCommand("pp_motionblur 1")  
 			ent:ConCommand("pp_motionblur_addalpha 0.05")  
 			ent:ConCommand("pp_motionblur_delay 0.035")  
@@ -111,8 +102,6 @@ function ENT:PhysicsCollide( data, physnum )
 				self.Retracting = true
 			end
 		end )
-		
-		--if ply then ply:TakeDamage( self:GetDamage(), self:GetOwner(), self ) else ent:TakeDamage( self:GetDamage(), self:GetOwner(), self ) end
 	else
 		self:SetPos( data.HitPos - data.HitNormal * 3 )
 		self:SetAngles( data.HitNormal:Angle() )
@@ -151,11 +140,6 @@ function ENT:Think()
 			if IsValid(phys) then
 				phys:SetVelocity( self.FireVelocity )
 				self.Fired = true
-			else
-				--self:PhysWake()
-				--local phys = self:GetPhysicsObject()
-				--phys:SetVelocity( self.FireVelocity )
-				--self.Fired = true
 			end
 		end
 	end
@@ -163,7 +147,7 @@ function ENT:Think()
 	if ( self.Retracting ) then
 		if ( not vWeapon ) then self:Remove() return end
 		
-		local target = vOwner and self.Weapon.Owner:GetPos() or self.Weapon:GetPos()		-- FIX this fucking awful shit
+		local target = vOwner and self.Owner:GetPos() or self:GetPos()
 		local dir = ( target - self:GetPos() ):GetNormal()
 		
 		self:SetAngles( dir:Angle() )
@@ -176,13 +160,13 @@ end
 
 if CLIENT then return end
 
-hook.Add( "CanPlayerSuicide", "GS-Taser-CanPlayerSuicide", function( ply ) 
+hook.Add( "CanPlayerSuicide", "RP_Taser_CanPlayerSuicide", function( ply ) 
 	if ( IsValid( ply ) and ply.Tased ) then 
 		return false 
 	end 
 end )
 
-hook.Add( "DoPlayerDeath", "GS-Taser-DoPlayerDeath", function( ply )
+hook.Add( "DoPlayerDeath", "RP_Taser_DoPlayerDeath", function( ply )
 	if ( IsValid( ply ) and ply.Tased ) then
 		ResetPlayer( ply )
 	end
