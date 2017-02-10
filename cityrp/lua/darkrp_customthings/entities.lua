@@ -60,6 +60,7 @@ EasyEntity("zig_battery", 2000, "battery", "Printer Accessories")
 EasyEntity("zig_ink", 1000, "ink", "Printer Accessories")
 
 EasyEntity("ent_bleach", 600, "bleach", "Other")
+
 EasyEntity("ent_kevlar", 12000, "kevlar", "Black Market", TEAM_BLACKMARKET)
 
 end

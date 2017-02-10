@@ -11,12 +11,12 @@ SWEP.Author 					= ""
 SWEP.Contact 					= ""
 SWEP.Purpose 					= "Blow shit up."
 
+SWEP.UseHands = true
 SWEP.ViewModel				= "models/weapons/cstrike/c_c4.mdl"	-- Weapon view model
 SWEP.WorldModel				= "models/weapons/w_c4.mdl"	-- Weapon world model
 
-SWEP.ViewModelFOV 				= 62
+SWEP.ViewModelFOV 				= 54
 SWEP.ViewModelFlip 				= false
-SWEP.AnimPrefix	 				= "rpg"
 
 SWEP.Spawnable 					= true
 SWEP.Category 					= "RP"
@@ -74,10 +74,8 @@ function SWEP:PrimaryAttack()
 		end
 
 		self.Owner:EmitSound("c4.PlantSound")
-		self.Owner:StripWeapon("weapon_c4")
+		self.Owner:StripWeapon(self.ClassName)
 	end
 end
 
-function SWEP:SecondaryAttack()
-	self:PrimaryAttack()
-end
+function SWEP:SecondaryAttack() end

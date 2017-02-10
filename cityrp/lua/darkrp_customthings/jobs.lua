@@ -205,12 +205,12 @@ TEAM_GODFATHER = DarkRP.createJob("Godfather", {
 		With his power he coordinates the mafia and forms an efficient crime organization.
 		He has the ability to break into houses by using a lockpick.
 		The Godfather posesses the ability to unarrest you.]],
-	weapons = {"lockpick", "unarrest_stick"},
+	weapons = {"swb_ak47", "swb_fiveseven", "lockpick", "unarrest_stick"},
 	command = "godfather",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary * 1.75,
 	admin = 0,
-	vote = false,
+	vote = true,
 	hasLicense = false,
 	category = g_RegisterJobWithCategory,
 })
@@ -296,7 +296,7 @@ TEAM_TERRORLEADER = DarkRP.createJob("Terrorist Leader", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/guerilla.mdl",
 	description = [[The terrorist leader leads the terrorists in their war against the government.]],
-	weapons = {"swb_ak47"},
+	weapons = {"swb_ak47", "weapon_c4"},
 	command = "terroristleader",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary,

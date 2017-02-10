@@ -41,13 +41,27 @@ if CLIENT then
 	local Color 		= Color
 	local cam 			= cam
 
+	function draw.OutlinedBox( x, y, w, h, thickness, clr )
+		surface.SetDrawColor( clr )
+		for i=0, thickness - 1 do
+			surface.DrawOutlinedRect( x + i, y + i, w - i * 2, h - i * 2 )
+		end
+	end
+
+	local function DrawTheProgress(x, y, w, h, perc)
+		local color = Color(255 - (perc * 255), perc * 255, 0, 255)
+
+		draw.OutlinedBox(x, y, w, h, 2, color_bg, color_outline)
+		draw.OutlinedBox(x + 5, y + 5, math_clamp((w * perc) - 10, 3, w), h - 10, 2, color, color_outline)
+	end
+
 	function SWEP:DrawHUD()
 		if ( not LocalPlayer():Alive() ) then return end
 
 		local w, h = 150, 25
 		local x, y = ScrW() - w - 30, ScrH() - h - 30
 
-		rp.ui.DrawProgress(x, y, w, h, self:GetCharge()/100)
+		DrawTheProgress(x, y, w, h, self:GetCharge()/100)
 
 		local vm = self.Owner:GetViewModel()
 		

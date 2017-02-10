@@ -32,13 +32,29 @@ if SERVER then
 		["models/props_interiors/vendingmachinesoda01a.mdl"] = true,
 		["models/props_interiors/vendingmachinesoda01a_door.mdl"] = true,
 	}
+	
+	local IsDoor = {
+		["prop_door_rotating"] = true,
+		["func_door"] = true,
+		["func_door_rotating"] = true
+	}
+
+	local IsProp = {
+		["prop_physics"] = true,
+		["prop_ragdoll"] = true
+	}
 
 	local function findents(pos, radius)
-		return table.Filter(ents.FindInSphere(pos, radius), function(v)
-			return (v:IsProp() or v:IsDoor())
-		end), table.Filter(ents.FindInSphere(pos, radius), function(v)
-			return v:IsProp() and ((v.FadingDoor == true) or (v:GetCollisionGroup() == COLLISION_GROUP_WORLD))
-		end)
+		local props = {}
+		local doors = {}
+		for k, v in pairs(ents.FindInSphere(pos, radius)) do
+			if IsValid(v) and IsDoor[v:GetClass()] then
+				table.insert(doors, v)
+			elseif IsValid(v) and IsProp[v:GetClass()] then
+				table.insert(props, v)
+			end
+		end
+		return props, doors
 	end
 
 	function ENT:Explosion()
@@ -83,23 +99,6 @@ if SERVER then
 
 		local max_rand = 6
 		local props, doors = findents(self:GetPos(), 75)
-		
-		local prop_count, door_count = #props, #doors
-
-		if (prop_count >= 8) or (door_count > 5) then
-			props, door = findents(self:GetPos(), 100)
-			prop_count, door_count = #props, #doors
-			max_rand = 4
-			if (prop_count >= 15) or (door_count > 7) then
-				props, door = findents(self:GetPos(), 150)
-				prop_count, door_count = #props, #doors
-				max_rand = 2
-				if (prop_count >= 25) or (door_count > 9) then
-					props, door = findents(self:GetPos(), 250)
-					prop_count, door_count = #props, #doors
-				end
-			end
-		end
 
 		for k, v in ipairs(props) do
 			if IsValid(v) then
@@ -119,9 +118,14 @@ if SERVER then
 							end
 						end
 					end
-				elseif v:IsDoor() then
-					v:DoorLock(false)
 				end
+			end
+		end
+
+		for k, v in ipairs(doors) do
+			if IsValid(v) and IsDoor[v:GetClass()] then
+				v:Fire("Unlock")
+				v:Fire("Open")
 			end
 		end
 
