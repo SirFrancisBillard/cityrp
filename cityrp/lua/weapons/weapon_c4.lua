@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 SWEP.PrintName 					= "C4"
-SWEP.Slot 						= 1
+SWEP.Slot 						= 4
 SWEP.SlotPos 					= 1
 SWEP.DrawAmmo 					= false
 SWEP.DrawCrosshair 				= false
@@ -31,18 +31,26 @@ SWEP.Secondary.DefaultClip 		= 0
 SWEP.Secondary.Automatic 		= false
 SWEP.Secondary.Ammo 			= ""
 
-function SWEP:Initialize()
-	self.nextReload = 0
-	self:SetHoldType("normal")
+local UseDelay = 60
+
+function SWEP:CanBeUsed()
+	return CurTime() - self:GetLastUsed() >= UseDelay
 end
 
-function SWEP:Deploy()
-	if (SERVER) then
-		self.Owner:DrawWorldModel(false)
-	end
+function SWEP:SetupDataTables()
+	self:NetworkVar("Int", 0, "LastUsed")
+end
+
+function SWEP:Initialize()
+	self.nextReload = 0
+	self:SetHoldType("slam")
+	self:SetLastUsed(CurTime())
 end
 
 function SWEP:PrimaryAttack()
+	if not self:CanBeUsed() then
+		return self:SecondaryAttack()
+	end
 	if (SERVER) then
 		local tr = util.TraceLine({
 			start = self.Owner:GetShootPos(),
@@ -73,9 +81,16 @@ function SWEP:PrimaryAttack()
 			c4:SetMoveType(MOVETYPE_VPHYSICS)
 		end
 
-		self.Owner:EmitSound("c4.PlantSound")
-		self.Owner:StripWeapon(self.ClassName)
+		self.Owner:EmitSound("C4.PlantSound")
+		self:SetLastUsed(CurTime())
 	end
 end
 
-function SWEP:SecondaryAttack() end
+function SWEP:SecondaryAttack()
+	if CLIENT then return end
+	if self:CanBeUsed() then
+		return self.Owner:ChatPrint("This C4 can be used.")
+	else
+		return self.Owner:ChatPrint("This C4 can be used in " .. math.Round(UseDelay - (CurTime() - self:GetLastUsed())) .. " seconds.")
+	end
+end

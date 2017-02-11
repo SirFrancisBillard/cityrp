@@ -7,8 +7,8 @@ game.AddAmmoType({
 	tracer = TRACER_NONE,
 })
 
+SWEP.Category = "RP"
 SWEP.Spawnable = true
-SWEP.AdminOnly = true
 
 SWEP.Primary.ClipSize		= 1000
 SWEP.Primary.DefaultClip	= 10000
