@@ -71,6 +71,7 @@ RegisterJobCategory("Citizens", Color(0, 255, 0))
 TEAM_CITIZEN = DarkRP.createJob("Citizen", {
 	color = g_RegisterJobWithColor,
 	model = Models.Citizens,
+	description = [[The Citizen is the most basic level of society you can hold besides being a hobo.
 		You have no specific role in city life.]],
 	weapons = {},
 	command = "citizen",
