@@ -49,10 +49,6 @@ else
 	end)
 end
 
-function ENT:SetupDataTables()
-	self:NetworkVar("Entity", 0, "Shooter")
-end
-
 function ENT:Initialize()
 	if SERVER then
 	
@@ -72,7 +68,7 @@ function ENT:Initialize()
 			phys:SetMass(1)
 		end
 		
-		SafeRemoveEntityDelayed(self, 1)
+		SafeRemoveEntityDelayed(self, 0.5)
 		
 	end
 	
@@ -85,7 +81,7 @@ function ENT:Think()
 	local Players = player.GetAll()
 		
 	for k,v in pairs(Players) do
-		if v:GetPos():Distance(self:GetPos()) <= 100 and v:EntIndex() ~= self:GetShooter():EntIndex() then
+		if v:GetPos():Distance(self:GetPos()) <= 100 and v:EntIndex() ~= self:GetOwner():EntIndex() then
 			v:ViewPunch(Angle(math.random(0, 50), math.random(-30, 30), 0))
 			v.LastCough = v.LastCough or CurTime() - 3
 			if CurTime() - v.LastCough > 2 then

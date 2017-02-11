@@ -50,9 +50,9 @@ function SWEP:PrimaryAttack()
 	local ent = ents.Create("ent_pepperparticle")
 	if not IsValid(ent) then return end
 
-	ent:SetPos(self.Owner:EyePos() + (self.Owner:GetAimVector() * 32))
+	ent:SetPos(self.Owner:EyePos() + (self.Owner:GetAimVector() * 8))
 	ent:SetAngles(self.Owner:EyeAngles())
-	ent:SetShooter(self.Owner)
+	ent:SetOwner(self.Owner)
 	ent:Spawn()
 
 	local phys = ent:GetPhysicsObject()

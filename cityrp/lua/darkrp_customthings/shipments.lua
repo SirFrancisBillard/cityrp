@@ -112,7 +112,7 @@ WeaponShipment(TEAM_GUN, "Machine Guns", "swb_m249", 30000)
 
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "lockpick", 4200)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "keypad_cracker", 2400)
-WeaponShipment(TEAM_BLACKMARKET, TEAM_DOCTOR, "Black Market", "med_kit", 3600)
+WeaponShipment({TEAM_BLACKMARKET, TEAM_DOCTOR}, "Black Market", "med_kit", 3600)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "unarrest_stick", 9800)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "weapon_c4", 12000)
 
@@ -137,7 +137,6 @@ EntityShipment(TEAM_DRUG, "Drugs", "durgz_lsd", "lsd", 1400, "models/smile/smile
 EntityShipment(TEAM_DRUG, "Drugs", "durgz_pcp", "pcp", 1600, "models/marioragdoll/Super Mario Galaxy/star/star.mdl")
 EntityShipment(TEAM_DRUG, "Drugs", "durgz_heroine", "heroin", 1800, "models/katharsmodels/syringe_out/syringe_out.mdl")
 EntityShipment(TEAM_DRUG, "Drugs", "durgz_cocaine", "cocaine", 2000, "models/cocn.mdl")
-EntityShipment(TEAM_DRUG, "Drugs", "durgz_bathsalts", "bathsalts", 2200, "models/props_lab/jar01a.mdl")
 
 end
 

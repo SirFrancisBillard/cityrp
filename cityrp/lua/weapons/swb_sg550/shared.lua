@@ -73,7 +73,7 @@ SWEP.AdminSpawnable		= true
 SWEP.Primary.ClipSize		= 30
 SWEP.Primary.DefaultClip	= 30
 SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo			= "Rifle"
+SWEP.Primary.Ammo			= "Sniper Rifle"
 
 SWEP.FireDelay = 0.0857
 SWEP.FireSound = Sound("Weapon_SG550.Single")

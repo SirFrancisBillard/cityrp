@@ -168,7 +168,7 @@ TEAM_GUARD = DarkRP.createJob("Guard", {
 	description = [[Guards can be paid to protect certain areas or people.]],
 	weapons = {"swb_fiveseven", "stunstick"},
 	command = "guard",
-	max = 0,
+	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,
@@ -544,17 +544,17 @@ TEAM_ADMIN = DarkRP.createJob("National Guard", {
 	description = [[Think of the national guard as in-character admins.
 		They will not patrol or raid, but any genocides that pop up will be dealt with.
 		You do NOT want to fuck with the National Guard.]],
-	weapons = {"arrest_stick", "unarrest_stick", "swb_deagle", "swb_m4a1", "swb_m249", "weapon_taser", "stunstick", "door_ram", "weaponchecker"},
+	weapons = {"arrest_stick", "unarrest_stick", "swb_deagle", "swb_m4a1", "swb_m249", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
 	command = "nationalguard",
 	max = 6,
 	salary = GAMEMODE.Config.normalsalary * 2,
 	admin = 1,
-	vote = true,
+	vote = false,
 	hasLicense = true,
 	chief = true,
 	ammo = {
-		["pistol"] = 60,
-		["smg1"] = 90
+		["pistol"] = 200,
+		["rifle"] = 600
 	},
 	category = g_RegisterJobWithCategory,
 })

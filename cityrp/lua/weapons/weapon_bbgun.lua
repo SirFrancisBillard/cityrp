@@ -76,7 +76,7 @@ SWEP.AdminSpawnable		= true
 SWEP.Primary.ClipSize		= 10
 SWEP.Primary.DefaultClip	= 10
 SWEP.Primary.Automatic		= false
-SWEP.Primary.Ammo			= "Rifle"
+SWEP.Primary.Ammo			= "bbgun"
 
 SWEP.FireDelay = 1.3
 SWEP.FireSound = Sound("garrysmod/balloon_pop_cute.wav")
