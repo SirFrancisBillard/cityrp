@@ -100,3 +100,10 @@ DarkRP.createAmmoType("Sniper Rifle", {
 	price = 200,
 	amountGiven = 10
 })
+
+DarkRP.createAmmoType("bbgun", {
+	name = "Box of BBs",
+	model = "models/props_lab/box01a.mdl",
+	price = 20,
+	amountGiven = 10
+})

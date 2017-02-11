@@ -71,7 +71,7 @@ RegisterJobCategory("Citizens", Color(0, 255, 0))
 TEAM_CITIZEN = DarkRP.createJob("Citizen", {
 	color = g_RegisterJobWithColor,
 	model = Models.Citizens,
-	description = [[The Citizen is the most basic level of society you can hold besides being a hobo. You have no specific role in city life.]],
+		You have no specific role in city life.]],
 	weapons = {},
 	command = "citizen",
 	max = 0,
@@ -481,7 +481,7 @@ TEAM_POLICE = DarkRP.createJob("Police Officer", {
 		The Battering Ram can break down the door of a criminal, with a warrant for their arrest.
 		The Battering Ram can also unfreeze frozen props (if enabled).
 		Type /wanted <name> to alert the public to the presence of a criminal.]],
-	weapons = {"arrest_stick", "unarrest_stick", "swb_fiveseven", "weapon_taser", "stunstick", "door_ram", "weaponchecker"},
+	weapons = {"arrest_stick", "unarrest_stick", "swb_fiveseven", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
 	command = "police",
 	max = 8,
 	salary = GAMEMODE.Config.normalsalary * 1.5,
@@ -504,7 +504,7 @@ TEAM_CHIEF = DarkRP.createJob("Police Chief", {
 		The Battering Ram can break down the door of a criminal, with a warrant for his/her arrest.
 		Type /wanted <name> to alert the public to the presence of a criminal.
 		Type /jailpos to set the Jail Position.]],
-	weapons = {"arrest_stick", "unarrest_stick", "swb_deagle", "swb_mp5", "weapon_taser", "stunstick", "door_ram", "weaponchecker"},
+	weapons = {"arrest_stick", "unarrest_stick", "swb_deagle", "swb_mp5", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
 	command = "chief",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary * 1.75,
@@ -523,7 +523,7 @@ TEAM_WOODY = DarkRP.createJob("Sheriff Woody", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/woody.mdl",
 	description = [[There is a snake in your boot.]],
-	weapons = {"arrest_stick", "unarrest_stick", "swb_357", "weapon_taser", "stunstick", "door_ram", "weaponchecker"},
+	weapons = {"arrest_stick", "unarrest_stick", "swb_357", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
 	command = "woody",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary * 1.5,
@@ -634,12 +634,12 @@ TEAM_SHITTYSTARWARSCOSPLAYER = DarkRP.createJob("Star Wars Cosplayer", {
 	category = g_RegisterJobWithCategory,
 })
 
-TEAM_AXE = DarkRP.createJob("Axe Murderer", {
+TEAM_MURDER = DarkRP.createJob("Murderer", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/corpse1.mdl",
-	description = [[You run around killing everyone in sight, but you are always KOS.]],
-	weapons = {"weapon_hl2axe"},
-	command = "axemurderer",
+	description = [[You have escaped from the murder gamemode somehow, only to find yourself here.]],
+	weapons = {"swb_knife"},
+	command = "murderer",
 	max = 1,
 	salary = 0,
 	admin = 0,

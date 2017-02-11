@@ -122,6 +122,8 @@ WeaponShipment(TEAM_VAPE, "Vapes", "weapon_vape_american", 7500)
 WeaponShipment(TEAM_VAPE, "Vapes", "weapon_vape_medicinal", 10000)
 WeaponShipment(TEAM_VAPE, "Vapes", "weapon_vape_mega", 1000000)
 
+WeaponShipment(nil, "Toys", "weapon_bbgun", 1000)
+
 EntityShipment(TEAM_DOCTOR, "Medical", "durgz_aspirin", "aspirin", 1200, "models/jaanus/aspbtl.mdl")
 EntityShipment(TEAM_DOCTOR, "Medical", "ent_medkit", "medicalkit", 1000, "models/Items/HealthKit.mdl")
 
