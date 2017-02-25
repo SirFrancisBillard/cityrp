@@ -27,12 +27,12 @@ function ENT:Draw()
 	color_black.a = 500 - dist
 	
 	if self:GetDTInt(0) - CurTime() > 0 then
-		cam.Start3D2D(pos + Vector(0, 0, 30), ang + Angle(0, 90, 90), .1)
-			draw.SimpleTextOutlined(string.FormattedTime(self:GetDTInt(0) - CurTime(), "%01i:%02i"), '3d2d', 0, 0, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, color_black)
+		cam.Start3D2D(pos + Vector(0, 0, 45), ang + Angle(0, 90, 90), .1)
+			draw.SimpleTextOutlined(string.FormattedTime(self:GetDTInt(0) - CurTime(), "%01i:%02i"), 'DermaLarge', 0, 0, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, color_black)
 		cam.End3D2D()
 	else 
-		cam.Start3D2D(pos + Vector(0, 0, 30), ang + Angle(0, 90, 90), .1)
-			draw.SimpleTextOutlined("Dumpster", '3d2d', 0, 0, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, color_black)
+		cam.Start3D2D(pos + Vector(0, 0, 45), ang + Angle(0, 90, 90), .1)
+			draw.SimpleTextOutlined("Dumpster", 'DermaLarge', 0, 0, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, color_black)
 		cam.End3D2D()
 	end
 end

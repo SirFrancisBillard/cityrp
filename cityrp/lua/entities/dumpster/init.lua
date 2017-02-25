@@ -192,11 +192,6 @@ end
 function ENT:Use(activator)
 	if self:GetDTInt(0) > CurTime() then return end
 
-	if not rp.teams[activator:Team()].hobo then
-		rp.Notify(activator, NOTIFY_ERROR, rp.Term('MustBeHobo'))
-		return
-	end
-
 	self:SetDTInt(0, CurTime() + recharge_time)
 	self:EmitItems(activator)
 end

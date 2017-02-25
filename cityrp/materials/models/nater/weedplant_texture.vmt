@@ -1,6 +1,0 @@
-"VertexlitGeneric"
-{
-	"$basetexture" "models/nater/weedplant_texture"
-	"$bumpmap" "models/nater/weedplant_texture_bump"
-	"$surfaceprop" "Concrete"
-}

@@ -1,6 +1,0 @@
-"LightmappedGeneric"
-{
-	"$basetexture" "models/nater/weedplant_dirt_bump"
-	"$surfaceprop" "Dirt"
-	"$translucent" 1
-}
