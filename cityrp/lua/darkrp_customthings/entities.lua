@@ -2,28 +2,24 @@
 local m_Max = 4
 
 local function EasyEntity(cls, cost, com, cat, who)
-	if type(scripted_ents.Get(cls)) ~= "table" then
-		ErrorNoHalt("[DarkRP] Entity class " .. cls .. " is invalid!")
-		return
-	end
 	if who == nil then
-		DarkRP.createEntity(scripted_ents.Get(cls).PrintName or "ERROR NAME", {
+		DarkRP.createEntity(g_DarkRPEntData[cls].PrintName or "ERROR NAME", {
 			ent = cls,
-			model = scripted_ents.Get(cls).Model or "models/props_junk/watermelon01.mdl",
+			model = g_DarkRPEntData[cls].Model or "models/props_junk/watermelon01.mdl",
 			price = cost,
 			max = m_Max,
 			cmd = "buy" .. com,
-			category = cat,
+			category = cat
 		})
 	else
-		DarkRP.createEntity(scripted_ents.Get(cls).PrintName or "ERROR NAME", {
+		DarkRP.createEntity(g_DarkRPEntData[cls].PrintName or "ERROR NAME", {
 			ent = cls,
-			model = scripted_ents.Get(cls).Model or "models/props_junk/watermelon01.mdl",
+			model = g_DarkRPEntData[cls].Model or "models/props_junk/watermelon01.mdl",
 			price = cost,
 			max = m_Max,
 			cmd = "buy" .. com,
 			allowed = who,
-			category = cat,
+			category = cat
 		})
 	end
 end
@@ -47,8 +43,6 @@ http://wiki.darkrp.com/index.php/DarkRP:CustomEntityFields
 Add entities under the following line:
 ---------------------------------------------------------------------------]]
 
-local function DoEntities()
-
 EasyEntity("zig_printer_topaz", 2500, "topazprinter", "Printers")
 EasyEntity("zig_printer_amethyst", 5000, "amethystprinter", "Printers")
 EasyEntity("zig_printer_emerald", 7500, "emeraldprinter", "Printers")
@@ -60,14 +54,4 @@ EasyEntity("zig_battery", 2000, "battery", "Printer Accessories")
 EasyEntity("zig_ink", 1000, "ink", "Printer Accessories")
 
 EasyEntity("ent_bleach", 600, "bleach", "Other")
-
 EasyEntity("ent_kevlar", 12000, "kevlar", "Black Market", TEAM_BLACKMARKET)
-
-end
-
-if g_DarkRPExtraEntitiesRefreshed ~= nil then
-	DoEntities()
-else
-	hook.Add("InitPostEntity", "RegisterMoreDarkRPEntities", DoEntities)
-	g_DarkRPExtraEntitiesRefreshed = true
-end

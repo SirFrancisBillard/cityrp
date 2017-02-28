@@ -31,26 +31,11 @@ SWEP.Secondary.DefaultClip 		= 0
 SWEP.Secondary.Automatic 		= false
 SWEP.Secondary.Ammo 			= ""
 
-local UseDelay = 60
-
-function SWEP:CanBeUsed()
-	return CurTime() - self:GetLastUsed() >= UseDelay
-end
-
-function SWEP:SetupDataTables()
-	self:NetworkVar("Int", 0, "LastUsed")
-end
-
 function SWEP:Initialize()
-	self.nextReload = 0
 	self:SetHoldType("slam")
-	self:SetLastUsed(CurTime())
 end
 
 function SWEP:PrimaryAttack()
-	if not self:CanBeUsed() then
-		return self:SecondaryAttack()
-	end
 	if (SERVER) then
 		local tr = util.TraceLine({
 			start = self.Owner:GetShootPos(),
@@ -82,15 +67,9 @@ function SWEP:PrimaryAttack()
 		end
 
 		self.Owner:EmitSound("C4.PlantSound")
-		self:SetLastUsed(CurTime())
+		self.Owner:ConCommand("lastinv")
+		self.Owner:StripWeapon(self.ClassName)
 	end
 end
 
-function SWEP:SecondaryAttack()
-	if CLIENT then return end
-	if self:CanBeUsed() then
-		return self.Owner:ChatPrint("This C4 can be used.")
-	else
-		return self.Owner:ChatPrint("This C4 can be used in " .. math.Round(UseDelay - (CurTime() - self:GetLastUsed())) .. " seconds.")
-	end
-end
+function SWEP:SecondaryAttack() end
