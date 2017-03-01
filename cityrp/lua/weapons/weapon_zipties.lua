@@ -83,12 +83,12 @@ if SERVER then
 		end
 		
 		if CurTime() >= self.lasttie and not self.istying then
-			if not( IsValid( self.Owner ) and IsValid( self.Owner:GetEyeTrace().Entity ) and self.Owner:GetEyeTrace().Entity:IsPlayer() ) then return end
+			if not (IsValid(self.Owner) and IsValid(self.Owner:GetEyeTrace().Entity) and self.Owner:GetEyeTrace().Entity:IsPlayer()) then return end
 			local Ent = self.Owner:GetEyeTrace().Entity
-			if not( Ent:GetPos():Distance(self.Owner:GetPos() ) < 512) then return end
+			if not Ent:GetPos():Distance(self.Owner:GetPos()) < 512 then return end
 			local TieMiddle = GetConVarNumber("rp_ziptie_tiecount")
 			local TieVariation = GetConVarNumber("rp_ziptie_tievariation")
-			self.tiesleft = math.random(PickMiddle - PickVariation, PickMiddle + PickVariation)
+			self.tiesleft = math.random(TieMiddle - TieVariation, TieMiddle + TieVariation)
 			self.tieent = Ent
 			self.istying = true
 			self.lasttie = CurTime() + 3
