@@ -43,7 +43,7 @@ end
 
 if SERVER then
 	SWEP.lastpick = 0
-	SWEP.ispicking = false
+	SWEP.istying = false
 	SWEP.pickent = nil
 	SWEP.picksleft = 0
 	SWEP.lastpicktimer = 0
@@ -55,19 +55,19 @@ if SERVER then
 	end
 
 	function SWEP:PrimaryAttack()	
-		if self.ispicking then
+		if self.istying then
 			if self.picksleft > 1 then
 				if self.lastpicktimer < CurTime() then
 					self.picksleft = self.picksleft - 1
 					self.Owner:SetNWInt("picksleft", self.picksleft)
-					self.Owner:SetNWBool("canpick", false)
+					self.Owner:SetNWBool("cantie", false)
 					self.Owner:EmitSound("ambient/machines/keyboard" .. tostring(math.random(1, 6)) .. "_clicks.wav", 70, 40)
 					self.lastpicktimer = CurTime() + math.random( 1, 3 )
 				else
-					self.ispicking = false
+					self.istying = false
 					self.pickent = nil			
 					self.Owner:SetNWInt("picksleft", 0)
-					self.Owner:SetNWBool("canpick", false)
+					self.Owner:SetNWBool("cantie", false)
 					self:NewSetWeaponHoldType("normal")
 					DarkRP.notify(self.Owner, 1, 4, "Pickpocket failed!")
 					return
@@ -83,15 +83,15 @@ if SERVER then
 			end
 		end
 		
-		if CurTime() >= self.lastpick and not self.ispicking then
+		if CurTime() >= self.lastpick and not self.istying then
 			if not( IsValid( self.Owner ) and IsValid( self.Owner:GetEyeTrace().Entity ) and self.Owner:GetEyeTrace().Entity:IsPlayer() ) then return end
 			local Ent = self.Owner:GetEyeTrace().Entity
 			if not( Ent:GetPos():Distance( self.Owner:GetPos() ) < 512 ) then return end
-			local PickMiddle = GetConVarNumber( "rp_pickpocket_pickcount" )
-			local PickVariation = GetConVarNumber( "rp_pickpocket_pickvariation" )
+			local PickMiddle = GetConVarNumber( "rp_ziptie_tiecount" )
+			local PickVariation = GetConVarNumber( "rp_ziptie_tievariation" )
 			self.picksleft = math.random( PickMiddle - PickVariation, PickMiddle + PickVariation )
 			self.pickent = Ent
-			self.ispicking = true
+			self.istying = true
 			self.lastpick = CurTime() + 3
 			self:NewSetWeaponHoldType( "pistol" )
 			self.Owner:SetNWInt( "picksleft", self.picksleft )
@@ -100,31 +100,31 @@ if SERVER then
 	end	
 
 	function SWEP:Holster()
-		self.ispicking = false
+		self.istying = false
 		self.Owner:DrawWorldModel(true)
 		self.Owner:DrawViewModel(true)
 		return true
 	end
 
 	function SWEP:Think()
-		self.Owner:SetNWBool( "picking", self.ispicking )
-		if self.ispicking then
-			if not ( IsValid(self.pickent) and IsValid( self.Owner ) and IsValid( self.Owner:GetEyeTrace().Entity ) and self.Owner:GetEyeTrace().Entity == self.pickent and self.Owner:GetEyeTrace().Entity:GetPos():Distance( self.Owner:GetPos() ) < 512 ) then
-				self:NewSetWeaponHoldType( "normal" )
-				self.ispicking = false
+		self.Owner:SetNWBool( "tying", self.istying )
+		if self.istying then
+			if not (IsValid(self.pickent) and IsValid(self.Owner) and IsValid(self.Owner:GetEyeTrace().Entity) and self.Owner:GetEyeTrace().Entity == self.pickent and self.Owner:GetEyeTrace().Entity:GetPos():Distance( self.Owner:GetPos() ) < 512 ) then
+				self:NewSetWeaponHoldType("normal")
+				self.istying = false
 				self.pickent = nil
 				self.lastpick = CurTime() + 3
-				DarkRP.notify( self.Owner, 1, 4, "Pickpocket failed" )
+				DarkRP.notify(self.Owner, 1, 4, "Tying failed!")
 			end
 			
 			if self.picksleft > 0 and self.lastpicktimer < CurTime() then
-				self.Owner:SetNWBool( "canpick", true )
+				self.Owner:SetNWBool("cantie", true)
 			else
-				self.Owner:SetNWBool( "canpick", false )
+				self.Owner:SetNWBool("cantie", false)
 			end
 		else
-			if self.Owner:GetNWBool( "canpick" ) then
-				self.Owner:SetNWBool( "canpick", false )
+			if self.Owner:GetNWBool("cantie") then
+				self.Owner:SetNWBool("cantie", false)
 			end
 		end
 	end
@@ -135,9 +135,9 @@ else -- CLIENT
 	SWEP.DrawCrosshair = false
 
 	function SWEP:DrawHUD()
-		if LocalPlayer():GetNWBool("picking") then
-			draw.SimpleText( "Pickpocketing... " .. LocalPlayer():GetNWInt( "picksleft" ) .. " picks left...", "Trebuchet24", ScrW() / 2, ScrH() / 2, Color( 200, 200, 200, 255 ), 1, 1 )
-			if LocalPlayer():GetNWBool( "canpick" ) then
+		if LocalPlayer():GetNWBool("tying") then
+			draw.SimpleText( "Tying... " .. LocalPlayer():GetNWInt( "picksleft" ) .. " picks left...", "Trebuchet24", ScrW() / 2, ScrH() / 2, Color( 200, 200, 200, 255 ), 1, 1 )
+			if LocalPlayer():GetNWBool( "cantie" ) then
 				draw.SimpleText( "Pick now!", "Trebuchet24", ScrW() / 2, ScrH() / 2 + 30, Color( 200, 200, 200, 255 ), 1, 1 )
 			else
 				draw.SimpleText( "Wait...", "Trebuchet24", ScrW() / 2, ScrH() / 2 + 30, Color( 200, 200, 200, 255 ), 1, 1 )
