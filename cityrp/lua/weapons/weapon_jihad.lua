@@ -29,12 +29,21 @@ SWEP.Secondary.DefaultClip = 0
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = ""
 
+if SERVER then
+	-- darkrp disables taunts by default, allow that here for now
+	-- todo: put this somewhere more appropriate
+	function GAMEMODE:PlayerShouldTaunt(ply, actid)
+		return true
+	end
+end
+
 function SWEP:Initialize()
 	self:SetHoldType("slam")
+
 	util.PrecacheModel("models/Humans/Charple01.mdl")
-    util.PrecacheModel("models/Humans/Charple02.mdl")
-    util.PrecacheModel("models/Humans/Charple03.mdl")
-    util.PrecacheModel("models/Humans/Charple04.mdl")
+	util.PrecacheModel("models/Humans/Charple02.mdl")
+	util.PrecacheModel("models/Humans/Charple03.mdl")
+	util.PrecacheModel("models/Humans/Charple04.mdl")
 end
 
 function SWEP:PrimaryAttack()
