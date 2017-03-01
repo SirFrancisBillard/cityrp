@@ -3,12 +3,6 @@ AddCSLuaFile()
 if SERVER then
 	resource.AddFile("sound/cityrp/jihad_1.wav")
 	resource.AddFile("sound/cityrp/jihad_2.wav")
-
-	-- darkrp disables taunts by default, allow that here for now
-	-- todo: put this somewhere more appropriate
-	function GAMEMODE:PlayerShouldTaunt(ply, actid)
-		return true
-	end
 end
 
 sound.Add({
@@ -59,7 +53,7 @@ function SWEP:Initialize()
 end
 
 function SWEP:PrimaryAttack()
-	self:SetNextPrimaryFire(CurTime() + 3)
+	self:SetNextPrimaryFire(CurTime() + 1)
 	self.Owner:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_GMOD_GESTURE_TAUNT_ZOMBIE, true)
 	if SERVER then
 		self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
@@ -82,16 +76,8 @@ function SWEP:PrimaryAttack()
 			ply:SetColor(COLOR_WHITE)
 
 			util.BlastDamage(ply, ply, ply:GetPos(), 800, 300)
-
-			--self.Owner:Kill()
 		end)
 	end
 end
 
 function SWEP:SecondaryAttack() end
-
-if SERVER then
-	function SWEP:OnDrop()
-		self:Remove()
-	end
-end
