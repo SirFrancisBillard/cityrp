@@ -10,8 +10,8 @@ SWEP.ViewModelFlip = false
 SWEP.ViewModel = "models/weapons/v_crowbar.mdl"
 SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 
+SWEP.Category = "RP"
 SWEP.Spawnable = true
-SWEP.AdminSpawnable = true
 
 SWEP.Primary.ClipSize = -1      
 SWEP.Primary.DefaultClip = 0        
@@ -28,7 +28,6 @@ CreateConVar("rp_ziptie_tievariation", 2, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVA
 
 function SWEP:Initialize()
 	self:SetWeaponHoldType("normal")
-	nextFire = CurTime()
 end
 
 function SWEP:NewSetWeaponHoldType(holdtype)
@@ -42,12 +41,12 @@ function SWEP:NewSetWeaponHoldType(holdtype)
 end
 
 if SERVER then
-	SWEP.lastpick = 0
+	SWEP.lasttie = 0
 	SWEP.istying = false
-	SWEP.pickent = nil
-	SWEP.picksleft = 0
-	SWEP.lastpicktimer = 0
-	SWEP.picktimer = 2.5
+	SWEP.tieent = nil
+	SWEP.tiesleft = 0
+	SWEP.lasttietimer = 0
+	SWEP.tietimer = 2.5
 
 	function SWEP:Deploy()
 		self.Owner:DrawWorldModel(false)
@@ -56,45 +55,45 @@ if SERVER then
 
 	function SWEP:PrimaryAttack()	
 		if self.istying then
-			if self.picksleft > 1 then
-				if self.lastpicktimer < CurTime() then
-					self.picksleft = self.picksleft - 1
-					self.Owner:SetNWInt("picksleft", self.picksleft)
+			if self.tiesleft > 1 then
+				if self.lasttietimer < CurTime() then
+					self.tiesleft = self.tiesleft - 1
+					self.Owner:SetNWInt("tiesleft", self.tiesleft)
 					self.Owner:SetNWBool("cantie", false)
 					self.Owner:EmitSound("ambient/machines/keyboard" .. tostring(math.random(1, 6)) .. "_clicks.wav", 70, 40)
-					self.lastpicktimer = CurTime() + math.random( 1, 3 )
+					self.lasttietimer = CurTime() + math.random(1, 3)
 				else
 					self.istying = false
-					self.pickent = nil			
-					self.Owner:SetNWInt("picksleft", 0)
+					self.tieent = nil			
+					self.Owner:SetNWInt("tiesleft", 0)
 					self.Owner:SetNWBool("cantie", false)
 					self:NewSetWeaponHoldType("normal")
 					DarkRP.notify(self.Owner, 1, 4, "Pickpocket failed!")
 					return
 				end
 			else
-				if IsValid(self.pickent) then
-					self.pickent:Give("weapon_ziptied")
-					self.pickent:SelectWeapon("weapon_ziptied")
-					DarkRP.notify(self.pickent, 1, 4, "You have been ziptied!")
-					DarkRP.notify(self.Owner, 1, 4, "You have ziptied " .. self.pickent:Nick() .. "!")
+				if IsValid(self.tieent) then
+					self.tieent:Give("weapon_ziptied")
+					self.tieent:SelectWeapon("weapon_ziptied")
+					DarkRP.notify(self.tieent, 1, 4, "You have been ziptied!")
+					DarkRP.notify(self.Owner, 1, 4, "You have ziptied " .. self.tieent:Nick() .. "!")
 					self.Owner:StripWeapon(self.ClassName)
 				end
 			end
 		end
 		
-		if CurTime() >= self.lastpick and not self.istying then
+		if CurTime() >= self.lasttie and not self.istying then
 			if not( IsValid( self.Owner ) and IsValid( self.Owner:GetEyeTrace().Entity ) and self.Owner:GetEyeTrace().Entity:IsPlayer() ) then return end
 			local Ent = self.Owner:GetEyeTrace().Entity
-			if not( Ent:GetPos():Distance( self.Owner:GetPos() ) < 512 ) then return end
-			local PickMiddle = GetConVarNumber( "rp_ziptie_tiecount" )
-			local PickVariation = GetConVarNumber( "rp_ziptie_tievariation" )
-			self.picksleft = math.random( PickMiddle - PickVariation, PickMiddle + PickVariation )
-			self.pickent = Ent
+			if not( Ent:GetPos():Distance(self.Owner:GetPos() ) < 512) then return end
+			local TieMiddle = GetConVarNumber("rp_ziptie_tiecount")
+			local TieVariation = GetConVarNumber("rp_ziptie_tievariation")
+			self.tiesleft = math.random(PickMiddle - PickVariation, PickMiddle + PickVariation)
+			self.tieent = Ent
 			self.istying = true
-			self.lastpick = CurTime() + 3
-			self:NewSetWeaponHoldType( "pistol" )
-			self.Owner:SetNWInt( "picksleft", self.picksleft )
+			self.lasttie = CurTime() + 3
+			self:NewSetWeaponHoldType("pistol")
+			self.Owner:SetNWInt("tiesleft", self.tiesleft)
 
 		end
 	end	
@@ -107,17 +106,17 @@ if SERVER then
 	end
 
 	function SWEP:Think()
-		self.Owner:SetNWBool( "tying", self.istying )
+		self.Owner:SetNWBool("tying", self.istying)
 		if self.istying then
-			if not (IsValid(self.pickent) and IsValid(self.Owner) and IsValid(self.Owner:GetEyeTrace().Entity) and self.Owner:GetEyeTrace().Entity == self.pickent and self.Owner:GetEyeTrace().Entity:GetPos():Distance( self.Owner:GetPos() ) < 512 ) then
+			if not (IsValid(self.tieent) and IsValid(self.Owner) and IsValid(self.Owner:GetEyeTrace().Entity) and self.Owner:GetEyeTrace().Entity == self.pickent and self.Owner:GetEyeTrace().Entity:GetPos():Distance(self.Owner:GetPos() ) < 512) then
 				self:NewSetWeaponHoldType("normal")
 				self.istying = false
-				self.pickent = nil
-				self.lastpick = CurTime() + 3
+				self.tieent = nil
+				self.lasttie = CurTime() + 3
 				DarkRP.notify(self.Owner, 1, 4, "Tying failed!")
 			end
 			
-			if self.picksleft > 0 and self.lastpicktimer < CurTime() then
+			if self.tiesleft > 0 and self.lasttietimer < CurTime() then
 				self.Owner:SetNWBool("cantie", true)
 			else
 				self.Owner:SetNWBool("cantie", false)
@@ -136,11 +135,11 @@ else -- CLIENT
 
 	function SWEP:DrawHUD()
 		if LocalPlayer():GetNWBool("tying") then
-			draw.SimpleText( "Tying... " .. LocalPlayer():GetNWInt( "picksleft" ) .. " picks left...", "Trebuchet24", ScrW() / 2, ScrH() / 2, Color( 200, 200, 200, 255 ), 1, 1 )
-			if LocalPlayer():GetNWBool( "cantie" ) then
-				draw.SimpleText( "Pick now!", "Trebuchet24", ScrW() / 2, ScrH() / 2 + 30, Color( 200, 200, 200, 255 ), 1, 1 )
+			draw.SimpleText("Tying... " .. LocalPlayer():GetNWInt("tiesleft") .. " knots left...", "Trebuchet24", ScrW() / 2, ScrH() / 2, Color(200, 200, 200, 255), 1, 1)
+			if LocalPlayer():GetNWBool("cantie") then
+				draw.SimpleText("Tie now!", "Trebuchet24", ScrW() / 2, ScrH() / 2 + 30, Color(200, 200, 200, 255), 1, 1)
 			else
-				draw.SimpleText( "Wait...", "Trebuchet24", ScrW() / 2, ScrH() / 2 + 30, Color( 200, 200, 200, 255 ), 1, 1 )
+				draw.SimpleText("Wait...", "Trebuchet24", ScrW() / 2, ScrH() / 2 + 30, Color(200, 200, 200, 255), 1, 1)
 			end
 		end
 	end
