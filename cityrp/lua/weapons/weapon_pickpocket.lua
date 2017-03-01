@@ -24,10 +24,10 @@ SWEP.Secondary.DefaultClip = 0
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = ""
 
-CreateConVar("rp_pickpocket_minimumamt", 50, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE})
-CreateConVar("rp_pickpocket_maximumamt", 150, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE})
-CreateConVar("rp_pickpocket_pickcount", 10, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE})
-CreateConVar("rp_pickpocket_pickvariation", 2, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE})
+CreateConVar("rp_pickpocket_minimumamt", 200, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE})
+CreateConVar("rp_pickpocket_maximumamt", 800, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE})
+CreateConVar("rp_pickpocket_pickcount", 2, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE})
+CreateConVar("rp_pickpocket_pickvariation", 1, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE})
 
 function SWEP:Initialize()
 	self:SetWeaponHoldType("normal")
@@ -54,6 +54,7 @@ if SERVER then
 
 	function SWEP:Deploy()
 		self.Owner:DrawWorldModel(false)
+		self.Owner:DrawViewModel(false)
 	end
 
 	function SWEP:PrimaryAttack()	
@@ -71,22 +72,22 @@ if SERVER then
 					self.Owner:SetNWInt("picksleft", 0)
 					self.Owner:SetNWBool("canpick", false)
 					self:NewSetWeaponHoldType("normal")
-					GAMEMODE:Notify(self.Owner, 1, 4, "Pickpocket failed")
+					DarkRP.notify(self.Owner, 1, 4, "Pickpocket failed!")
 					return
 				end
 			else
 				local amount = math.random( GetConVarNumber( "rp_pickpocket_minimumamt" ), GetConVarNumber( "rp_pickpocket_maximumamt" ) )
 				if IsValid( self.pickent ) then
-					if( self.pickent:CanAfford( amount ) ) then
-						self.pickent:AddMoney( -amount )
-						self.Owner:AddMoney( amount )
+					if( self.pickent:canAfford( amount ) ) then
+						self.pickent:addMoney( -amount )
+						self.Owner:addMoney( amount )
 					else
 						amount = self.pickent.DarkRPVars.money
-						self.pickent:AddMoney( -amount )
-						self.Owner:AddMoney( amount )
+						self.pickent:addMoney( -amount )
+						self.Owner:addMoney( amount )
 					end
-					GAMEMODE:Notify( self.pickent, 1, 4, "$" .. amount .. " has been pickpocketed from you!" )
-					GAMEMODE:Notify( self.Owner, 1, 4, "You have pickpocketed $" .. amount .. "!" )			
+					DarkRP.notify( self.pickent, 1, 4, "$" .. amount .. " has been pickpocketed from you!" )
+					DarkRP.notify( self.Owner, 1, 4, "You have pickpocketed $" .. amount .. "!" )			
 				end
 				self:NewSetWeaponHoldType( "normal" )
 				self.ispicking = false
@@ -97,7 +98,7 @@ if SERVER then
 		if CurTime() >= self.lastpick and not self.ispicking then
 			if not( IsValid( self.Owner ) and IsValid( self.Owner:GetEyeTrace().Entity ) and self.Owner:GetEyeTrace().Entity:IsPlayer() ) then return end
 			local Ent = self.Owner:GetEyeTrace().Entity
-			if not( Ent:GetPos():Distance( self.Owner:GetPos() ) < 300 ) then return end
+			if not( Ent:GetPos():Distance( self.Owner:GetPos() ) < 512 ) then return end
 			local PickMiddle = GetConVarNumber( "rp_pickpocket_pickcount" )
 			local PickVariation = GetConVarNumber( "rp_pickpocket_pickvariation" )
 			self.picksleft = math.random( PickMiddle - PickVariation, PickMiddle + PickVariation )
@@ -112,19 +113,20 @@ if SERVER then
 
 	function SWEP:Holster()
 		self.ispicking = false
-		self.Owner:DrawWorldModel(false)
+		self.Owner:DrawWorldModel(true)
+		self.Owner:DrawViewModel(true)
 		return true
 	end
 
 	function SWEP:Think()
 		self.Owner:SetNWBool( "picking", self.ispicking )
 		if self.ispicking then
-			if not ( IsValid(self.pickent) and IsValid( self.Owner ) and IsValid( self.Owner:GetEyeTrace().Entity ) and self.Owner:GetEyeTrace().Entity == self.pickent and self.Owner:GetEyeTrace().Entity:GetPos():Distance( self.Owner:GetPos() ) < 300 ) then
+			if not ( IsValid(self.pickent) and IsValid( self.Owner ) and IsValid( self.Owner:GetEyeTrace().Entity ) and self.Owner:GetEyeTrace().Entity == self.pickent and self.Owner:GetEyeTrace().Entity:GetPos():Distance( self.Owner:GetPos() ) < 512 ) then
 				self:NewSetWeaponHoldType( "normal" )
 				self.ispicking = false
 				self.pickent = nil
 				self.lastpick = CurTime() + 3
-				GAMEMODE:Notify( self.Owner, 1, 4, "Pickpocket failed" )
+				DarkRP.notify( self.Owner, 1, 4, "Pickpocket failed" )
 			end
 			
 			if self.picksleft > 0 and self.lastpicktimer < CurTime() then
