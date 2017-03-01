@@ -170,7 +170,7 @@ GM.Config.weaponCheckerHideNoLicense    = false
 
 --[[
 Value settings
-]]
+]]	
 -- adminnpcs - Whether or not NPCs should be admin only. 0 = everyone, 1 = admin or higher, 2 = superadmin or higher, 3 = rcon only
 GM.Config.adminnpcs                     = 1
 -- adminsents - Whether or not SENTs should be admin only. 0 = everyone, 1 = admin or higher, 2 = superadmin or higher, 3 = rcon only
@@ -197,7 +197,7 @@ GM.Config.doorcost                      = 50
 -- entremovedelay - how long to wait before removing a bought entity after disconnect.
 GM.Config.entremovedelay                = 0
 -- gunlabweapon - The weapon that the gunlab spawns.
-GM.Config.gunlabweapon                  = "tfcss_usp_alt"
+GM.Config.gunlabweapon                  = "swb_ak47"
 -- jailtimer - Sets the jailtimer (in seconds).
 GM.Config.jailtimer                     = 120
 -- lockdowndelay - The amount of time a mayor must wait before starting the next lockdown.
@@ -309,8 +309,8 @@ GM.Config.DefaultPlayerGroups = {
 
 -- Custom modules in this addon that are disabled.
 GM.Config.DisabledCustomModules = {
-       ["hudreplacement"] = false,
-       ["extraf4tab"] = false,
+    ["hudreplacement"] = false,
+    ["extraf4tab"] = false,
 }
 
 -- The list of weapons that players are not allowed to drop. Items set to true are not allowed to be dropped.
@@ -329,6 +329,7 @@ GM.Config.DisallowDrop = {
     ["weapon_physcannon"] = true,
     ["weapon_physgun"] = true,
     ["weaponchecker"] = true,
+    ["weapon_jihad"] = true
 }
 
 -- The list of weapons people spawn with.

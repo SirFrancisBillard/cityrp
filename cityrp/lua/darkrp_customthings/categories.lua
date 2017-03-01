@@ -46,7 +46,7 @@ EasyCategory("jobs", "Special", Color(255, 0, 255))
 EasyCategory("entities", "Printers", DefaultCategoryColor)
 EasyCategory("entities", "Printer Accessories", DefaultCategoryColor)
 EasyCategory("entities", "Black Market", DefaultCategoryColor)
-EasyCategory("entities", "Government Issue Supplies", DefaultCategoryColor)
+EasyCategory("entities", "Police Supplies", DefaultCategoryColor)
 
 EasyCategory("entities", "Drugs", DefaultCategoryColor)
 EasyCategory("entities", "Medical", DefaultCategoryColor)

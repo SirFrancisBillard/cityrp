@@ -19,7 +19,7 @@ if CLIENT then
 end
 
 SWEP.SpeedDec = 0
-SWEP.Slot = 0
+SWEP.Slot = 2
 SWEP.SlotPos = 0
 SWEP.SWBWeapon = true
 SWEP.Author			= "Spy"

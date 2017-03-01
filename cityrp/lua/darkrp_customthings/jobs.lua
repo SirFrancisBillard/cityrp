@@ -189,7 +189,7 @@ TEAM_MAFIA = DarkRP.createJob("Mafia", {
 	description = [[The lowest person of crime.
 		The Mafia must work for the Godfather who runs the crime family.
 		The Godfather sets your agenda and you follow it or you might be punished.]],
-	weapons = {"swb_fiveseven"},
+	weapons = {"swb_fiveseven", "weapon_pickpocket"},
 	command = "mafia",
 	max = 6,
 	salary = GAMEMODE.Config.normalsalary,
@@ -206,7 +206,7 @@ TEAM_GODFATHER = DarkRP.createJob("Godfather", {
 		With his power he coordinates the mafia and forms an efficient crime organization.
 		He has the ability to break into houses by using a lockpick.
 		The Godfather posesses the ability to unarrest you.]],
-	weapons = {"swb_ak47", "swb_fiveseven", "lockpick", "unarrest_stick"},
+	weapons = {"swb_ak47", "swb_fiveseven", "lockpick", "weapon_pickpocket", "unarrest_stick"},
 	command = "godfather",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary * 1.75,
@@ -233,8 +233,8 @@ TEAM_THIEF = DarkRP.createJob("Thief", {
 TEAM_LOOTER = DarkRP.createJob("Looter", {
 	color = g_RegisterJobWithColor,
 	model = {"models/player/phoenix.mdl", "models/player/arctic.mdl"},
-	description = [[Looters can raid without cooldown.]],
-	weapons = {},
+	description = [[Looters specialize in raiding.]],
+	weapons = {"weapon_c4"},
 	command = "looter",
 	max = 6,
 	salary = GAMEMODE.Config.normalsalary,
@@ -283,7 +283,7 @@ TEAM_TERROR = DarkRP.createJob("Terrorist", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/guerilla.mdl",
 	description = [[Terrorists spread terror throughout the city and are in a constant war with the government.]],
-	weapons = {"swb_ak47"},
+	weapons = {"swb_ak47", "weapon_jihad"},
 	command = "terrorist",
 	max = 6,
 	salary = GAMEMODE.Config.normalsalary,
@@ -297,7 +297,7 @@ TEAM_TERRORLEADER = DarkRP.createJob("Terrorist Leader", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/guerilla.mdl",
 	description = [[The terrorist leader leads the terrorists in their war against the government.]],
-	weapons = {"swb_ak47", "weapon_c4"},
+	weapons = {"swb_ak47", "weapon_jihad", "weapon_c4"},
 	command = "terroristleader",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary,
