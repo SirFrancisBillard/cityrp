@@ -56,6 +56,8 @@ function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + 2)
 	self.Owner:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_GMOD_GESTURE_TAUNT_ZOMBIE, true)
 	if SERVER then
+		BroadcastLua([[Entity(]] .. self.Owner:EntIndex() .. [[):AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_GMOD_GESTURE_TAUNT_ZOMBIE, true)]])
+
 		self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 		self.Owner:EmitSound("Jihad.Scream")
 
@@ -73,9 +75,9 @@ function SWEP:PrimaryAttack()
 			explosion:EmitSound(Sound("ambient/explosions/explode_" .. math.random(1, 4) .. ".wav", 200, math.random(100, 150)))
 
 			ply:SetModel("models/Humans/Charple0" .. math.random(1, 4) .. ".mdl")
-			ply:SetColor(COLOR_WHITE)
+			ply:SetColor(color_white)
 
-			util.BlastDamage(ply, ply, ply:GetPos(), 800, 300)
+			util.BlastDamage(ply, ply, ply:GetPos(), 400, 300)
 		end)
 	end
 end

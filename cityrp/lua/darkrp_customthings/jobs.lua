@@ -236,7 +236,21 @@ TEAM_LOOTER = DarkRP.createJob("Looter", {
 	description = [[Looters specialize in raiding.]],
 	weapons = {"weapon_c4"},
 	command = "looter",
-	max = 6,
+	max = 4,
+	salary = GAMEMODE.Config.normalsalary,
+	admin = 0,
+	vote = false,
+	hasLicense = false,
+	category = g_RegisterJobWithCategory,
+})
+
+TEAM_KIDNAPPER = DarkRP.createJob("Kidnapper", {
+	color = g_RegisterJobWithColor,
+	model = {"models/player/phoenix.mdl", "models/player/arctic.mdl"},
+	description = [[Kidnappers can take hostages and hold them for ransom.]],
+	weapons = {"weapon_zipties"},
+	command = "kidnapper",
+	max = 4,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,
