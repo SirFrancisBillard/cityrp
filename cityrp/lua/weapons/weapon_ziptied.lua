@@ -1,12 +1,16 @@
 AddCSLuaFile()
 
+game.AddAmmoType({name = "ziptied"})
+if CLIENT then
+	language.Add("ziptied_ammo", "Ziptie Strength")
+end
+
 SWEP.PrintName = "Ziptied"
 SWEP.Instructions = "Primary fire to struggle."
-
 SWEP.Slot = 2
 SWEP.SlotPos = 1
 
-SWEP.DrawAmmo = false
+SWEP.DrawAmmo = true
 SWEP.DrawCrosshair = false
 
 SWEP.ViewModelFOV = 62
@@ -17,9 +21,9 @@ SWEP.AdminSpawnable = true
 SWEP.Category = "RP"
 
 SWEP.Primary.ClipSize = -1
-SWEP.Primary.DefaultClip = 0
+SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Automatic = false
-SWEP.Primary.Ammo = ""
+SWEP.Primary.Ammo = "ziptied"
 
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = 0
@@ -28,7 +32,6 @@ SWEP.Secondary.Ammo = ""
 
 SWEP.ViewModel = "models/weapons/c_arms.mdl"
 SWEP.WorldModel = ""
-
 SWEP.UseHands = true
 
 function SWEP:SetupDataTables()
@@ -41,6 +44,10 @@ end
 
 function SWEP:Deploy()
 	self:SendWeaponAnim(ACT_VM_DEPLOY)
+end
+
+function SWEP:OnDrop()
+	self:Remove()
 end
 
 function SWEP:Holster()
@@ -63,10 +70,14 @@ function SWEP:PrimaryAttack()
 
 	self:SetStruggle(self:GetStruggle() + math.random(2, 14))
 	if self:GetStruggle() >= 100 then
-		local ply = self.Owner
-		ply:StripWeapon(self.ClassName)
-		ply:EmitSound("physics/cardboard/cardboard_box_impact_hard" .. math.random(7) .. ".wav")
-		ply:ConCommand("lastinv")
+		self.Owner:EmitSound("physics/cardboard/cardboard_box_impact_hard" .. math.random(7) .. ".wav")
+		self.Owner:RemoveAmmo(1, self.Primary.Ammo)
+		if self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
+			self:SendWeaponAnim(ACT_VM_DRAW)
+		else
+			self.Owner:ConCommand("lastinv")
+			self.Owner:StripWeapon(self.ClassName)
+		end
 	end
 end
 

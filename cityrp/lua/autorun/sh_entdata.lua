@@ -22,7 +22,7 @@ g_DarkRPEntData = {
 	["swb_g3sg1"] = {PrintName = "G3SG1", Model = "models/weapons/3_snip_g3sg1.mdl"},
 	["swb_sg550"] = {PrintName = "SIG SG550", Model = "models/weapons/3_snip_sg550.mdl"},
 	["swb_m249"] = {PrintName = "M249 Para", Model = "models/weapons/3_mach_m249para.mdl"},
-	["weapon_molotov"] = {PrintName = "Molotov Cocktail", Model = "models/props_junk/garbage_glassbottle003a.mdl"},
+	["weapon_molotov"] = {PrintName = "Molotov Cocktail", Model = "models/props_junk/GlassBottle01a.mdl"},
 	["lockpick"] = {PrintName = "Lock Pick", Model = "models/weapons/w_crowbar.mdl"},
 	["keypad_cracker"] = {PrintName = "Keypad Cracker", Model = "models/weapons/w_c4.mdl"},
 	["med_kit"] = {PrintName = "Medic Kit", Model = "models/weapons/w_medkit.mdl"},

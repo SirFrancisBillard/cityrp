@@ -8,7 +8,7 @@ ENT.PrintName = "Thrown Molotov"
 if CLIENT then return end
 
 function ENT:Initialize()
-	self:SetModel("models/props_junk/garbage_glassbottle003a.mdl")
+	self:SetModel("models/props_junk/GlassBottle01a.mdl")
 	self:PhysicsInit(SOLID_VPHYSICS)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)

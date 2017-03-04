@@ -6,14 +6,11 @@ if CLIENT then
 end
 
 SWEP.PrintName = "Zipties"
-SWEP.Author = "DarkRP Developers"
 SWEP.Instructions = "Click on a player to tie them up."
 SWEP.Purpose = "Kidnapping"
 
-SWEP.ViewModelFOV = 62
-SWEP.ViewModelFlip = false
-SWEP.ViewModel = "models/weapons/v_crowbar.mdl"
-SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
+SWEP.Slot = 2
+SWEP.SlotPos = 3
 
 SWEP.Category = "RP"
 SWEP.Spawnable = true
@@ -28,130 +25,146 @@ SWEP.Secondary.DefaultClip = 0
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = ""
 
-CreateConVar("rp_ziptie_tiecount", 5, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE})
-CreateConVar("rp_ziptie_tievariation", 2, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE})
+SWEP.HoldType = "normal"
+SWEP.ViewModelFOV = 70
+SWEP.ViewModelFlip = false
+SWEP.UseHands = true
+SWEP.ViewModel = "models/weapons/c_grenade.mdl"
+SWEP.WorldModel = ""
+SWEP.ShowViewModel = true
+SWEP.ShowWorldModel = true
+
+SWEP.ViewModelBoneMods = {
+	["ValveBiped.Grenade_body"] = {scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0)}
+}
+
+SWEP.VElements = {
+	["ties"] = {type = "Model", model = "models/Items/CrossbowRounds.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.844, 2.755, 0.797), angle = Angle(-97.581, -61.209, 56.716), size = Vector(0.912, 1.029, 0.953), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}}
+}
+
+SWEP.WElements = {
+	["ties"] = {type = "Model", model = "models/Items/CrossbowRounds.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.151, 1.075, -2.597), angle = Angle(106.364, 66.593, -1.293), size = Vector(0.912, 1.029, 0.953), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}}
+}
 
 function SWEP:Initialize()
 	self:SetWeaponHoldType("normal")
 end
 
-function SWEP:NewSetWeaponHoldType(holdtype)
-	if SERVER then
-		umsg.Start("DRP_HoldType")
-			umsg.Entity(self)
-			umsg.String(holdtype)
-		umsg.End()
-	end
-	self:SetWeaponHoldType(holdtype)
+function SWEP:SetupDataTables()
+	self:NetworkVar("Bool", 0, "IsTying")
+	self:NetworkVar("Float", 0, "StartTie")
+	self:NetworkVar("Float", 1, "EndTie")
+	self:NetworkVar("Float", 2, "NextSoundTime")
+	self:NetworkVar("Int", 0, "TotalTies")
 end
 
-if SERVER then
-	SWEP.lasttie = 0
-	SWEP.istying = false
-	SWEP.tieent = nil
-	SWEP.tiesleft = 0
-	SWEP.lasttietimer = 0
-	SWEP.tietimer = 2.5
+function SWEP:PrimaryAttack()
+	if self:GetIsTying() then return end
+	self:SetNextPrimaryFire(CurTime() + 0.3)
 
-	function SWEP:Deploy()
-		self.Owner:DrawWorldModel(false)
-		self.Owner:DrawViewModel(false)
+	self:GetOwner():LagCompensation(true)
+	local trace = self:GetOwner():GetEyeTrace()
+	self:GetOwner():LagCompensation(false)
+
+	if not IsValid(trace.Entity) or not trace.Entity:IsPlayer() or trace.Entity:GetPos():DistToSqr(self:GetOwner():GetPos()) > 10000 then
+		return
 	end
 
-	function SWEP:PrimaryAttack()	
-		if self.istying then
-			if self.tiesleft > 1 then
-				if self.lasttietimer < CurTime() then
-					self.tiesleft = self.tiesleft - 1
-					self.Owner:SetNWInt("tiesleft", self.tiesleft)
-					self.Owner:SetNWBool("cantie", false)
-					self.Owner:EmitSound("ambient/machines/keyboard" .. tostring(math.random(1, 6)) .. "_clicks.wav", 70, 40)
-					self.lasttietimer = CurTime() + math.random(1, 3)
-				else
-					self.istying = false
-					self.tieent = nil			
-					self.Owner:SetNWInt("tiesleft", 0)
-					self.Owner:SetNWBool("cantie", false)
-					self:NewSetWeaponHoldType("normal")
-					DarkRP.notify(self.Owner, 1, 4, "Tying failed!")
-					return
-				end
-			else
-				if IsValid(self.tieent) then
-					self.tieent:Give("weapon_ziptied")
-					self.tieent:SelectWeapon("weapon_ziptied")
-					DarkRP.notify(self.tieent, 1, 4, "You have been ziptied!")
-					DarkRP.notify(self.Owner, 1, 4, "You have ziptied " .. self.tieent:Nick() .. "!")
-					self.Owner:RemoveAmmo(1, self.Primary.Ammo)
-					if self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
-						self:SendWeaponAnim(ACT_VM_DRAW)
-					else
-						self.Owner:ConCommand("lastinv")
-						self.Owner:StripWeapon(self.ClassName)
-					end
-				end
-			end
-		end
-		
-		if CurTime() >= self.lasttie and not self.istying then
-			if not (IsValid(self.Owner) and IsValid(self.Owner:GetEyeTrace().Entity) and self.Owner:GetEyeTrace().Entity:IsPlayer()) then return end
-			local Ent = self.Owner:GetEyeTrace().Entity
-			if not Ent:GetPos():Distance(self.Owner:GetPos()) < 512 then return end
-			local TieMiddle = GetConVarNumber("rp_ziptie_tiecount")
-			local TieVariation = GetConVarNumber("rp_ziptie_tievariation")
-			self.tiesleft = math.random(TieMiddle - TieVariation, TieMiddle + TieVariation)
-			self.tieent = Ent
-			self.istying = true
-			self.lasttie = CurTime() + 3
-			self:NewSetWeaponHoldType("pistol")
-			self.Owner:SetNWInt("tiesleft", self.tiesleft)
+	self:SetIsTying(true)
+	self:SetStartTie(CurTime())
+	self:SetEndTie(CurTime() + 4)
 
-		end
-	end	
+	self:SetNextSoundTime(CurTime() + 0.5)
 
-	function SWEP:Holster()
-		self.istying = false
-		self.Owner:DrawWorldModel(true)
-		self.Owner:DrawViewModel(true)
-		return true
+	if CLIENT then
+		self.Dots = ""
+		self.NextDotsTime = CurTime() + 0.5
+	end
+end
+
+function SWEP:Holster()
+	self:SetIsTying(false)
+	self:SetNextSoundTime(0)
+	return true
+end
+
+function SWEP:Succeed(ply)
+	if not IsValid(self.Owner) then return end
+	self:SetIsTying(false)
+
+	if CLIENT then return end
+
+	ply:Give("weapon_ziptied")
+	ply:SelectWeapon("weapon_ziptied")
+
+	self.Owner:RemoveAmmo(1, self.Primary.Ammo)
+	if self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
+		self:SendWeaponAnim(ACT_VM_DRAW)
+	else
+		self.Owner:ConCommand("lastinv")
+		self.Owner:StripWeapon(self.ClassName)
 	end
 
-	function SWEP:Think()
-		self.Owner:SetNWBool("tying", self.istying)
-		if self.istying then
-			if not (IsValid(self.tieent) and IsValid(self.Owner) and IsValid(self.Owner:GetEyeTrace().Entity) and self.Owner:GetEyeTrace().Entity == self.pickent and self.Owner:GetEyeTrace().Entity:GetPos():Distance(self.Owner:GetPos() ) < 512) then
-				self:NewSetWeaponHoldType("normal")
-				self.istying = false
-				self.tieent = nil
-				self.lasttie = CurTime() + 3
-				DarkRP.notify(self.Owner, 1, 4, "Tying failed!")
-			end
-			
-			if self.tiesleft > 0 and self.lasttietimer < CurTime() then
-				self.Owner:SetNWBool("cantie", true)
-			else
-				self.Owner:SetNWBool("cantie", false)
-			end
+	DarkRP.notify(self.Owner, 1, 4, "You have tied " .. ply:Nick() .. "!")
+end
+
+function SWEP:Fail()
+	self:SetHoldType("normal")
+	if CLIENT then return end
+	self:SetIsTying(false)
+	self:SetNextSoundTime(0)
+	DarkRP.notify(self.Owner, 1, 4, "Tying failed!")
+end
+
+function SWEP:Think()
+	if self:GetIsTying() and self:GetEndTie() ~= 0 then
+		self:GetOwner():LagCompensation(true)
+		local trace = self:GetOwner():GetEyeTrace()
+		self:GetOwner():LagCompensation(false)
+		if not IsValid(trace.Entity) or trace.HitPos:DistToSqr(self:GetOwner():GetShootPos()) > 10000 or not trace.Entity:IsPlayer() then
+			self:Fail()
+		end
+		if self:GetEndTie() <= CurTime() then
+			self:Succeed(trace.Entity)
+		end
+	end
+    if self:GetNextSoundTime() ~= 0 and CurTime() >= self:GetNextSoundTime() then
+		if self:GetIsTying() then
+			self:SetNextSoundTime(CurTime() + 0.5)
+			self:EmitSound("npc/combine_soldier/gear5.wav", 100, 100)
 		else
-			if self.Owner:GetNWBool("cantie") then
-				self.Owner:SetNWBool("cantie", false)
-			end
+			self:SetNextSoundTime(0)
+			self:EmitSound("npc/combine_soldier/gear5.wav", 50, 100)
 		end
 	end
-else -- CLIENT
-	SWEP.Slot = 3
-	SWEP.SlotPos = 1
-	SWEP.DrawAmmo = false
-	SWEP.DrawCrosshair = false
+	if CLIENT and self.NextDotsTime and CurTime() >= self.NextDotsTime then
+		self.NextDotsTime = CurTime() + 0.5
+		self.Dots = self.Dots or ""
+		local len = string.len(self.Dots)
+		local dots = {
+			[0] = ".",
+			[1] = "..",
+			[2] = "...",
+			[3] = ""
+		}
+		self.Dots = dots[len]
+	end
+end
 
-	function SWEP:DrawHUD()
-		if LocalPlayer():GetNWBool("tying") then
-			draw.SimpleText("Tying... " .. LocalPlayer():GetNWInt("tiesleft") .. " knots left...", "Trebuchet24", ScrW() / 2, ScrH() / 2, Color(200, 200, 200, 255), 1, 1)
-			if LocalPlayer():GetNWBool("cantie") then
-				draw.SimpleText("Tie now!", "Trebuchet24", ScrW() / 2, ScrH() / 2 + 30, Color(200, 200, 200, 255), 1, 1)
-			else
-				draw.SimpleText("Wait...", "Trebuchet24", ScrW() / 2, ScrH() / 2 + 30, Color(200, 200, 200, 255), 1, 1)
-			end
-		end
+function SWEP:DrawHUD()
+	if self:GetIsTying() and self:GetEndTie() ~= 0 then
+		self.Dots = self.Dots or ""
+		local w = ScrW()
+		local h = ScrH()
+		local x, y, width, height = w / 2 - w / 10, h / 2, w / 5, h / 15
+		local time = self:GetEndTie() - self:GetStartTie()
+		local curtime = CurTime() - self:GetStartTie()
+		local status = math.Clamp(curtime / time, 0, 1)
+		local BarWidth = status * (width - 16)
+		local cornerRadius = math.Min(8, BarWidth / 3 * 2 - BarWidth / 3 * 2 % 2)
+
+		draw.RoundedBox(8, x, y, width, height, Color(10, 10, 10, 120))
+		draw.RoundedBox(cornerRadius, x + 8, y + 8, BarWidth, height - 16, Color(0, 0 + (status * 255), 255 - (status * 255), 255))
+		draw.DrawNonParsedSimpleText("Tying" .. self.Dots, "Trebuchet24", w / 2, y + height / 2, Color(255, 255, 255, 255), 1, 1)
 	end
 end

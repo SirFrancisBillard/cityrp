@@ -34,7 +34,7 @@ SWEP.Primary.Ammo 				= "C4"
 SWEP.Secondary.ClipSize 		= -1
 SWEP.Secondary.DefaultClip 		= -1
 SWEP.Secondary.Automatic 		= false
-SWEP.Secondary.Ammo 			= "None"
+SWEP.Secondary.Ammo 			= ""
 
 function SWEP:Initialize()
 	self:SetHoldType("slam")

@@ -5,6 +5,8 @@ if CLIENT then
 	language.Add("molotov_ammo", "Molotov Cocktails")
 end
 
+SWEP.Base = "weapon_sck_base"
+
 SWEP.PrintName = "Molotov Cocktail"
 SWEP.Instructions = "Primary fire to dispense Soviet hospitality.\nSecondary fire to light without throwing."
 SWEP.Purpose = "Revolution"
@@ -15,9 +17,6 @@ SWEP.SlotPos = 1
 
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = false
-
-SWEP.ViewModelFOV = 62
-SWEP.ViewModelFlip = false
 
 SWEP.Spawnable = true	
 SWEP.AdminSpawnable = true
@@ -33,11 +32,26 @@ SWEP.Secondary.DefaultClip = 0
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = ""
 
--- TODO: Better VM, maybe SCK?
-SWEP.ViewModel = "models/weapons/cstrike/c_eq_flashbang.mdl"
-SWEP.WorldModel = "models/weapons/w_eq_flashbang.mdl"
-
+SWEP.HoldType = "grenade"
+SWEP.ViewModelFOV = 70
+SWEP.ViewModelFlip = false
 SWEP.UseHands = true
+SWEP.ViewModel = "models/weapons/c_grenade.mdl"
+SWEP.WorldModel = ""
+SWEP.ShowViewModel = true
+SWEP.ShowWorldModel = true
+
+SWEP.ViewModelBoneMods = {
+	["ValveBiped.Grenade_body"] = {scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0)}
+}
+
+SWEP.VElements = {
+	["bottle"] = { type = "Model", model = "models/props_junk/GlassBottle01a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.361, 2.709, -2.474), angle = Angle(-9.539, -84.175, 180), size = Vector(1.011, 1.011, 1.011), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
+
+SWEP.WElements = {
+	["bottle"] = { type = "Model", model = "models/props_junk/GlassBottle01a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.748, 1.988, -2.597), angle = Angle(-174.698, 67.234, -2.013), size = Vector(0.912, 1.029, 0.953), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+}
 
 function SWEP:SetupDataTables()
 	self:NetworkVar("Bool", 0, "Lit")
@@ -47,6 +61,8 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:Initialize()
+	self.BaseClass.Initialize(self)
+
 	self:SetWeaponHoldType("grenade")
 
 	self:SetLit(false)
@@ -54,8 +70,6 @@ function SWEP:Initialize()
 	self:SetSuppressThrow(false)
 	self:SetThrowTime(0)
 
-	self.EmitFirstPrimeSound = 0
-	self.EmitSecondPrimeSound = 0
 	self.EmitIgniteSound = 0
 end
 
@@ -118,7 +132,7 @@ end
 function SWEP:Light()
 	if self:GetLit() then return end
 
-	self:SendWeaponAnim(ACT_VM_PULLPIN)
+	self:SendWeaponAnim(ACT_VM_PULLBACK_HIGH)
 
 	self.EmitIgniteSound = CurTime() + 0.6
 
