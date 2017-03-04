@@ -57,26 +57,30 @@ local cards = {
 }
 
 local function LocalChat(ply, txt)
-	if not IsValid(ply) or not ply:IsPlayer() then return end
+	if not IsValid(ply) or not ply:IsPlayer() then return "" end
 	for _, v in pairs(ents.FindInSphere(ply:GetPos(), 300)) do
 		v:ChatPrint(txt)
 	end
+	return ""
 end
 
 local function RollHundred(ply)
-	LocalChat(ply, "[ROLL] " .. ply:Nick() .. " has rolled " .. tostring(math.random(100)) .. " out of 100.")
+	return LocalChat(ply, "[ROLL] " .. ply:Nick() .. " has rolled " .. tostring(math.random(100)) .. " out of 100.")
 end
-DarkRP.defineChatCommand("/roll", RollHundred)
+
+DarkRP.defineChatCommand("roll", RollHundred)
 
 local function RollDice(ply)
-	LocalChat(ply, "[DICE] " .. ply:Nick() .. " has rolled " .. tostring(math.random(6)) .. " and " .. tostring(math.random(6)) .. ".")
+	return LocalChat(ply, "[DICE] " .. ply:Nick() .. " has rolled " .. tostring(math.random(6)) .. " and " .. tostring(math.random(6)) .. ".")
 end
-DarkRP.defineChatCommand("/dice", RollHundred)
-DarkRP.defineChatCommand("/rolldice", RollHundred)
+
+DarkRP.defineChatCommand("dice", RollHundred)
+DarkRP.defineChatCommand("rolldice", RollHundred)
 
 local function PickCard(ply)
-	LocalChat(ply, "[CARD] " .. ply:Nick() .. " has drawn " .. cards[math.random(#cards)] .. ".")
+	return LocalChat(ply, "[CARD] " .. ply:Nick() .. " has drawn " .. cards[math.random(#cards)] .. ".")
 end
-DarkRP.defineChatCommand("/card", PickCard)
-DarkRP.defineChatCommand("/pickcard", PickCard)
-DarkRP.defineChatCommand("/drawcard", PickCard)
+
+DarkRP.defineChatCommand("card", PickCard)
+DarkRP.defineChatCommand("pickcard", PickCard)
+DarkRP.defineChatCommand("drawcard", PickCard)

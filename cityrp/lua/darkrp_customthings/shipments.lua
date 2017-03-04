@@ -85,10 +85,12 @@ WeaponShipment(TEAM_GUN, "Sniper Rifles", "swb_sg550", 30000)
 
 WeaponShipment(TEAM_GUN, "Machine Guns", "swb_m249", 30000)
 
+WeaponShipment(nil, "Black Market", "weapon_molotov", 3500)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "lockpick", 4200)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "keypad_cracker", 2400)
 WeaponShipment({TEAM_BLACKMARKET, TEAM_DOCTOR}, "Black Market", "med_kit", 3600)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "unarrest_stick", 9800)
+WeaponShipment(TEAM_BLACKMARKET, "Black Market", "weapon_zipties", 11250)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "weapon_c4", 12000)
 
 WeaponShipment(TEAM_VAPE, "Vapes", "weapon_vape", 1000)

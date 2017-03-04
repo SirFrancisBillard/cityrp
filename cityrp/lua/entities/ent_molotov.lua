@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_anim"
 
-ENT.PrintName		= "Thrown Molotov"
+ENT.PrintName = "Thrown Molotov"
 
 if CLIENT then return end
 
@@ -18,6 +18,9 @@ function ENT:Initialize()
 	if not Phys or not Phys:IsValid() then return end
 	self:GetPhysicsObject():Wake()
 	self.What = CurTime()
+
+
+	util.SpriteTrail(self, 0, Color(255, 120, 0), false, 8, 2, 0.4, 1 / 10 * 0.5, "trails/smoke.vmt")
 end
 
 function ENT:Explode(pos)

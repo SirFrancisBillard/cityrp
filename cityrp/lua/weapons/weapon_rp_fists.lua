@@ -9,7 +9,7 @@ SWEP.SlotPos = 4
 
 SWEP.Spawnable = true
 
-SWEP.ViewModel = Model( "models/weapons/c_arms.mdl" )
+SWEP.ViewModel = Model("models/weapons/c_arms.mdl")
 SWEP.WorldModel = ""
 SWEP.ViewModelFOV = 54
 SWEP.UseHands = true
@@ -28,8 +28,8 @@ SWEP.DrawAmmo = false
 
 SWEP.HitDistance = 48
 
-local SwingSound = Sound( "WeaponFrag.Throw" )
-local HitSound = Sound( "Flesh.ImpactHard" )
+local SwingSound = Sound("WeaponFrag.Throw")
+local HitSound = Sound("Flesh.ImpactHard")
 
 function SWEP:Initialize()
 

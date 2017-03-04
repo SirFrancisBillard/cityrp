@@ -3,11 +3,20 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_anim"
 
-ENT.PrintName		= "Fire"
+ENT.PrintName = "Fire"
+
+PrecacheParticleSystem("fire_medium_02_nosmoke")
 
 if CLIENT then
 	function ENT:Initialize()
-		ParticleEffectAttach("fire_medium_02_nosmoke", PATTACH_ABSORIGIN_FOLLOW, self, 0)
+		PrecacheParticleSystem("fire_medium_02_nosmoke")
+	end
+
+	function ENT:Think()
+		ParticleEffect("fire_medium_02_nosmoke", self:GetPos(), self:GetAngles(), self)
+
+		self:SetNextClientThink(CurTime() + 2)
+		return true
 	end
 
 	function ENT:Draw() end
@@ -28,18 +37,18 @@ function ENT:Initialize()
 	self:DrawShadow(false)
 	self:SetTrigger(true)
 
-	self.BurnSound = CreateSound(self, "interior_fire01_stereo.wav")
+	self.BurnSound = CreateSound(self, "npc/headcrab/headcrab_burning_loop2")
 	if self.BurnSound then
 		self.BurnSound:Play()
 		self.BurnSound:ChangeVolume(0.15, 0)
 	end
 
-	SafeRemoveEntity(self, 60)
+	SafeRemoveEntityDelayed(self, 60)
 end
 
 function ENT:Touch(other)
 	if IsValid(other) then
-		other:Ignite(8, 16)
+		other:Ignite(4, 16)
 	end
 end
 

@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 SWEP.PrintName = "Molotov Cocktail"
-SWEP.Instructions = "Primary fire to dispense Soviet hospitality."
+SWEP.Instructions = "Primary fire to dispense Soviet hospitality.\nSecondary fire to light without throwing."
 SWEP.Purpose = "Revolution"
 SWEP.Author = "Vyacheslav Mikhailovich Molotov"
 
@@ -16,6 +16,7 @@ SWEP.ViewModelFlip = false
 
 SWEP.Spawnable = true	
 SWEP.AdminSpawnable = true
+SWEP.Category = "RP"
 
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = 0
@@ -31,10 +32,12 @@ SWEP.Secondary.Ammo = ""
 SWEP.ViewModel = "models/weapons/c_grenade.mdl"
 SWEP.WorldModel = "models/weapons/w_grenade.mdl"
 
+SWEP.UseHands = true
+
 function SWEP:SetupDataTables()
 	self:NetworkVar("Bool", 0, "Lit")
 	self:NetworkVar("Bool", 1, "ThrowWhenReady")
-	self:NetworkVar("Bool", 2, "Supress")
+	self:NetworkVar("Bool", 2, "SuppressThrow")
 	self:NetworkVar("Int", 0, "ThrowTime")
 end
 
@@ -43,7 +46,12 @@ function SWEP:Initialize()
 
 	self:SetLit(false)
 	self:SetThrowWhenReady(false)
+	self:SetSuppressThrow(false)
 	self:SetThrowTime(0)
+
+	self.EmitFirstPrimeSound = 0
+	self.EmitSecondPrimeSound = 0
+	self.EmitIgniteSound = 0
 end
 
 function SWEP:ThrowPrimed()
@@ -52,10 +60,11 @@ end
 
 function SWEP:Deploy()
 	self:SendWeaponAnim(ACT_VM_DEPLOY)
+	self:Initialize()
 end
 
 function SWEP:Holster()
-	return not self:GetThrowWhenReady()
+	return not self:GetLit()
 end
 
 function SWEP:CanPrimaryAttack()
@@ -81,40 +90,69 @@ end
 function SWEP:SecondaryAttack()
 	self:SetNextPrimaryFire(CurTime() + 1)
 	self:SetNextSecondaryFire(CurTime() + 1)
+
+	if not self:GetLit() and not self:ThrowPrimed() then
+		self:Light()
+	end
 end
 
 function SWEP:Think()
 	if self:GetThrowWhenReady() and self:ThrowPrimed() then
 		self:Throw()
-	elseif self:ThrowPrimed() and not self.DontEmitPrimedSound then
-		-- self:EmitSound("molotov prime sound")
-		self.DontEmitPrimedSound = true
+	end
+
+	if self.EmitFirstPrimeSound ~= 0 and self.EmitFirstPrimeSound <= CurTime() then
+		self:EmitSound("physics/metal/chain_impact_hard2.wav")
+		self:EmitSound("physics/metal/chain_impact_hard2.wav")
+		self:EmitSound("physics/metal/chain_impact_hard2.wav")
+		self:EmitSound("physics/metal/chain_impact_hard2.wav")
+		self.EmitFirstPrimeSound = 0
+	end
+
+	if self.EmitSecondPrimeSound ~= 0 and self.EmitSecondPrimeSound <= CurTime() then
+		self:EmitSound("physics/metal/chain_impact_hard2.wav")
+		
+		self.EmitSecondPrimeSound = 0
+	end
+
+	if self.EmitIgniteSound ~= 0 and self.EmitIgniteSound <= CurTime() then
+		self:EmitSound("ambient/fire/mtov_flame2.wav")
+		self:EmitSound("ambient/fire/mtov_flame2.wav")
+		self.EmitIgniteSound = 0
 	end
 
 	self:NextThink(CurTime() + 0.1)
 	return true
 end
-
 function SWEP:Light()
 	if self:GetLit() then return end
 
-	self:SendWeaponAnim(ACT_VM_PULLPIN)
+	self:SendWeaponAnim(ACT_VM_PULLBACK)
+
+	self.EmitFirstPrimeSound = CurTime() + 1
+	self.EmitSecondPrimeSound = CurTime() + 2
+	self.EmitIgniteSound = CurTime() + 3
 
 	self:SetLit(true)
-	self:SetThrowTime(CurTime() + 1)
+	self:SetThrowTime(CurTime() + 5)
 end
 
 function SWEP:Throw()
+	if self:GetSuppressThrow() then return end
+
+	self:SetSuppressThrow(true)
+	self:SetThrowWhenReady(false)
+	self:SetLit(false)
+
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 
 	self:EmitSound("npc/vort/claw_swing".. math.random(1, 2).. ".wav")
-	self:SendWeaponAnim(ACT_VM_THROW)
 
 	if SERVER then
 		local molly = ents.Create("ent_molotov")
 		molly:SetPos(self.Owner:GetShootPos() + self.Owner:GetAimVector() * 20)
 		molly:Spawn()
-		Molotov:GetPhysicsObject():ApplyForceCenter(self.Owner:GetAimVector() * 1500)
+		molly:GetPhysicsObject():ApplyForceCenter(self.Owner:GetAimVector() * 1500)
 
 		self.Owner:ConCommand("lastinv")
 		self.Owner:StripWeapon(self.ClassName)

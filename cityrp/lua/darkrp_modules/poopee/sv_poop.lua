@@ -28,5 +28,5 @@ local function DoPoo(ply)
 	return ""
 end
 
-DarkRP.defineChatCommand("/poo", DoPoo)
-DarkRP.defineChatCommand("/poop", DoPoo)
+DarkRP.defineChatCommand("poo", DoPoo)
+DarkRP.defineChatCommand("poop", DoPoo)

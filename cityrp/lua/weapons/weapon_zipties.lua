@@ -68,7 +68,7 @@ if SERVER then
 					self.Owner:SetNWInt("tiesleft", 0)
 					self.Owner:SetNWBool("cantie", false)
 					self:NewSetWeaponHoldType("normal")
-					DarkRP.notify(self.Owner, 1, 4, "Pickpocket failed!")
+					DarkRP.notify(self.Owner, 1, 4, "Tying failed!")
 					return
 				end
 			else
