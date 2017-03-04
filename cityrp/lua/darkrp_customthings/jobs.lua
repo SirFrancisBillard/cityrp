@@ -264,6 +264,32 @@ KILLERS
 
 RegisterJobCategory("Killers", Color(255, 0, 0))
 
+TEAM_SHOOTER = DarkRP.createJob("School Shooter", {
+	color = g_RegisterJobWithColor,
+	model = Models.Citizens,
+	description = [[You will not let yourself be bullied any longer.]],
+	weapons = {"swb_m249", "swb_ak47", "swb_m3super90", "swb_deagle"},
+	command = "schoolshooter",
+	max = 1,
+	salary = GAMEMODE.Config.normalsalary,
+	admin = 0,
+	ammo = {
+		["pistol"] = 999,
+		["buckshot"] = 999,
+		["rifle"] = 999
+	},
+	vote = false,
+	hasLicense = false,
+	category = g_RegisterJobWithCategory,
+	PlayerDeath = function(ply, weapon, killer)
+		g_SchoolShooterAnnounced = false
+		ply:teamBan()
+		ply:changeTeam(GAMEMODE.DefaultTeam, true)
+		net.Start("SchoolShooterDied")
+		net.Broadcast()
+	end
+})
+
 TEAM_HITMAN = DarkRP.createJob("Hitman", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/leet.mdl",
