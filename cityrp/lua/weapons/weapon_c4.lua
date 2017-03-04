@@ -1,5 +1,10 @@
 AddCSLuaFile()
 
+game.AddAmmoType({name = "C4"})
+if CLIENT then
+	language.Add("C4_ammo", "Plastic Explosives")
+end
+
 SWEP.PrintName 					= "C4"
 SWEP.Slot 						= 4
 SWEP.SlotPos 					= 1
@@ -20,22 +25,23 @@ SWEP.ViewModelFlip 				= false
 
 SWEP.Spawnable 					= true
 SWEP.Category 					= "RP"
-SWEP.Sound 						= ""
+
 SWEP.Primary.ClipSize 			= -1
-SWEP.Primary.DefaultClip 		= 0
+SWEP.Primary.DefaultClip 		= 1
 SWEP.Primary.Automatic 			= false
-SWEP.Primary.Ammo 				= ""
+SWEP.Primary.Ammo 				= "C4"
 
 SWEP.Secondary.ClipSize 		= -1
-SWEP.Secondary.DefaultClip 		= 0
+SWEP.Secondary.DefaultClip 		= -1
 SWEP.Secondary.Automatic 		= false
-SWEP.Secondary.Ammo 			= ""
+SWEP.Secondary.Ammo 			= "None"
 
 function SWEP:Initialize()
 	self:SetHoldType("slam")
 end
 
 function SWEP:PrimaryAttack()
+	self:SetNextPrimaryFire(CurTime() + 0.6)
 	if (SERVER) then
 		local tr = util.TraceLine({
 			start = self.Owner:GetShootPos(),
@@ -67,8 +73,14 @@ function SWEP:PrimaryAttack()
 		end
 
 		self.Owner:EmitSound("C4.PlantSound")
-		self.Owner:ConCommand("lastinv")
-		self.Owner:StripWeapon(self.ClassName)
+
+		self.Owner:RemoveAmmo(1, self.Primary.Ammo)
+		if self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
+			self:SendWeaponAnim(ACT_VM_DRAW)
+		else
+			self.Owner:ConCommand("lastinv")
+			self.Owner:StripWeapon(self.ClassName)
+		end
 	end
 end
 

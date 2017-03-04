@@ -1,5 +1,10 @@
 AddCSLuaFile()
 
+game.AddAmmoType({name = "molotov"})
+if CLIENT then
+	language.Add("molotov_ammo", "Molotov Cocktails")
+end
+
 SWEP.PrintName = "Molotov Cocktail"
 SWEP.Instructions = "Primary fire to dispense Soviet hospitality.\nSecondary fire to light without throwing."
 SWEP.Purpose = "Revolution"
@@ -19,9 +24,9 @@ SWEP.AdminSpawnable = true
 SWEP.Category = "RP"
 
 SWEP.Primary.ClipSize = -1
-SWEP.Primary.DefaultClip = 0
+SWEP.Primary.DefaultClip = 1
 SWEP.Primary.Automatic = false
-SWEP.Primary.Ammo = ""
+SWEP.Primary.Ammo = "molotov"
 
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = 0
@@ -29,8 +34,8 @@ SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = ""
 
 -- TODO: Better VM, maybe SCK?
-SWEP.ViewModel = "models/weapons/c_grenade.mdl"
-SWEP.WorldModel = "models/weapons/w_grenade.mdl"
+SWEP.ViewModel = "models/weapons/cstrike/c_eq_flashbang.mdl"
+SWEP.WorldModel = "models/weapons/w_eq_flashbang.mdl"
 
 SWEP.UseHands = true
 
@@ -101,22 +106,7 @@ function SWEP:Think()
 		self:Throw()
 	end
 
-	if self.EmitFirstPrimeSound ~= 0 and self.EmitFirstPrimeSound <= CurTime() then
-		self:EmitSound("physics/metal/chain_impact_hard2.wav")
-		self:EmitSound("physics/metal/chain_impact_hard2.wav")
-		self:EmitSound("physics/metal/chain_impact_hard2.wav")
-		self:EmitSound("physics/metal/chain_impact_hard2.wav")
-		self.EmitFirstPrimeSound = 0
-	end
-
-	if self.EmitSecondPrimeSound ~= 0 and self.EmitSecondPrimeSound <= CurTime() then
-		self:EmitSound("physics/metal/chain_impact_hard2.wav")
-		
-		self.EmitSecondPrimeSound = 0
-	end
-
 	if self.EmitIgniteSound ~= 0 and self.EmitIgniteSound <= CurTime() then
-		self:EmitSound("ambient/fire/mtov_flame2.wav")
 		self:EmitSound("ambient/fire/mtov_flame2.wav")
 		self.EmitIgniteSound = 0
 	end
@@ -124,25 +114,25 @@ function SWEP:Think()
 	self:NextThink(CurTime() + 0.1)
 	return true
 end
+
 function SWEP:Light()
 	if self:GetLit() then return end
 
-	self:SendWeaponAnim(ACT_VM_PULLBACK)
+	self:SendWeaponAnim(ACT_VM_PULLPIN)
 
-	self.EmitFirstPrimeSound = CurTime() + 1
-	self.EmitSecondPrimeSound = CurTime() + 2
-	self.EmitIgniteSound = CurTime() + 3
+	self.EmitIgniteSound = CurTime() + 0.6
 
 	self:SetLit(true)
-	self:SetThrowTime(CurTime() + 5)
+	self:SetThrowTime(CurTime() + 2)
 end
 
 function SWEP:Throw()
 	if self:GetSuppressThrow() then return end
 
-	self:SetSuppressThrow(true)
-	self:SetThrowWhenReady(false)
 	self:SetLit(false)
+	self:SetThrowWhenReady(false)
+	self:SetSuppressThrow(false)
+	self:SetThrowTime(0)
 
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 
@@ -154,7 +144,12 @@ function SWEP:Throw()
 		molly:Spawn()
 		molly:GetPhysicsObject():ApplyForceCenter(self.Owner:GetAimVector() * 1500)
 
-		self.Owner:ConCommand("lastinv")
-		self.Owner:StripWeapon(self.ClassName)
+		self.Owner:RemoveAmmo(1, self.Primary.Ammo)
+		if self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
+			self:SendWeaponAnim(ACT_VM_DRAW)
+		else
+			self.Owner:ConCommand("lastinv")
+			self.Owner:StripWeapon(self.ClassName)
+		end
 	end
 end

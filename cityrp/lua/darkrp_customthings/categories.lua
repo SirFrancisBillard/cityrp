@@ -1,12 +1,12 @@
 
-local function EasyCategory(kind, nm, clr)
+local function EasyCategory(kind, nm, clr, sort_order_override)
 	DarkRP.createCategory{
 		name = nm,
 		categorises = kind,
 		startExpanded = true,
 		color = clr,
 		canSee = function(ply) return true end,
-		sortOrder = 100,
+		sortOrder = sort_order_override or 100,
 	}
 end
 
@@ -40,6 +40,7 @@ EasyCategory("jobs", "Killers", Color(255, 0, 0))
 EasyCategory("jobs", "Criminals", Color(75, 75, 75))
 EasyCategory("jobs", "Salesmen", Color(30, 190, 120))
 EasyCategory("jobs", "Police", Color(0, 0, 255))
+EasyCategory("jobs", "Animals", Color(255, 175, 0), 101)
 EasyCategory("jobs", "Homeless", Color(100, 60, 20))
 EasyCategory("jobs", "Special", Color(255, 0, 255))
 

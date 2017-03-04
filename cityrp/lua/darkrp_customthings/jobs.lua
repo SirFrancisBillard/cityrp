@@ -331,6 +331,10 @@ TEAM_TERROR = DarkRP.createJob("Terrorist", {
 	vote = false,
 	hasLicense = false,
 	category = g_RegisterJobWithCategory,
+	PlayerDeath = function(ply, weapon, killer)
+		ply:teamBan()
+		ply:changeTeam(GAMEMODE.DefaultTeam, true)
+	end
 })
 
 TEAM_TERRORLEADER = DarkRP.createJob("Terrorist Leader", {
@@ -345,6 +349,10 @@ TEAM_TERRORLEADER = DarkRP.createJob("Terrorist Leader", {
 	vote = false,
 	hasLicense = false,
 	category = g_RegisterJobWithCategory,
+	PlayerDeath = function(ply, weapon, killer)
+		ply:teamBan()
+		ply:changeTeam(GAMEMODE.DefaultTeam, true)
+	end
 })
 
 TEAM_NAZI = DarkRP.createJob("Nazi", {
@@ -364,7 +372,7 @@ TEAM_NAZI = DarkRP.createJob("Nazi", {
 
 TEAM_HITLER = DarkRP.createJob("Adolf Hitler", {
 	color = g_RegisterJobWithColor,
-	model = "models/player/dod_german.mdl",
+	model = "models/hitler.mdl",
 	description = [[Hitler leads the Nazis in their quest to exterminate all jews.]],
 	weapons = {"swb_ak47", "swb_fiveseven"},
 	command = "hitler",
@@ -417,7 +425,7 @@ TEAM_VAPE = DarkRP.createJob("Vape Lord", {
 	model = "models/player/skeleton.mdl",
 	description = [[Vape lords sell vapes so people can rip fat clouds.
 		Don't let anyone beat you in a vape battle!]],
-	weapons = {},
+	weapons = {"weapon_vape"},
 	command = "vapelord",
 	max = 4,
 	salary = GAMEMODE.Config.normalsalary,
@@ -440,6 +448,44 @@ TEAM_BLACKMARKET = DarkRP.createJob("Black Market Dealer", {
 	vote = false,
 	hasLicense = false,
 	category = g_RegisterJobWithCategory,
+})
+
+RegisterJobCategory("Animals", Color(255, 175, 0))
+
+TEAM_DOGE = DarkRP.createJob("Doge", {
+	color = g_RegisterJobWithColor,
+	model = "models/doge_player/doge_player.mdl",
+	description = [[Woof woof motherfucker.]],
+	weapons = {},
+	command = "doge",
+	max = 4,
+	salary = 0,
+	admin = 0,
+	vote = false,
+	hasLicense = false,
+	category = g_RegisterJobWithCategory,
+	PlayerSpawn = function(ply)
+		ply:SetMaxHealth(60)
+		ply:SetHealth(60)
+	end
+})
+
+TEAM_CRAB = DarkRP.createJob("Crab", {
+	color = g_RegisterJobWithColor,
+	model = "models/headcrab.mdl",
+	description = [[Catch me if you can!]],
+	weapons = {},
+	command = "crab",
+	max = 4,
+	salary = 0,
+	admin = 0,
+	vote = false,
+	hasLicense = false,
+	category = g_RegisterJobWithCategory,
+	PlayerSpawn = function(ply)
+		ply:SetMaxHealth(20)
+		ply:SetHealth(20)
+	end
 })
 
 --[[---------------------------------------------------------------------------

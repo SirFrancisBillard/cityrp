@@ -1,5 +1,10 @@
 AddCSLuaFile()
 
+game.AddAmmoType({name = "zipties"})
+if CLIENT then
+	language.Add("zipties_ammo", "Zipties")
+end
+
 SWEP.PrintName = "Zipties"
 SWEP.Author = "DarkRP Developers"
 SWEP.Instructions = "Click on a player to tie them up."
@@ -13,10 +18,10 @@ SWEP.WorldModel = "models/weapons/w_crowbar.mdl"
 SWEP.Category = "RP"
 SWEP.Spawnable = true
 
-SWEP.Primary.ClipSize = -1      
-SWEP.Primary.DefaultClip = 0        
-SWEP.Primary.Automatic = false      
-SWEP.Primary.Ammo = ""
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = 1
+SWEP.Primary.Automatic = false
+SWEP.Primary.Ammo = "zipties"
 
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = 0
@@ -77,7 +82,13 @@ if SERVER then
 					self.tieent:SelectWeapon("weapon_ziptied")
 					DarkRP.notify(self.tieent, 1, 4, "You have been ziptied!")
 					DarkRP.notify(self.Owner, 1, 4, "You have ziptied " .. self.tieent:Nick() .. "!")
-					self.Owner:StripWeapon(self.ClassName)
+					self.Owner:RemoveAmmo(1, self.Primary.Ammo)
+					if self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
+						self:SendWeaponAnim(ACT_VM_DRAW)
+					else
+						self.Owner:ConCommand("lastinv")
+						self.Owner:StripWeapon(self.ClassName)
+					end
 				end
 			end
 		end
