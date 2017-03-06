@@ -9,12 +9,6 @@ SWEP.ViewModel = Model("models/weapons/v_hands.mdl")
 SWEP.ViewModelFOV = 62
 SWEP.WorldModel = ""
 
-SWEP.Sound = Sound("weapons/ar2/npc_ar2_altfire.wav")
-
-function SWEP:Precache()
-	util.PrecacheSound(self.Sound)
-end
-
 function SWEP:Initialize()
 	self.Owner.IsBurger = false
 end
@@ -41,7 +35,7 @@ function SWEP:SecondaryAttack()
 
 	if CLIENT then return end
 
-	if (self.PreviousModel) then
+	if self.PreviousModel then
 		self.Owner:SetModel(self.PreviousModel)
 	end
 end
