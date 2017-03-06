@@ -46,11 +46,11 @@ SWEP.ViewModelBoneMods = {
 }
 
 SWEP.VElements = {
-	["bottle"] = { type = "Model", model = "models/props_junk/GlassBottle01a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.361, 2.709, -2.474), angle = Angle(-9.539, -84.175, 180), size = Vector(1.011, 1.011, 1.011), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["bottle"] = {type = "Model", model = "models/props_junk/GlassBottle01a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.361, 2.709, -2.474), angle = Angle(-9.539, -84.175, 180), size = Vector(1.011, 1.011, 1.011), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}}
 }
 
 SWEP.WElements = {
-	["bottle"] = { type = "Model", model = "models/props_junk/GlassBottle01a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.748, 1.988, -2.597), angle = Angle(-174.698, 67.234, -2.013), size = Vector(0.912, 1.029, 0.953), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["bottle"] = {type = "Model", model = "models/props_junk/GlassBottle01a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.748, 1.988, -2.597), angle = Angle(-174.698, 67.234, -2.013), size = Vector(0.912, 1.029, 0.953), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}}
 }
 
 function SWEP:SetupDataTables()
@@ -60,11 +60,7 @@ function SWEP:SetupDataTables()
 	self:NetworkVar("Int", 0, "ThrowTime")
 end
 
-function SWEP:Initialize()
-	self.BaseClass.Initialize(self)
-
-	self:SetWeaponHoldType("grenade")
-
+function SWEP:ResetVars()
 	self:SetLit(false)
 	self:SetThrowWhenReady(false)
 	self:SetSuppressThrow(false)
@@ -73,13 +69,24 @@ function SWEP:Initialize()
 	self.EmitIgniteSound = 0
 end
 
+function SWEP:Initialize()
+	self.BaseClass.Initialize(self)
+
+	self:SetWeaponHoldType("grenade")
+
+	self:ResetVars()
+end
+
 function SWEP:ThrowPrimed()
 	return self:GetThrowTime() ~= 0 and CurTime() >= self:GetThrowTime()
 end
 
-function SWEP:Deploy()
-	self:Initialize()
-	return self.BaseClass.Deploy(self)
+function SWEP:Holster()
+	local holst = self.BaseClass.Holster(self)
+	if holst then
+		self:ResetVars()
+	end
+	return holst 
 end
 
 function SWEP:CanPrimaryAttack()
@@ -93,7 +100,7 @@ end
 function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + 1)
 	self:SetNextSecondaryFire(CurTime() + 1)
-	
+
 	if self:GetLit() and self:ThrowPrimed() then
 		self:Throw()
 	else
@@ -146,7 +153,7 @@ function SWEP:Throw()
 
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 
-	self:EmitSound("npc/vort/claw_swing".. math.random(1, 2).. ".wav")
+	self:EmitSound("npc/vort/claw_swing" .. math.random(1, 2) .. ".wav")
 
 	if SERVER then
 		local molly = ents.Create("ent_molotov")
