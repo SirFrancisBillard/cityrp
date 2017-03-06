@@ -5,6 +5,8 @@ if CLIENT then
 	language.Add("zipties_ammo", "Zipties")
 end
 
+SWEP.Base = "weapon_sck_base"
+
 SWEP.PrintName = "Zipties"
 SWEP.Instructions = "Click on a player to tie them up."
 SWEP.Purpose = "Kidnapping"
@@ -46,10 +48,6 @@ SWEP.WElements = {
 	["ties"] = {type = "Model", model = "models/Items/CrossbowRounds.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.151, 1.075, -2.597), angle = Angle(106.364, 66.593, -1.293), size = Vector(0.912, 1.029, 0.953), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}}
 }
 
-function SWEP:Initialize()
-	self:SetWeaponHoldType("normal")
-end
-
 function SWEP:SetupDataTables()
 	self:NetworkVar("Bool", 0, "IsTying")
 	self:NetworkVar("Float", 0, "StartTie")
@@ -85,7 +83,7 @@ end
 function SWEP:Holster()
 	self:SetIsTying(false)
 	self:SetNextSoundTime(0)
-	return true
+	return self.BaseClass.Holster(self)
 end
 
 function SWEP:Succeed(ply)

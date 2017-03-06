@@ -59,7 +59,9 @@ local cards = {
 local function LocalChat(ply, txt)
 	if not IsValid(ply) or not ply:IsPlayer() then return "" end
 	for _, v in pairs(ents.FindInSphere(ply:GetPos(), 300)) do
-		v:ChatPrint(txt)
+		if IsValid(v) and v:IsPlayer() then
+			v:ChatPrint(txt)
+		end
 	end
 	return ""
 end

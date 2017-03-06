@@ -78,12 +78,8 @@ function SWEP:ThrowPrimed()
 end
 
 function SWEP:Deploy()
-	self:SendWeaponAnim(ACT_VM_DEPLOY)
 	self:Initialize()
-end
-
-function SWEP:Holster()
-	return not self:GetLit()
+	return self.BaseClass.Deploy(self)
 end
 
 function SWEP:CanPrimaryAttack()
