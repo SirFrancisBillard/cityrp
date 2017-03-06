@@ -151,6 +151,7 @@ function SWEP:Throw()
 	if SERVER then
 		local molly = ents.Create("ent_molotov")
 		molly:SetPos(self.Owner:GetShootPos() + self.Owner:GetAimVector() * 20)
+		molly:SetOwner(self.Owner)
 		molly:Spawn()
 		molly:GetPhysicsObject():ApplyForceCenter(self.Owner:GetAimVector() * 1500)
 

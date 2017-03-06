@@ -239,6 +239,9 @@ TEAM_LOOTER = DarkRP.createJob("Looter", {
 	max = 4,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
+	ammo = {
+		["C4"] = 3
+	},
 	vote = false,
 	hasLicense = false,
 	category = g_RegisterJobWithCategory,

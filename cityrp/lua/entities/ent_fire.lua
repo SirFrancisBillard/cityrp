@@ -37,10 +37,10 @@ function ENT:Initialize()
 	self:DrawShadow(false)
 	self:SetTrigger(true)
 
-	self.BurnSound = CreateSound(self, "npc/headcrab/headcrab_burning_loop2")
+	self.BurnSound = CreateSound(self, "ambient/fire/fire_med_loop1.wav")
 	if self.BurnSound then
 		self.BurnSound:Play()
-		self.BurnSound:ChangeVolume(0.15, 0)
+		self.BurnSound:ChangeVolume(1, 0)
 	end
 
 	SafeRemoveEntityDelayed(self, 60)
