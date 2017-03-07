@@ -1,16 +1,19 @@
 AddCSLuaFile()
 
 SWEP.PrintName = "Burgatron"
-SWEP.Slot = 1
+SWEP.Slot = 2
 SWEP.SlotPos = 0
-SWEP.Instructions = "Left click to be a burger, right click or switch guns to go back!"
+SWEP.Instructions = "<color=green>[PRIMARY FIRE]</color> Become a burger.\n<color=green>[SECONDARY FIRE]</color> Turn back."
 
-SWEP.ViewModel = Model("models/weapons/v_hands.mdl")
+SWEP.ViewModel = "models/weapons/v_pistol.mdl"
 SWEP.ViewModelFOV = 62
 SWEP.WorldModel = ""
 
+local BURGER = "models/food/burger.mdl"
+
 function SWEP:Initialize()
 	self.Owner.IsBurger = false
+	util.PrecacheModel(BURGER)
 end
 
 function SWEP:PrimaryAttack()
@@ -23,7 +26,7 @@ function SWEP:PrimaryAttack()
 	if CLIENT then return end
 
 	self.PreviousModel = self.Owner:GetModel()
-	self.Owner:SetModel("models/food/burger.mdl")
+	self.Owner:SetModel(BURGER)
 end
 
 function SWEP:SecondaryAttack()
