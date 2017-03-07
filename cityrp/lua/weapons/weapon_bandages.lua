@@ -58,15 +58,17 @@ function SWEP:Deploy()
 	return self.BaseClass.Deploy(self)
 end
 
+
+
 function SWEP:CanPrimaryAttack()
 	return IsGood(self) and self.Owner:Health() < self.Owner:GetMaxHealth()
 end
 
 function SWEP:PrimaryAttack()
-	if not self:CanPrimaryAttack() then return end
-	self:SetNextPrimaryAttack(CurTime() + 0.8)
-	self:SetNextSecondaryAttack(CurTime() + 0.8)
-	self:SendWeaponAnim(ACT_VM_THROW)
+	if CLIENT or not self:CanPrimaryAttack() then return end
+	self:SetNextPrimaryFire(CurTime() + 0.8)
+	self:SetNextSecondaryFire(CurTime() + 0.8)
+	self:SendWeaponAnim(ACT_VM_PULLBACK_LOW)
 	timer.Simple(0.3, function()
 		if not IsGood(self) then return end
 		self.Owner:SetHealth(math.min(self.Owner:Health() + 5, self.Owner:GetMaxHealth()))
@@ -85,20 +87,21 @@ function SWEP:CanSecondaryAttack()
 	self.Owner:LagCompensation(true)
 	local tr = self.Owner:GetEyeTrace()
 	self.Owner:LagCompensation(false)
-	if tr.Hit and IsValid(tr.HitEntity) and tr.HitEntity:IsPlayer() and tr.HitEntity:Health() < tr.Entity:GetMaxHealth() and tr.Entity:GetShootPos():DistSqr(self.Owner:GetShootPos()) < 62500 then
-		return true, tr.HitEntity
+	if IsValid(tr.Entity) and tr.Entity:IsPlayer() and tr.Entity:Health() < tr.Entity:GetMaxHealth() and tr.Entity:GetShootPos():DistToSqr(self.Owner:GetShootPos()) < 62500 then
+		return true, tr.Entity
 	end
 	return false, NULL
 end
 
 function SWEP:SecondaryAttack()
 	local can, ply = self:CanSecondaryAttack()
-	if not can then return end
-	self:SetNextPrimaryAttack(CurTime() + 0.8)
-	self:SetNextSecondaryAttack(CurTime() + 0.8)
+	if CLIENT or not can then return end
+	self:SetNextPrimaryFire(CurTime() + 0.8)
+	self:SetNextSecondaryFire(CurTime() + 0.8)
+	self:SendWeaponAnim(ACT_VM_THROW)
 	timer.Simple(0.3, function()
-		if not IsGood(self) or not IsValid(ply) or not ply:IsPlayer() or not self.Owner:GetShootPos():DistSqr(ply:GetShootPos()) < 62500 then return end
-		ply:SetHealth(math.min(self.Owner:Health() + 5, self.Owner:GetMaxHealth()))
+		if not IsGood(self) or not IsValid(ply) or not ply:IsPlayer() or not (self.Owner:GetShootPos():DistToSqr(ply:GetShootPos()) < 62500) then return end
+		ply:SetHealth(math.min(ply:Health() + 5, ply:GetMaxHealth()))
 
 		self.Owner:RemoveAmmo(1, self.Primary.Ammo)
 		if self.Owner:GetAmmoCount(self.Primary.Ammo) > 0 then
