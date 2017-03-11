@@ -56,14 +56,12 @@ SWEP.WElements = {
 function SWEP:SetupDataTables()
 	self:NetworkVar("Bool", 0, "Lit")
 	self:NetworkVar("Bool", 1, "ThrowWhenReady")
-	self:NetworkVar("Bool", 2, "SuppressThrow")
 	self:NetworkVar("Int", 0, "ThrowTime")
 end
 
 function SWEP:ResetVars()
 	self:SetLit(false)
 	self:SetThrowWhenReady(false)
-	self:SetSuppressThrow(false)
 	self:SetThrowTime(0)
 
 	self.EmitIgniteSound = 0
@@ -144,16 +142,10 @@ function SWEP:Light()
 end
 
 function SWEP:Throw()
-	if self:GetSuppressThrow() then return end
-
-	self:SetLit(false)
-	self:SetThrowWhenReady(false)
-	self:SetSuppressThrow(false)
-	self:SetThrowTime(0)
+	self:ResetVars()
 
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
-
-	self:EmitSound("npc/vort/claw_swing" .. math.random(1, 2) .. ".wav")
+	self.Owner:EmitSound("npc/vort/claw_swing" .. math.random(1, 2) .. ".wav")
 
 	if SERVER then
 		local molly = ents.Create("ent_molotov")
