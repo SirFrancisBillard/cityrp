@@ -20,30 +20,26 @@ if SERVER then
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
+
 		local phys = self:GetPhysicsObject()
 		if phys:IsValid() then
 			phys:Wake()
 			phys:SetMass(200)
 		end
-		self:SetUseType(SIMPLE_USE or 3)
-		if self.PermaMaterial then
-			self:SetMaterial(self.PermaMaterial)
-		end
-		if self.PermaColor then
-			self:SetColor(self.PermaColor)
-		end
-		if self.PermaScale and (self.PermaScale != 1.0) then
-			self:SetModelScale(self.PermaScale)
-		end
+
+		self:SetUseType(SIMPLE_USE)
+
 		self:SetMoney(80000)
 	end
+
 	function ENT:Think()
-		if (self:GetMoney() < 1) then
+		if self:GetMoney() < 1 then
 			self:SetBeingRobbed(false)
 		end
+
 		if self:GetBeingRobbed() then
 			local amount
-			if (self:GetMoney() < 10000) then
+			if self:GetMoney() < 10000 then
 				amount = self:GetMoney()
 			else
 				amount = 10000
@@ -57,6 +53,7 @@ if SERVER then
 			self:SetMoney(math.Clamp(self:GetMoney() + 250, 0, 1000000))
 			self:SetCooldown(math.Clamp(self:GetCooldown() - 1, 0, self:GetCooldown()))
 		end
+
 		self:NextThink(CurTime() + 1)
 		return true
 	end
@@ -69,7 +66,7 @@ if SERVER then
 				if self:GetBeingRobbed() then
 					caller:ChatPrint("This vault is currently being robbed!")
 				else
-					if (self:GetCooldown() <= 0) then
+					if self:GetCooldown() <= 0 then
 						self:SetCooldown(360)
 						self:SetBeingRobbed(true)
 						timer.Simple(30, function()
@@ -91,16 +88,16 @@ if CLIENT then
 		font = "Trebuchet",
 		size = 48,
 	})
+
 	function ENT:Draw()
 		self:DrawModel()
-		
+
 		local pos = self:GetPos()
 		local ang = self:GetAngles()
 
-
 		local stuff = {}
 
-		stuff[#stuff + 1] = {content = ("$"..string.Comma(self:GetMoney())), color = Color(0, 255, 0)}
+		stuff[#stuff + 1] = {content = ("$" .. string.Comma(self:GetMoney())), color = Color(0, 255, 0)}
 		stuff[#stuff + 1] = {content = self:GetBeingRobbed() and "Robbery in progress" or ((self:GetCooldown() <= 0) and "Ready to be robbed!" or "Cooldown: "..self:GetCooldown()), color = Color(255, 0, 0)}
 		stuff[#stuff + 1] = {content = self.PrintName, color = Color(255, 255, 255)}
 
