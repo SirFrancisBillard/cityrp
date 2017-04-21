@@ -19,49 +19,52 @@ if SERVER then
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
+
 		local phys = self:GetPhysicsObject()
 		if phys:IsValid() then
 			phys:Wake()
 			phys:SetMass(60)
 		end
-		self:SetUseType(SIMPLE_USE or 3)
-		if self.PermaMaterial then
-			self:SetMaterial(self.PermaMaterial)
-		end
-		if self.PermaColor then
-			self:SetColor(self.PermaColor)
-		end
-		if self.PermaScale and (self.PermaScale != 1.0) then
-			self:SetModelScale(self.PermaScale)
-		end
+		self:SetUseType(SIMPLE_USE)
+
 		self:SetCanCollect(false)
 	end
+
 	function ENT:Think()
 		local nope = false
 		for k, v in pairs(ents.FindByClass("bank_vault")) do
-			if (self:GetPos():Distance(v:GetPos()) < 4096) then
+			if self:GetPos():Distance(v:GetPos()) < 1600 then
 				nope = true
 			end
 		end
 		self:SetCanCollect(nope)
-		if (self:GetMoney() < 1) then
+
+		if self:GetMoney() < 1 then
 			SafeRemoveEntity(self)
 		end
+
 		self:NextThink(CurTime() + 1)
 		return true
 	end
+
 	function ENT:Use(activator, caller)
 		if IsValid(caller) and caller:IsPlayer() then
-			local amount
-			if (self:GetMoney() < 1000) then
-				amount = self:GetMoney()
+			if self:GetCanCollect() the 
+				local amount
+				if (self:GetMoney() < 1000) then
+					amount = self:GetMoney()
+				else
+					amount = 1000
+				end
+
+				self:SetMoney(self:GetMoney() - amount)
+				DarkRP.createMoneyBag(self:GetPos() + Vector(0, 0, 12), amount)
+
+				if self:GetMoney() < 1 then
+					SafeRemoveEntity(self)
+				end
 			else
-				amount = 1000
-			end
-			self:SetMoney(self:GetMoney() - amount)
-			DarkRP.createMoneyBag(self:GetPos() + Vector(0, 0, 12), amount)
-			if (self:GetMoney() < 1) then
-				SafeRemoveEntity(self)
+				ply:ChatPrint("You are too close to the bank vault!")
 			end
 		end
 	end
@@ -70,12 +73,13 @@ end
 if CLIENT then
 	function ENT:Draw()
 		self:DrawModel()
-		
+
 		local pos = self:GetPos()
 		local maxs = self:LocalToWorld(self:OBBMaxs())
 		local mins = self:LocalToWorld(self:OBBMins())
 		local ang = self:GetAngles()
 		local top
+
 		if (maxs.z > mins.z) then
 			top = maxs.z
 		else
@@ -84,7 +88,7 @@ if CLIENT then
 
 		local stuff = {}
 
-		stuff[#stuff + 1] = {content = ("$"..string.Comma(self:GetMoney())), color = Color(0, 255, 0)}
+		stuff[#stuff + 1] = {content = ("$" .. string.Comma(self:GetMoney())), color = Color(0, 255, 0)}
 		stuff[#stuff + 1] = {content = self.PrintName, color = Color(255, 255, 255)}
 
 		cam.Start3D2D(Vector(pos.x, pos.y, pos.z + (top - pos.z) - 8), Angle(0, LocalPlayer():EyeAngles().y - 90, 90), 0.125)
