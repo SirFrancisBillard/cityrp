@@ -49,7 +49,7 @@ if SERVER then
 
 	function ENT:Use(activator, caller)
 		if IsValid(caller) and caller:IsPlayer() then
-			if self:GetCanCollect() the 
+			if self:GetCanCollect() then
 				local amount
 				if (self:GetMoney() < 1000) then
 					amount = self:GetMoney()

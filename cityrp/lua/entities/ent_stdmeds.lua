@@ -1,27 +1,18 @@
 AddCSLuaFile()
 
 ENT.Type = "anim"
-ENT.Base = "base_anim"
+ENT.Base = "cityrp_base"
 ENT.PrintName = "STD Medication"
-ENT.Category = "RP"
+ENT.Category = "Medical"
 ENT.Spawnable = true
+ENT.Model = "models/props_lab/jar01a.mdl"
 
 if SERVER then
-	function ENT:Initialize()
-		self:SetModel("models/props_lab/jar01a.mdl")
-		self:PhysicsInit(SOLID_VPHYSICS)
-		self:SetMoveType(MOVETYPE_VPHYSICS)
-		self:SetSolid(SOLID_VPHYSICS)
-		self:SetCollisionGroup(COLLISION_GROUP_INTERACTIVE_DEBRIS)
-		self:PhysWake()
-	end
-
 	function ENT:Use(activator, caller)
-		caller:CureSTD()
-		self:Remove()
-	end
-else -- CLIENT
-	function ENT:Draw()
-		self:DrawModel() 
+		if IsValid(caller) and caller:IsPlayer() then
+			caller:EmitSound(Sound("npc/barnacle/barnacle_gulp"..math.random(1, 2)..".wav"))
+			caller:CureSTD()
+			SafeRemoveEntity(self)
+		end
 	end
 end

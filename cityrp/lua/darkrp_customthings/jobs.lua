@@ -166,7 +166,7 @@ TEAM_GUARD = DarkRP.createJob("Guard", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/barney.mdl",
 	description = [[Guards can be paid to protect certain areas or people.]],
-	weapons = {"swb_fiveseven", "stunstick"},
+	weapons = {"lite_fiveseven", "stunstick"},
 	command = "guard",
 	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
@@ -183,13 +183,29 @@ CRIMINALS
 
 RegisterJobCategory("Criminals", Color(75, 75, 75))
 
+TEAM_RAPPER = DarkRP.createJob("Rapper", {
+	color = g_RegisterJobWithColor,
+	model = Models.Gangsters,
+	description = [[Like DJs, but with more gang shit.
+		Don't let the other rappers diss you or your coast.
+		Feud with other rappers and eliminate them at all costs.]],
+	weapons = {"lite_mac10", "lite_glock"},
+	command = "rapper",
+	max = 2,
+	salary = GAMEMODE.Config.normalsalary,
+	admin = 0,
+	vote = false,
+	hasLicense = false,
+	category = g_RegisterJobWithCategory,
+})
+
 TEAM_MAFIA = DarkRP.createJob("Mafia", {
 	color = g_RegisterJobWithColor,
 	model = Models.Gangsters,
 	description = [[The lowest person of crime.
 		The Mafia must work for the Godfather who runs the crime family.
 		The Godfather sets your agenda and you follow it or you might be punished.]],
-	weapons = {"swb_fiveseven", "weapon_pickpocket"},
+	weapons = {"lite_fiveseven", "weapon_pickpocket"},
 	command = "mafia",
 	max = 6,
 	salary = GAMEMODE.Config.normalsalary,
@@ -206,7 +222,7 @@ TEAM_GODFATHER = DarkRP.createJob("Godfather", {
 		With his power he coordinates the mafia and forms an efficient crime organization.
 		He has the ability to break into houses by using a lockpick.
 		The Godfather posesses the ability to unarrest you.]],
-	weapons = {"swb_ak47", "swb_fiveseven", "lockpick", "weapon_pickpocket", "unarrest_stick"},
+	weapons = {"lite_ak47", "lite_fiveseven", "lockpick", "weapon_pickpocket", "unarrest_stick"},
 	command = "godfather",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary * 1.75,
@@ -233,7 +249,7 @@ TEAM_THIEF = DarkRP.createJob("Thief", {
 TEAM_LOOTER = DarkRP.createJob("Looter", {
 	color = g_RegisterJobWithColor,
 	model = {"models/player/phoenix.mdl", "models/player/arctic.mdl"},
-	description = [[Looters specialize in raiding.]],
+	description = [[Looters specialize in raiding bases.]],
 	weapons = {"weapon_c4"},
 	command = "looter",
 	max = 4,
@@ -285,7 +301,7 @@ TEAM_SHOOTER = DarkRP.createJob("School Shooter", {
 	color = g_RegisterJobWithColor,
 	model = Models.Citizens,
 	description = [[You will not let yourself be bullied any longer.]],
-	weapons = {"swb_m249", "swb_ak47", "swb_m3super90", "swb_deagle"},
+	weapons = {"lite_m249", "lite_ak47", "lite_m3super90", "lite_deagle"},
 	command = "schoolshooter",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary,
@@ -312,7 +328,7 @@ TEAM_HITMAN = DarkRP.createJob("Hitman", {
 	model = "models/player/leet.mdl",
 	description = [[Hitmen are paid to kill.
 		However, killing is still illegal.]],
-	weapons = {"swb_scout", "swb_usp"},
+	weapons = {"lite_scout", "lite_usp"},
 	command = "hitman",
 	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
@@ -326,60 +342,38 @@ TEAM_TERROR = DarkRP.createJob("Terrorist", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/guerilla.mdl",
 	description = [[Terrorists spread terror throughout the city and are in a constant war with the government.]],
-	weapons = {"swb_ak47", "weapon_jihad"},
+	weapons = {"lite_ak47", "weapon_jihad"},
 	command = "terrorist",
 	max = 6,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,
 	hasLicense = false,
-	category = g_RegisterJobWithCategory,
-	PlayerDeath = function(ply, weapon, killer)
-		ply:teamBan()
-		ply:changeTeam(GAMEMODE.DefaultTeam, true)
-	end
+	category = g_RegisterJobWithCategory
 })
 
 TEAM_TERRORLEADER = DarkRP.createJob("Terrorist Leader", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/guerilla.mdl",
 	description = [[The terrorist leader leads the terrorists in their war against the government.]],
-	weapons = {"swb_ak47", "weapon_jihad", "weapon_c4"},
+	weapons = {"lite_ak47", "weapon_jihad", "weapon_c4"},
 	command = "terroristleader",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,
 	hasLicense = false,
-	category = g_RegisterJobWithCategory,
-	PlayerDeath = function(ply, weapon, killer)
-		ply:teamBan()
-		ply:changeTeam(GAMEMODE.DefaultTeam, true)
-	end
+	category = g_RegisterJobWithCategory
 })
 
 TEAM_NAZI = DarkRP.createJob("Nazi", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/dod_german.mdl",
 	description = [[Nazis are on a quest to exterminate all jews and correct everyone's grammar.
-		Killing jews in public is perfectly legal.]],
-	weapons = {"swb_fiveseven"},
+		Killing jews in public is legal.]],
+	weapons = {"lite_fiveseven", "weapon_jewdetector"},
 	command = "nazi",
 	max = 6,
-	salary = GAMEMODE.Config.normalsalary,
-	admin = 0,
-	vote = false,
-	hasLicense = false,
-	category = g_RegisterJobWithCategory,
-})
-
-TEAM_HITLER = DarkRP.createJob("Adolf Hitler", {
-	color = g_RegisterJobWithColor,
-	model = "models/hitler.mdl",
-	description = [[Hitler leads the Nazis in their quest to exterminate all jews.]],
-	weapons = {"swb_ak47", "swb_fiveseven"},
-	command = "hitler",
-	max = 1,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,
@@ -391,7 +385,7 @@ TEAM_HITLER = DarkRP.createJob("Adolf Hitler", {
 DEALERS
 ---------------------------------------------------------------------------]]
 
-RegisterJobCategory("Salesmen", Color(30, 190, 120))
+RegisterJobCategory("Merchants", Color(30, 190, 120))
 
 TEAM_GUN = DarkRP.createJob("Gun Dealer", {
 	color = g_RegisterJobWithColor,
@@ -415,21 +409,6 @@ TEAM_DRUG = DarkRP.createJob("Drug Dealer", {
 		Make sure you aren't caught selling illegal drugs to the public! You might get arrested!]],
 	weapons = {},
 	command = "drugdealer",
-	max = 4,
-	salary = GAMEMODE.Config.normalsalary,
-	admin = 0,
-	vote = false,
-	hasLicense = false,
-	category = g_RegisterJobWithCategory,
-})
-
-TEAM_VAPE = DarkRP.createJob("Vape Lord", {
-	color = g_RegisterJobWithColor,
-	model = "models/player/skeleton.mdl",
-	description = [[Vape lords sell vapes so people can rip fat clouds.
-		Don't let anyone beat you in a vape battle!]],
-	weapons = {"weapon_vape"},
-	command = "vapelord",
 	max = 4,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
@@ -525,7 +504,7 @@ TEAM_SUPERHOBO = DarkRP.createJob("Super Hobo", {
 		You can lead the hobos to a rebellion against the government.
 		You carry a bent paperclip that can be used to pick locks.
 		You also carry a BB gun your father gave you before he died.]],
-	weapons = {"swb_fiveseven", "lockpick", "weapon_bugbait"},
+	weapons = {"lite_fiveseven", "lockpick", "weapon_bugbait"},
 	command = "superhobo",
 	max = 1,
 	salary = 0,
@@ -543,7 +522,7 @@ TEAM_SEWER = DarkRP.createJob("Sewer Monster", {
 	description = [[Wait, there isn't even a sewer.
 		How did you get here?
 		I guess you just walk around and kill people?]],
-	weapons = {"weapon_bugbait", "swb_knife"},
+	weapons = {"weapon_bugbait", "weapon_knife"},
 	command = "sewermonster",
 	max = 1,
 	salary = 0,
@@ -571,7 +550,7 @@ TEAM_POLICE = DarkRP.createJob("Police Officer", {
 		The Battering Ram can break down the door of a criminal, with a warrant for their arrest.
 		The Battering Ram can also unfreeze frozen props (if enabled).
 		Type /wanted <name> to alert the public to the presence of a criminal.]],
-	weapons = {"arrest_stick", "unarrest_stick", "swb_fiveseven", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
+	weapons = {"arrest_stick", "unarrest_stick", "lite_fiveseven", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
 	command = "police",
 	max = 8,
 	salary = GAMEMODE.Config.normalsalary * 1.5,
@@ -594,7 +573,7 @@ TEAM_CHIEF = DarkRP.createJob("Police Chief", {
 		The Battering Ram can break down the door of a criminal, with a warrant for his/her arrest.
 		Type /wanted <name> to alert the public to the presence of a criminal.
 		Type /jailpos to set the Jail Position.]],
-	weapons = {"arrest_stick", "unarrest_stick", "swb_deagle", "swb_mp5", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
+	weapons = {"arrest_stick", "unarrest_stick", "lite_deagle", "lite_mp5", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
 	command = "chief",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary * 1.75,
@@ -609,31 +588,13 @@ TEAM_CHIEF = DarkRP.createJob("Police Chief", {
 	category = g_RegisterJobWithCategory,
 })
 
-TEAM_WOODY = DarkRP.createJob("Sheriff Woody", {
-	color = g_RegisterJobWithColor,
-	model = "models/player/woody.mdl",
-	description = [[There is a snake in your boot.]],
-	weapons = {"arrest_stick", "unarrest_stick", "swb_357", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
-	command = "woody",
-	max = 1,
-	salary = GAMEMODE.Config.normalsalary * 1.5,
-	admin = 0,
-	vote = true,
-	hasLicense = true,
-	chief = true,
-	ammo = {
-		["357"] = 60,
-	},
-	category = g_RegisterJobWithCategory,
-})
-
 TEAM_ADMIN = DarkRP.createJob("National Guard", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/swat.mdl",
 	description = [[Think of the national guard as in-character admins.
 		They will not patrol or raid, but any genocides that pop up will be dealt with.
-		You do NOT want to fuck with the National Guard.]],
-	weapons = {"arrest_stick", "unarrest_stick", "swb_deagle", "swb_m4a1", "swb_m249", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
+		You shouldn't fuck with the National Guard.]],
+	weapons = {"arrest_stick", "unarrest_stick", "lite_deagle", "lite_m4a1", "lite_m249", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
 	command = "nationalguard",
 	max = 6,
 	salary = GAMEMODE.Config.normalsalary * 2,
@@ -679,7 +640,7 @@ RegisterJobCategory("Special", Color(255, 0, 255))
 TEAM_KARDASHIAN = DarkRP.createJob("Kim Kardashian", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/alyx.mdl",
-	description = [[You are extremely stupid.
+	description = [[You aren't very bright.
 		You make lots of money.
 		You are always KOS.]],
 	weapons = {},
@@ -728,7 +689,7 @@ TEAM_MURDER = DarkRP.createJob("Murderer", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/corpse1.mdl",
 	description = [[You have escaped from the murder gamemode somehow, only to find yourself here.]],
-	weapons = {"swb_knife"},
+	weapons = {"lite_knife"},
 	command = "murderer",
 	max = 1,
 	salary = 0,
