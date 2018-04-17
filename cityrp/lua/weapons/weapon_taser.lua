@@ -2,9 +2,10 @@ SWEP.Base = "weapon_rp_base"
 
 if CLIENT then
 	SWEP.PrintName		= "Taser"
-	SWEP.Purpose		= "Fires a stunning projectile"
-	SWEP.Instructions	= "Left click to launch the taser"
-	SWEP.Category 		= 'RP'
+	SWEP.Instructions	= [[
+<color=green>[PRIMARY FIRE]</color> Fire taser.
+Targets hit with the taser will be stunned.]]
+	SWEP.Category 		= "Police"
 	SWEP.Slot			= 3
 	SWEP.SlotPos		= 1
 	SWEP.DrawCrosshair	= true

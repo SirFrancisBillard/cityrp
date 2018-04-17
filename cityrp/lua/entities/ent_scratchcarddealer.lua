@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Type = "ai"
 ENT.Base = "base_ai"
 ENT.PrintName = "Scratch Card Dealer"
-ENT.Category = "Scratch Cards"
+ENT.Category = "Dealers"
 ENT.Spawnable = true
 ENT.Model = "models/player/breen.mdl"
 ENT.AutomaticFrameAdvance = true

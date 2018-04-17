@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 ENT.PrintName = "Bottle"
-ENT.Category = "Crime+"
+ENT.Category = "Alcohol (Old)"
 ENT.Spawnable = true
 ENT.Model = "models/props_junk/garbage_glassbottle003a.mdl"
 

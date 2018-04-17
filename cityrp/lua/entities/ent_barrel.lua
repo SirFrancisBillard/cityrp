@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 ENT.PrintName = "Barrel"
-ENT.Category = "Crime+"
+ENT.Category = "Cocaine Making"
 ENT.Spawnable = true
 ENT.Model = "models/props_borealis/bluebarrel001.mdl"
 
@@ -36,12 +36,12 @@ end
 if SERVER then
 	function ENT:StartTouch(ent)
 		if IsValid(ent) then
-			if (ent:GetClass() == "rp_leaves") and (not self:GetHasLeaves()) then
+			if (ent:GetClass() == "ent_leaves") and (not self:GetHasLeaves()) then
 				SafeRemoveEntity(ent)
 				self:SetHasLeaves(true)
 				self:EmitSound(Sound("physics/cardboard/cardboard_box_impact_hard"..math.random(1, 7)..".wav"))
 			end
-			if (ent:GetClass() == "rp_caustic") and (not self:GetHasCaustic()) then
+			if (ent:GetClass() == "ent_caustic") and (not self:GetHasCaustic()) then
 				SafeRemoveEntity(ent)
 				self:SetHasCaustic(true)
 				self:EmitSound(Sound("ambient/water/drip"..math.random(1, 4)..".wav"))
@@ -61,7 +61,7 @@ if SERVER then
 				self:SetMixingProgress(0)
 				self:SetHasLeaves(false)
 				self:SetHasCaustic(false)
-				local coke = ents.Create("rp_cocaine")
+				local coke = ents.Create("ent_cocaine")
 				coke:SetPos(self:GetPos() + Vector(0, 0, 30))
 				coke:Spawn()
 			end

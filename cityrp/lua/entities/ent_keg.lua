@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 ENT.PrintName = "Keg"
-ENT.Category = "Crime+"
+ENT.Category = "Alcohol Distilling"
 ENT.Spawnable = true
 ENT.Model = "models/props_c17/woodbarrel001.mdl"
 
@@ -26,6 +26,7 @@ end
 function ENT:SetupDataTables()
 	self:NetworkVar("Int", 0, "FermentingProgress")
 	self:NetworkVar("String", 0, "Alcohol")
+	self:NetworkVar("String", 1, "AlcoholClass")
 	self:NetworkVar("Bool", 0, "IsFermenting")
 end
 function ENT:CanFerment()
@@ -38,28 +39,11 @@ end
 if SERVER then
 	function ENT:StartTouch(ent)
 		if IsValid(ent) then
-			if (ent:GetClass() == "rp_orange") and (not self:GetIsFermenting()) then
+			if ent.MakesAlcohol and not self:GetIsFermenting() then
 				SafeRemoveEntity(ent)
 				self:SetIsFermenting(true)
-				self:SetAlcohol("Pruno")
-				self:EmitSound("ambient/water/drip"..math.random(1, 4)..".wav")
-			end
-			if (ent:GetClass() == "rp_banana") and (not self:GetIsFermenting()) then
-				SafeRemoveEntity(ent)
-				self:SetIsFermenting(true)
-				self:SetAlcohol("Rum")
-				self:EmitSound("ambient/water/drip"..math.random(1, 4)..".wav")
-			end
-			if (ent:GetClass() == "rp_potato") and (not self:GetIsFermenting()) then
-				SafeRemoveEntity(ent)
-				self:SetIsFermenting(true)
-				self:SetAlcohol("Vodka")
-				self:EmitSound("ambient/water/drip"..math.random(1, 4)..".wav")
-			end
-			if (ent:GetClass() == "rp_melon") and (not self:GetIsFermenting()) then
-				SafeRemoveEntity(ent)
-				self:SetIsFermenting(true)
-				self:SetAlcohol("Moonshine")
+				self:SetAlcohol(ent.MakesAlcohol[1])
+				self:SetAlcoholClass(ent.MakesAlcohol[2])
 				self:EmitSound("ambient/water/drip"..math.random(1, 4)..".wav")
 			end
 		end
@@ -76,11 +60,11 @@ if SERVER then
 			if self:DoneFermenting() then
 				self:SetIsFermenting(false)
 				self:SetFermentingProgress(0)
-				local logic = ents.Create("rp_sixpack")
-				logic:SetPos(self:GetPos() + Vector(0, 0, 60))
-				logic:Spawn()
-				logic:SetAlcohol(self:GetAlcohol())
+				local product = ents.Create(self:GetAlcoholClass())
+				product:SetPos(self:GetPos() + Vector(0, 0, 60))
+				product:Spawn()
 				self:SetAlcohol("None")
+				self:SetAlcoholClass("ent_beer")
 				self:EmitSound("physics/glass/glass_bottle_impact_hard"..math.random(1, 3)..".wav")
 			end
 		end

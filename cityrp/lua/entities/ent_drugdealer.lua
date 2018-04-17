@@ -2,10 +2,10 @@ AddCSLuaFile()
 
 ENT.Type = "ai"
 ENT.Base = "base_ai"
-ENT.PrintName = "Oil Dealer"
-ENT.Category = "Oil"
+ENT.PrintName = "Drug Dealer"
+ENT.Category = "Dealers"
 ENT.Spawnable = true
-ENT.Model = "models/player/odessa.mdl"
+ENT.Model = "models/player/group03/male_08.mdl"
 ENT.AutomaticFrameAdvance = true
 
 function ENT:Initialize()
@@ -32,15 +32,15 @@ if SERVER then
 		if IsValid(caller) and caller:IsPlayer() then
 			local randy = math.random(1, 5)
 			if (randy == 1) then
-				caller:ChatPrint("Hey there!")
+				caller:ChatPrint("What the fuck do you want?")
 			elseif (randy == 2) then
-				caller:ChatPrint("You got me some oil?")
+				caller:ChatPrint("Get lost, buddy.")
 			elseif (randy == 3) then
-				caller:ChatPrint("Come back when you get some oil!")
+				caller:ChatPrint("We don't appreciate your kind around here.")
 			elseif (randy == 4) then
-				caller:ChatPrint("I only accept genuine oil.")
+				caller:ChatPrint("What do you need?")
 			elseif (randy == 5) then
-				caller:ChatPrint("I pay big bucks for it.")
+				caller:ChatPrint("Make it quick, I got five warrants.")
 			end
 		end
 	end
@@ -59,8 +59,8 @@ if CLIENT then
 		Ang:RotateAroundAxis(Ang:Right(), -90)
 		
 		cam.Start3D2D(self:GetPos() + (self:GetUp() * 100), Ang, 0.35)
-			draw.SimpleText("Oil Dealer", "Trebuchet24", 0, 0, Color(255, 0,0, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
-			draw.SimpleText("Bring me oil for cash", "Trebuchet24", 0, 40, Color(255, 0,0, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Drug Dealer", "Trebuchet24", 0, 0, Color(255, 0,0, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
+			draw.SimpleText("Bring me drugs for cash", "Trebuchet24", 0, 40, Color(255, 0,0, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP)
 		cam.End3D2D()
 	end
 end

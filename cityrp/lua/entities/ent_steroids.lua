@@ -15,7 +15,7 @@ if SERVER then
 				caller:SetArmor(math.min(caller:Armor() + 40, 200))
 				SafeRemoveEntity(self)
 			else
-				caller:ChatPrint("You already have " .. caller:Armor() .. " armor!")
+				caller:ChatPrint("You've taken enough steroids.")
 			end
 		end
 	end

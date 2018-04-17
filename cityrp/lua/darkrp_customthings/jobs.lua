@@ -137,7 +137,7 @@ TEAM_BANKER = DarkRP.createJob("Banker", {
 	model = "models/player/magnusson.mdl",
 	description = [[Bankers can legally own money printers.
 		Bankers loan money to people and allow pople to invest in a money printer business.]],
-	weapons = {},
+	weapons = {"weapon_jewdetector"},
 	command = "banker",
 	max = 6,
 	salary = GAMEMODE.Config.normalsalary,
@@ -430,44 +430,6 @@ TEAM_BLACKMARKET = DarkRP.createJob("Black Market Dealer", {
 	vote = false,
 	hasLicense = false,
 	category = g_RegisterJobWithCategory,
-})
-
-RegisterJobCategory("Animals", Color(255, 175, 0))
-
-TEAM_DOGE = DarkRP.createJob("Doge", {
-	color = g_RegisterJobWithColor,
-	model = "models/doge_player/doge_player.mdl",
-	description = [[Woof woof motherfucker.]],
-	weapons = {},
-	command = "doge",
-	max = 4,
-	salary = 0,
-	admin = 0,
-	vote = false,
-	hasLicense = false,
-	category = g_RegisterJobWithCategory,
-	PlayerSpawn = function(ply)
-		ply:SetMaxHealth(60)
-		ply:SetHealth(60)
-	end
-})
-
-TEAM_CRAB = DarkRP.createJob("Crab", {
-	color = g_RegisterJobWithColor,
-	model = "models/headcrab.mdl",
-	description = [[Catch me if you can!]],
-	weapons = {},
-	command = "crab",
-	max = 4,
-	salary = 0,
-	admin = 0,
-	vote = false,
-	hasLicense = false,
-	category = g_RegisterJobWithCategory,
-	PlayerSpawn = function(ply)
-		ply:SetMaxHealth(20)
-		ply:SetHealth(20)
-	end
 })
 
 --[[---------------------------------------------------------------------------

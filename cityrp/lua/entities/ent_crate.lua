@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 ENT.PrintName = "Shipping Crate"
-ENT.Category = "Crime+"
+ENT.Category = "Alcohol (Old)"
 ENT.Spawnable = true
 ENT.Model = "models/props_wasteland/laundry_cart002.mdl"
 

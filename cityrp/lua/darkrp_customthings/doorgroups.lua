@@ -10,8 +10,7 @@ AddDoorGroup("NAME OF THE GROUP HERE, you will see this when looking at a door",
 
 AddDoorGroup("Government only", TEAM_CHIEF, TEAM_POLICE, TEAM_MAYOR)
 AddDoorGroup("Terrorists only", TEAM_TERROR, TEAM_TERRORLEADER)
-AddDoorGroup("Nazis only", TEAM_NAZI, TEAM_HITLER)
 AddDoorGroup("ALL MEN ARE PIGS", TEAM_FEMINIST)
-AddDoorGroup("Gun dealer only", TEAM_GUN)
-AddDoorGroup("Drug dealer only", TEAM_DRUG)
-AddDoorGroup("Black market dealer only", TEAM_BLACKMARKET)
+AddDoorGroup("Gun dealers only", TEAM_GUN)
+AddDoorGroup("Drug dealers only", TEAM_DRUG)
+AddDoorGroup("Black market dealers only", TEAM_BLACKMARKET)

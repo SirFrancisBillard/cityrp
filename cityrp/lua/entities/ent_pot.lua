@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 ENT.PrintName = "Pot"
-ENT.Category = "Crime+"
+ENT.Category = "Meth Cooking"
 ENT.Spawnable = true
 ENT.Model = "models/props_c17/metalPot001a.mdl"
 
@@ -36,7 +36,7 @@ function ENT:SetupDataTables()
 end
 function ENT:IsOnStove()
 	for k, v in pairs(ents.FindInSphere(self:GetPos(), 12)) do
-		if (v:GetClass() == "rp_stove") and v:GetHasCanister() and (v:GetCanister():GetFuel() > 0) then
+		if (v:GetClass() == "ent_stove") and v:GetHasCanister() and (v:GetCanister():GetFuel() > 0) then
 			self:SetStove(v)
 			return IsValid(self)
 		end
@@ -52,13 +52,13 @@ end
 if SERVER then
 	function ENT:StartTouch(ent)
 		if IsValid(ent) then
-			if (ent:GetClass() == "rp_sodium") and (not self:GetHasSodium()) then
+			if (ent:GetClass() == "ent_sodium") and (not self:GetHasSodium()) then
 				SafeRemoveEntity(ent)
 				self:SetHasSodium(true)
 				self:EmitSound(Sound("ambient/levels/canals/toxic_slime_sizzle"..math.random(2, 4)..".wav"))
 				self:VisualEffect()
 			end
-			if (ent:GetClass() == "rp_chloride") and (not self:GetHasChloride()) then
+			if (ent:GetClass() == "ent_chloride") and (not self:GetHasChloride()) then
 				SafeRemoveEntity(ent)
 				self:SetHasChloride(true)
 				self:EmitSound(Sound("ambient/levels/canals/toxic_slime_sizzle"..math.random(2, 4)..".wav"))
@@ -83,7 +83,7 @@ if SERVER then
 				self:SetCookingProgress(0)
 				self:SetHasSodium(false)
 				self:SetHasChloride(false)
-				local meth = ents.Create("rp_meth")
+				local meth = ents.Create("ent_meth")
 				meth:SetPos(self:GetPos() + Vector(0, 0, 30))
 				meth:Spawn()
 				self:EmitSound(Sound("ambient/levels/canals/toxic_slime_sizzle"..math.random(2, 4)..".wav"))

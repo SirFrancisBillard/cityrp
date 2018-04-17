@@ -2,10 +2,10 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
-ENT.PrintName = "Weed"
-ENT.Category = "Crime+"
+ENT.PrintName = "Cocaine"
+ENT.Category = "Cocaine Making"
 ENT.Spawnable = true
-ENT.Model = "models/props/cs_office/trash_can_p5.mdl"
+ENT.Model = "models/props_lab/jar01b.mdl"
 
 function ENT:Initialize()
 	self:SetModel(self.Model)
@@ -21,10 +21,7 @@ function ENT:Initialize()
 	end
 end
 function ENT:SellPrice()
-	return 2000
-end
-function ENT:Think()
-	self:SetColor(Color(0, 255, 0))
+	return 6000
 end
 function ENT:Use(activator, caller)
 	if IsValid(caller) and caller:IsPlayer() then

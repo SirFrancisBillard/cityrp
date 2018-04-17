@@ -2,10 +2,10 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
-ENT.PrintName = "Meth"
+ENT.PrintName = "Weed"
 ENT.Category = "Crime+"
 ENT.Spawnable = true
-ENT.Model = "models/props_junk/rock001a.mdl"
+ENT.Model = "models/props/cs_office/trash_can_p5.mdl"
 
 function ENT:Initialize()
 	self:SetModel(self.Model)
@@ -21,16 +21,15 @@ function ENT:Initialize()
 	end
 end
 function ENT:SellPrice()
-	return 10000
+	return 2000
 end
 function ENT:Think()
-	self:SetColor(Color(0, 255, 255))
-	self:SetMaterial("models/debug/debugwhite")
+	self:SetColor(Color(0, 255, 0))
 end
 function ENT:Use(activator, caller)
 	if IsValid(caller) and caller:IsPlayer() then
 		for k, v in pairs(ents.FindInSphere(self:GetPos(), 128)) do
-			if (v:GetClass() == "rp_dealer") or (v:GetClass() == "rp_market") or (v:GetClass() == "rp_addict") then
+			if (v:GetClass() == "ent_dealer") or (v:GetClass() == "rp_market") or (v:GetClass() == "rp_addict") then
 				caller:addMoney(self:SellPrice())
 				caller:ChatPrint("You have sold "..string.lower(self.PrintName).." for $"..string.Comma(self:SellPrice()))
 				SafeRemoveEntity(self)

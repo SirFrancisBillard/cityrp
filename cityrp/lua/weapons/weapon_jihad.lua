@@ -6,7 +6,11 @@ SWEP.SlotPos = 1
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = false
 
-SWEP.Instructions = "Primary fire to explode almost instantly."
+SWEP.Instructions = [[<color=green>[PRIMARY FIRE]</color> Explode almost instantly.
+
+Martyrdom, death in holy war, is glorious. Allah will secure you as a citizen of eternal paradise.
+
+<color=red>Allahu akbar.</color>]]
 SWEP.Purpose = "Sacrifice yourself for Allah."
 
 SWEP.UseHands = true

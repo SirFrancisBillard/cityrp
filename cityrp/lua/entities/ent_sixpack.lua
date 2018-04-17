@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 ENT.PrintName = "Alcohol Case"
-ENT.Category = "Crime+"
+ENT.Category = "Alcohol (Old)"
 ENT.Spawnable = true
 ENT.Model = "models/props/cs_militia/caseofbeer01.mdl"
 

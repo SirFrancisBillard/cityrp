@@ -109,9 +109,6 @@ WeaponShipment(nil, "Explosives", "weapon_jihad", 25000)
 
 WeaponShipment(nil, "Toys", "weapon_bbgun", 1000)
 
--- EntityShipment(nil, "Medical", "durgz_aspirin", "aspirin", 1200)
-EntityShipment(nil, "Medical", "ent_medkit", "medicalkit", 1000)
-
 EntityShipment(nil, "Chemicals", "ent_bleach", "bleach", 400)
 EntityShipment(nil, "Chemicals", "ent_volatile", "volatilewaste", 800)
 

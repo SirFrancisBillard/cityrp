@@ -11,5 +11,4 @@ AddAgenda(Title of the agenda, Manager (who edits it), {Listeners (the ones who 
 AddAgenda("Mafia Agenda", TEAM_GODFATHER, {TEAM_MAFIA})
 AddAgenda("Police Agenda", TEAM_MAYOR, {TEAM_CHIEF, TEAM_POLICE})
 AddAgenda("Terrorist Agenda", TEAM_TERRORLEADER, {TEAM_TERROR})
-AddAgenda("Nazi Agenda", TEAM_HITLER, {TEAM_NAZI})
 AddAgenda("Hobo Agenda", TEAM_SUPERHOBO, {TEAM_HOBO})

@@ -2,10 +2,10 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
-ENT.PrintName = "Coca Plant"
-ENT.Category = "Crime+"
+ENT.PrintName = "Weed Plant"
+ENT.Category = "Weed Growing"
 ENT.Spawnable = true
-ENT.Model = "models/props/cs_office/plant01.mdl"
+ENT.Model = "models/props/de_inferno/flower_barrel_static.mdl"
 
 function ENT:Initialize()
 	self:SetModel(self.Model)
@@ -42,10 +42,9 @@ if SERVER then
 		if IsValid(caller) and caller:IsPlayer() then
 			if self:DoneGrowing() then
 				self:SetGrowth(0)
-				local coke = ents.Create("rp_leaves")
+				local coke = ents.Create("ent_weed")
 				coke:SetPos(self:GetPos() + Vector(0, 0, 30))
 				coke:Spawn()
-				self:EmitSound("physics/wood/wood_box_impact_soft"..math.random(1, 3)..".wav")
 			end
 		end
 	end
@@ -62,7 +61,7 @@ if CLIENT then
 
 		Ang:RotateAroundAxis(Ang:Forward(), 90)
 
-		cam.Start3D2D(Pos + (Ang:Up() * 15) + (Ang:Right() * -10), Ang, 0.12)
+		cam.Start3D2D(Pos + (Ang:Up() * 20) + (Ang:Right() * -10), Ang, 0.12)
 			draw.RoundedBox(2, -50, -65, 100, 30, Color(140, 0, 0, 100))
 			if (self:GetGrowth() > 0) then
 				draw.RoundedBox(2, -50, -65, self:GetGrowth(), 30, Color(0, 225, 0, 100))

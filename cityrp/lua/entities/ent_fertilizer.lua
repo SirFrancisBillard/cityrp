@@ -2,10 +2,11 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
-ENT.PrintName = "Chloride"
+ENT.PrintName = "Fertilizer"
 ENT.Category = "Crime+"
 ENT.Spawnable = true
-ENT.Model = "models/props_junk/garbage_plasticbottle001a.mdl"
+ENT.Model = "models/props_junk/garbage_bag001a.mdl"
+ENT.IsFertilizer = true
 
 function ENT:Initialize()
 	self:SetModel(self.Model)

@@ -81,16 +81,9 @@ DarkRP.createAmmoType("Buckshot", {
 })
 
 DarkRP.createAmmoType("SMG1", {
-	name = "SMG Ammo",
+	name = "Rifle Ammo",
 	model = "models/Items/BoxMRounds.mdl",
 	price = 40,
-	amountGiven = 30
-})
-
-DarkRP.createAmmoType("Rifle", {
-	name = "Rifle Ammo",
-	model = "models/Items/combine_rifle_cartridge01.mdl",
-	price = 80,
 	amountGiven = 30
 })
 

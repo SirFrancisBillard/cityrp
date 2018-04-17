@@ -11,7 +11,9 @@ if SERVER then
 	function ENT:Use(activator, caller)
 		if IsValid(caller) and caller:IsPlayer() then
 			caller:EmitSound(Sound("npc/barnacle/barnacle_gulp"..math.random(1, 2)..".wav"))
-			caller:SetHealth(math.min(caller:Health() + 10, caller:GetMaxHealth() * 1.6))
+			if caller:Health() < caller:GetMaxHealth() * 1.6 then
+				caller:SetHealth(math.min(caller:Health() + 10, caller:GetMaxHealth() * 1.6))
+			end
 			SafeRemoveEntity(self)
 		end
 	end

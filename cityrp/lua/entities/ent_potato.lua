@@ -2,10 +2,11 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
-ENT.PrintName = "Banana"
-ENT.Category = "Crime+"
+ENT.PrintName = "Potato"
+ENT.Category = "Food"
 ENT.Spawnable = true
-ENT.Model = "models/props/cs_italy/bananna.mdl"
+ENT.Model = "models/props/cs_italy/orange.mdl"
+ENT.MakesAlcohol = {"Vodka", "ent_vodka"}
 
 function ENT:Initialize()
 	self:SetModel(self.Model)
@@ -18,6 +19,9 @@ function ENT:Initialize()
 	local phys = self:GetPhysicsObject()
 	if IsValid(phys) then
 		phys:Wake()
-		phys:SetMass(10)
 	end
+end
+
+function ENT:Think()
+	self:SetColor(Color(100, 120, 20))
 end

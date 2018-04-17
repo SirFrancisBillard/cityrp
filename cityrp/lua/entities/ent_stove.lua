@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 ENT.PrintName = "Stove"
-ENT.Category = "Crime+"
+ENT.Category = "Meth Cooking"
 ENT.Spawnable = true
 ENT.Model = "models/props_c17/furnitureStove001a.mdl"
 
@@ -28,7 +28,7 @@ end
 
 if SERVER then
 	function ENT:StartTouch(ent)
-		if IsValid(ent) and (ent:GetClass() == "rp_gas") and (not self:GetHasCanister()) and (not ent:GetHasStove()) then
+		if IsValid(ent) and (ent:GetClass() == "ent_gas") and (not self:GetHasCanister()) and (not ent:GetHasStove()) then
 			if (not ent:IsReadyForStove()) then return end
 			self:SetHasCanister(true)
 			self:SetCanister(ent)
