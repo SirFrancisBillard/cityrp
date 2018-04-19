@@ -227,17 +227,17 @@ GM.Config.moneyRemoveTime               = 600
 -- mprintamount - Value of the money printed by the money printer.
 GM.Config.mprintamount                  = 250
 -- normalsalary - Sets the starting salary for newly joined players.
-GM.Config.normalsalary                  = 150
+GM.Config.normalsalary                  = 250
 -- npckillpay - Sets the money given for each NPC kill.
-GM.Config.npckillpay                    = 25
+GM.Config.npckillpay                    = 500
 -- paydelay - Sets how long it takes before people get salary.
 GM.Config.paydelay                      = 160
 -- pocketitems - Sets the amount of objects the pocket can carry.
 GM.Config.pocketitems                   = 24
 -- pricecap - The maximum price of items (using /price).
-GM.Config.pricecap                      = 500
+GM.Config.pricecap                      = 999999999
 -- pricemin - The minimum price of items (using /price).
-GM.Config.pricemin                      = 50
+GM.Config.pricemin                      = 1
 -- propcost - How much prop spawning should cost (prop paying must be enabled for this to have an effect).
 GM.Config.propcost                      = 10
 -- quakechance - Chance of an earthquake happening.
@@ -255,7 +255,7 @@ GM.Config.searchtime                    = 60
 -- ShipmentSpawnTime - Antispam time between spawning shipments.
 GM.Config.ShipmentSpamTime              = 1
 -- shipmenttime - The number of seconds it takes for a shipment to spawn.
-GM.Config.shipmentspawntime             = 6
+GM.Config.shipmentspawntime             = 2
 -- startinghealth - the health when you spawn.
 GM.Config.startinghealth                = 100
 -- startingmoney - your wallet when you join for the first time.
@@ -279,7 +279,7 @@ GM.Config.falldamageamount              = 10
 -- printeroverheatchance - The likelyhood of a printer overheating. The higher this number, the less likely (minimum 3, default 22).
 GM.Config.printeroverheatchance         = 22
 -- printerreward - Reward for destroying a money printer.
-GM.Config.printerreward                 = 1200
+GM.Config.printerreward                 = 5000
 
 --[[---------------------------------------------------------------------------
 Other settings

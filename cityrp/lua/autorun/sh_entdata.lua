@@ -84,4 +84,5 @@ g_DarkRPEntData = {
 	["ent_fertilizer"] = {PrintName = "Fertilizer", Model = "models/props_junk/garbage_bag001a.mdl"},
 	["ent_sodium"] = {PrintName = "Sodium", Model = "models/props_junk/garbage_plasticbottle002a.mdl"},
 	["ent_stabilizer"] = {PrintName = "Stabilization Pills", Model = "models/props_lab/jar01b.mdl"},
+	["weapon_knife"] = {PrintName = "Knife", Model = "models/weapons/w_knife_t.mdl"},
 }

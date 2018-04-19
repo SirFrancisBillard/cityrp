@@ -94,6 +94,7 @@ WeaponShipment(nil, "Grenades", "lite_flashbang", 1600)
 WeaponShipment(nil, "Grenades", "lite_smokegrenade", 2000)
 
 WeaponShipment(nil, "Black Market", "weapon_molotov", 400)
+WeaponShipment(nil, "Black Market", "weapon_knife", 600)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "lockpick", 1600)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "keypad_cracker", 2400)
 WeaponShipment({TEAM_BLACKMARKET, TEAM_DOCTOR}, "Black Market", "med_kit", 2000)

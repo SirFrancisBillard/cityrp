@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 SWEP.PrintName = "Jihad Bomb"
-SWEP.Slot = 4
+SWEP.Slot = 3
 SWEP.SlotPos = 1
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = false

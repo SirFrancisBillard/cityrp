@@ -33,7 +33,7 @@ SWEP.Primary.Sound = Sound("garrysmod/balloon_pop_cute.wav")
 SWEP.Primary.Recoil = 0
 SWEP.Primary.Damage = 2
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Cone = 0.05
+SWEP.Primary.Cone = 0
 SWEP.Primary.Delay = 1.5
 
 SWEP.Primary.Ammo = "bbgun"
@@ -48,7 +48,7 @@ SWEP.Secondary.DefaultClip = -1
 
 SWEP.Spread = {}
 SWEP.Spread.Min = 0
-SWEP.Spread.Max = 0.25
+SWEP.Spread.Max = 00
 SWEP.Spread.IronsightsMod = 0.001
 SWEP.Spread.CrouchMod = 0.6
 SWEP.Spread.AirMod = 1.2

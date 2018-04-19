@@ -90,8 +90,10 @@ TEAM_DOCTOR = DarkRP.createJob("Doctor", {
 	description = [[With your medical knowledge you work to restore players to full health.
 		Without a medic, people cannot be healed.
 		Left click with the Medical Kit to heal other players.
-		Right click with the Medical Kit to heal yourself.]],
-	weapons = {"med_kit"},
+		Right click with the Medical Kit to heal yourself.
+		Surgery can be performed using your knife.
+		Be careful not to kill your patients!]],
+	weapons = {"med_kit", "weapon_knife"},
 	command = "doctor",
 	max = 4,
 	salary = GAMEMODE.Config.normalsalary,
@@ -166,7 +168,7 @@ TEAM_GUARD = DarkRP.createJob("Guard", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/barney.mdl",
 	description = [[Guards can be paid to protect certain areas or people.]],
-	weapons = {"lite_fiveseven", "stunstick"},
+	weapons = {"lite_p228", "stunstick"},
 	command = "guard",
 	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
@@ -199,12 +201,27 @@ TEAM_RAPPER = DarkRP.createJob("Rapper", {
 	category = g_RegisterJobWithCategory,
 })
 
-TEAM_MAFIA = DarkRP.createJob("Mafia", {
+TEAM_THUG = DarkRP.createJob("Thug", {
 	color = g_RegisterJobWithColor,
 	model = Models.Gangsters,
 	description = [[The lowest person of crime.
+		Thugs commit petty unorganized crimes and can form gangs.]],
+	weapons = {"weapon_knife", "weapon_pickpocket"},
+	command = "thug",
+	max = 8,
+	salary = GAMEMODE.Config.normalsalary,
+	admin = 0,
+	vote = false,
+	hasLicense = false,
+	category = g_RegisterJobWithCategory,
+})
+
+TEAM_MAFIA = DarkRP.createJob("Mafia", {
+	color = g_RegisterJobWithColor,
+	model = Models.Gangsters,
+	description = [[The goons of the Mafia.
 		The Mafia must work for the Godfather who runs the crime family.
-		The Godfather sets your agenda and you follow it or you might be punished.]],
+		The Godfather sets your agenda and you follow it or you can be killed.]],
 	weapons = {"lite_fiveseven", "weapon_pickpocket"},
 	command = "mafia",
 	max = 6,
@@ -235,7 +252,8 @@ TEAM_GODFATHER = DarkRP.createJob("Godfather", {
 TEAM_THIEF = DarkRP.createJob("Thief", {
 	color = g_RegisterJobWithColor,
 	model = {"models/player/phoenix.mdl", "models/player/arctic.mdl"},
-	description = [[Thieves pick locks to break into peoples homes and steal their possessions.]],
+	description = [[Thieves pick locks to break into peoples homes and steal their possessions.
+		They can also pick pockets of unaware citizens for extra cash.]],
 	weapons = {"lockpick", "weapon_pickpocket"},
 	command = "thief",
 	max = 6,
@@ -249,7 +267,9 @@ TEAM_THIEF = DarkRP.createJob("Thief", {
 TEAM_LOOTER = DarkRP.createJob("Looter", {
 	color = g_RegisterJobWithColor,
 	model = {"models/player/phoenix.mdl", "models/player/arctic.mdl"},
-	description = [[Looters specialize in raiding bases.]],
+	description = [[Looters specialize in raiding bases.
+		C4 can be planted on doors to blow them open.
+		They explode quickly, so be careful!]],
 	weapons = {"weapon_c4"},
 	command = "looter",
 	max = 4,
@@ -266,8 +286,9 @@ TEAM_LOOTER = DarkRP.createJob("Looter", {
 TEAM_KIDNAPPER = DarkRP.createJob("Kidnapper", {
 	color = g_RegisterJobWithColor,
 	model = {"models/player/phoenix.mdl", "models/player/arctic.mdl"},
-	description = [[Kidnappers can take hostages and hold them for ransom.]],
-	weapons = {"weapon_zipties"},
+	description = [[Kidnappers can take hostages and hold them for ransom.
+		If no ransom is paid, you can torture and behead your captives.]],
+	weapons = {"weapon_zipties", "weapon_knife"},
 	command = "kidnapper",
 	max = 4,
 	salary = GAMEMODE.Config.normalsalary,
@@ -297,11 +318,11 @@ KILLERS
 
 RegisterJobCategory("Killers", Color(255, 0, 0))
 
-TEAM_SHOOTER = DarkRP.createJob("School Shooter", {
+TEAM_SHOOTER = DarkRP.createJob("Mass Shooter", {
 	color = g_RegisterJobWithColor,
 	model = Models.Citizens,
 	description = [[You will not let yourself be bullied any longer.]],
-	weapons = {"lite_m249", "lite_ak47", "lite_m3super90", "lite_deagle"},
+	weapons = {"lite_m249", "lite_ak47", "lite_m3", "lite_deagle"},
 	command = "schoolshooter",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary,
@@ -481,9 +502,8 @@ TEAM_SUPERHOBO = DarkRP.createJob("Super Hobo", {
 TEAM_SEWER = DarkRP.createJob("Sewer Monster", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/zombie_soldier.mdl",
-	description = [[Wait, there isn't even a sewer.
-		How did you get here?
-		I guess you just walk around and kill people?]],
+	description = [[There isn't even a sewer.
+		How did you get here?]],
 	weapons = {"weapon_bugbait", "weapon_knife"},
 	command = "sewermonster",
 	max = 1,
@@ -575,13 +595,13 @@ TEAM_MAYOR = DarkRP.createJob("Mayor", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/breen.mdl",
 	description = [[The Mayor of the city creates laws to govern the city.
-	If you are the mayor you may create and accept warrants.
-	Type /wanted <name>  to warrant a player.
-	Type /jailpos to set the Jail Position.
-	Type /lockdown initiate a lockdown of the city.
-	Everyone must be inside during a lockdown.
-	The cops patrol the area.
-	Type /unlockdown to end a lockdown.]],
+		If you are the mayor you may create and accept warrants.
+		Type /wanted <name>  to warrant a player.
+		Type /jailpos to set the Jail Position.
+		Type /lockdown initiate a lockdown of the city.
+		Everyone must be inside during a lockdown.
+		The cops patrol the area.
+		Type /unlockdown to end a lockdown.]],
 	weapons = {},
 	command = "mayor",
 	max = 1,
@@ -651,7 +671,7 @@ TEAM_MURDER = DarkRP.createJob("Murderer", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/corpse1.mdl",
 	description = [[You have escaped from the murder gamemode somehow, only to find yourself here.]],
-	weapons = {"lite_knife"},
+	weapons = {"weapon_knife"},
 	command = "murderer",
 	max = 1,
 	salary = 0,
@@ -667,7 +687,7 @@ TEAM_DAUGHTER = DarkRP.createJob("Mayor's Daughter", {
 	description = [[You are the mayor's daughter.
 		You are just like a citizen but richer.
 		Watch out though, getting kidnapped will force the mayor to pay a ransom to get you back!]],
-	weapons = {""},
+	weapons = {"weapon_pepperspray"},
 	command = "daughter",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary * 1.75,
