@@ -39,7 +39,7 @@ EasyCategory("jobs", "Citizens", Color(0, 255, 0))
 EasyCategory("jobs", "Killers", Color(255, 0, 0))
 EasyCategory("jobs", "Criminals", Color(75, 75, 75))
 EasyCategory("jobs", "Merchants", Color(30, 190, 120))
-EasyCategory("jobs", "Police", Color(0, 0, 255))
+EasyCategory("jobs", "Government", Color(0, 0, 255))
 EasyCategory("jobs", "Homeless", Color(100, 60, 20))
 EasyCategory("jobs", "Special", Color(255, 0, 255))
 

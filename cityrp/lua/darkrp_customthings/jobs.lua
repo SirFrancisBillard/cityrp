@@ -63,6 +63,34 @@ local Models = {
 		"models/player/Group03/Male_07.mdl",
 		"models/player/Group03/Male_08.mdl",
 		"models/player/Group03/Male_09.mdl"
+	},
+	BlackCitizens = {
+		"models/player/Group01/male_01.mdl",
+		"models/player/Group01/male_03.mdl",
+	},
+	BlackGangsters = { -- redundant xdddd
+		"models/player/Group03/male_01.mdl",
+		"models/player/Group03/male_03.mdl",
+	},
+	FancyCitizens = {
+		"models/player/Group02/male_02.mdl",
+		"models/player/Group02/male_04.mdl",
+		"models/player/Group02/male_06.mdl",
+		"models/player/Group02/male_08.mdl",
+	},
+	Hostages = {
+		"models/player/hostage/hostage_01.mdl",
+		"models/player/hostage/hostage_02.mdl",
+		"models/player/hostage/hostage_03.mdl",
+		"models/player/hostage/hostage_04.mdl",
+	},
+	WhiteHostages = {
+		"models/player/hostage/hostage_01.mdl",
+		"models/player/hostage/hostage_04.mdl",
+	},
+	BlueHostages = {
+		"models/player/hostage/hostage_02.mdl",
+		"models/player/hostage/hostage_03.mdl",
 	}
 }
 
@@ -170,6 +198,38 @@ TEAM_GUARD = DarkRP.createJob("Guard", {
 	description = [[Guards can be paid to protect certain areas or people.]],
 	weapons = {"lite_p228", "stunstick"},
 	command = "guard",
+	max = 2,
+	salary = GAMEMODE.Config.normalsalary,
+	admin = 0,
+	vote = false,
+	hasLicense = true,
+	candemote = false,
+	category = g_RegisterJobWithCategory,
+})
+
+TEAM_VIGILANTE = DarkRP.createJob("Vigilante", {
+	color = g_RegisterJobWithColor,
+	model = "models/player/barney.mdl",
+	description = [[You aren't a cop, but you hate crime just as much.
+		Only kill scumbugs who commit crimes.]],
+	weapons = {"lite_usp"},
+	command = "vigilante",
+	max = 2,
+	salary = GAMEMODE.Config.normalsalary,
+	admin = 0,
+	vote = false,
+	hasLicense = true,
+	candemote = false,
+	category = g_RegisterJobWithCategory,
+})
+
+TEAM_GATOR = DarkRP.createJob("Gator Hunter", {
+	color = g_RegisterJobWithColor,
+	model = "models/player/barney.mdl",
+	description = [[You aren't a cop, but you hate crime just as much.
+		Only kill scumbugs who commit crimes.]],
+	weapons = {"lite_usp"},
+	command = "vigilante",
 	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
@@ -483,7 +543,7 @@ TEAM_SUPERHOBO = DarkRP.createJob("Super Hobo", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/charple.mdl",
 	description = [[Slighter higher than the lowest member of society.
-		All hobos look up to you.
+		Hobos look up to you, but to everyone else, you're just another hobo.
 		You can lead the hobos to a rebellion against the government.
 		You carry a bent paperclip that can be used to pick locks.
 		You also carry a BB gun your father gave you before he died.]],
@@ -517,10 +577,10 @@ TEAM_SEWER = DarkRP.createJob("Sewer Monster", {
 })
 
 --[[---------------------------------------------------------------------------
-POLICE
+GOVERNMENT
 ---------------------------------------------------------------------------]]
 
-RegisterJobCategory("Police", Color(0, 0, 255))
+RegisterJobCategory("Government", Color(0, 0, 255))
 
 TEAM_POLICE = DarkRP.createJob("Police Officer", {
 	color = g_RegisterJobWithColor,
@@ -537,7 +597,7 @@ TEAM_POLICE = DarkRP.createJob("Police Officer", {
 	max = 8,
 	salary = GAMEMODE.Config.normalsalary * 1.5,
 	admin = 0,
-	vote = true,
+	vote = false,
 	hasLicense = true,
 	ammo = {
 		["pistol"] = 60,
@@ -610,6 +670,21 @@ TEAM_MAYOR = DarkRP.createJob("Mayor", {
 	vote = true,
 	hasLicense = false,
 	mayor = true,
+	category = g_RegisterJobWithCategory,
+})
+
+TEAM_MAIL = DarkRP.createJob("Mailman", {
+	color = g_RegisterJobWithColor,
+	model = {"models/player/mossman_arctic.mdl", "models/player/odessa.mdl"},
+	description = [[Mailmen collect mail for money.
+		Look for mailboxes throughout the city to collect the mail.
+		Mailmen also deliver things among players for money.]],
+	weapons = {"weapon_mail"},
+	command = "mailman",
+	max = 2,
+	salary = GAMEMODE.Config.normalsalary * 1.5,
+	admin = 0,
+	vote = false,
 	category = g_RegisterJobWithCategory,
 })
 
