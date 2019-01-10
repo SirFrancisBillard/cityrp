@@ -13,7 +13,7 @@ if SERVER then
 			caller:EmitSound(Sound("npc/barnacle/barnacle_gulp"..math.random(1, 2)..".wav"))
 			timer.Simple(math.random(0.4, 0.6), function()
 				if IsValid(caller) and caller:Alive() then
-					-- caller:EmitSound(Sound("hostage/hpain/hpain" .. math.random(1, 6) .. ".wav"))
+					caller:EmitSound(Sound("hostage/hpain/hpain" .. math.random(1, 6) .. ".wav"))
 					caller:Kill()
 				end
 			end)

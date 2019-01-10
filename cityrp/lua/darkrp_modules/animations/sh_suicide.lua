@@ -1,5 +1,4 @@
 
-
 RegisterLuaAnimation('kys_pistol', {
 	FrameData = {
 		{

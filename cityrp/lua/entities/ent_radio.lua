@@ -6,7 +6,7 @@ ENT.PrintName = "Radio"
 ENT.Spawnable = true
 ENT.Model = "models/props/cs_italy/bananna.mdl"
 
-ENT.SongList = {
+local RadioSongs = {
 	[1] = "https://sirfrancisbillard.github.io/billard-radio/music/california_love.mp3",
 	[2] = "https://sirfrancisbillard.github.io/billard-radio/music/going_back_to_cali.mp3",
 	[3] = "https://sirfrancisbillard.github.io/billard-radio/music/hit_em_up.mp3",

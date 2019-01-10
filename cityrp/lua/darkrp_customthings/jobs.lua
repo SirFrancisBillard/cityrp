@@ -225,12 +225,43 @@ TEAM_VIGILANTE = DarkRP.createJob("Vigilante", {
 
 TEAM_GATOR = DarkRP.createJob("Gator Hunter", {
 	color = g_RegisterJobWithColor,
-	model = "models/player/barney.mdl",
-	description = [[You aren't a cop, but you hate crime just as much.
-		Only kill scumbugs who commit crimes.]],
-	weapons = {"lite_usp"},
-	command = "vigilante",
-	max = 2,
+	model = "models/player/group01/male_03.mdl",
+			description = [[Now Amos Moses was a Cajun.
+		He lived by himself in the swamp.
+		He hunted alligator for a living.
+		He'd just knock them in the head with a stump.
+		The Louisiana law gonna get you, Amos.
+		It ain't legal hunting alligator down in the swamp, boy.
+		Now everyone blamed his old man.
+		For making him mean as a snake.
+		When Amos Moses was a boy.
+		His daddy would use him for alligator bait.
+		Tie a rope around his neck and throw him in the swamp.
+		Alligator bait in the Louisiana bayou.
+		About forty-five minutes southeast of Thibodaux, Louisiana.
+		Lived a man called Doc Mills South and his pretty wife Hannah.
+		Well, they raised up a son that could eat up his weight in groceries.
+		Named him after a man of the cloth.
+		Called him Amos Moses, yeah.
+		Now the folks around south Louisiana.
+		Said Amos was a hell of a man.
+		He could trap the biggest, the meanest alligator.
+		And he'd just use one hand.
+		That's all he got left 'cause an alligator bit it.
+		Left arm gone clear up to the elbow.
+		Well the sheriff caught wind that Amos was in the swamp trapping alligator skin.
+		So he snuck in the swamp gonna get the boy.
+		But he never come out again.
+		Well I wonder where the Louisiana sheriff went to.
+		Well you can sure get lost in the Louisiana bayou.
+		About forty-five minutes southeast of Thibodaux, Louisiana.
+		Lived a cat called Doc Mills South and his pretty wife Hannah.
+		Well, they raised up a son that could eat up his weight in groceries.
+		Named him after a man of the cloth.
+		Called him Amos Moses.]],
+	weapons = {"lite_m3"},
+	command = "gatorhunter",
+	max = 1,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,

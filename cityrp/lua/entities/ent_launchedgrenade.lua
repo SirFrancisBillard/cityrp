@@ -39,7 +39,7 @@ if SERVER then
 		boom:SetFlags(4)
 		util.Effect("Explosion", boom, true, true)
 
-		self:EmitSound(Sound("Jihad.Explosion"))
+		self:EmitSound(Sound("Arena.Explosion"))
 
 		util.BlastDamage(self, self.Owner, self:GetPos(), SplodeRadius, self.Roller and DamageRoller or DamageDirect)
 

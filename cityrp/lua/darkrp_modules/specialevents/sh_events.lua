@@ -1,4 +1,6 @@
 
+-- spawns for rp_downtown_v4c_v2 (of course)
+
 local DefaultSpawns = {
 	Vector(2807.027344, -2358.466064, -131.968750),
 	Vector(2791.989258, -2214.955078, -139.968750),

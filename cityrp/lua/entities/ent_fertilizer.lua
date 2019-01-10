@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 ENT.PrintName = "Fertilizer"
-ENT.Category = "Crime+"
+ENT.Category = "Weed Growing"
 ENT.Spawnable = true
 ENT.Model = "models/props_junk/garbage_bag001a.mdl"
 ENT.IsFertilizer = true
