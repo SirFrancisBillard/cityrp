@@ -83,7 +83,7 @@ local Ends = {
 	"while drunk",
 	"for breast cancer awareness week",
 	"twelve times",
-	"eighteen times"
+	"eighteen times",
 	"inside public restroom",
 	"during sexual intercourse",
 	"in mexico",
