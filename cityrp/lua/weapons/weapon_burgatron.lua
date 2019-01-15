@@ -3,7 +3,8 @@ AddCSLuaFile()
 SWEP.PrintName = "Burgatron"
 SWEP.Slot = 2
 SWEP.SlotPos = 0
-SWEP.Instructions = "<color=green>[PRIMARY FIRE]</color> Become a burger.\n<color=green>[SECONDARY FIRE]</color> Turn back."
+SWEP.Instructions = [[<color=green>[PRIMARY FIRE]</color> Become a burger.
+<color=green>[SECONDARY FIRE]</color> Turn back.]]
 
 SWEP.ViewModel = "models/weapons/v_pistol.mdl"
 SWEP.ViewModelFOV = 62

@@ -8,12 +8,12 @@ if CLIENT then
 	SWEP.DrawCrosshair = false
 end
 
-SWEP.Author = "NotSoSuper"
-SWEP.Instructions = "Left Click: Hold to torch props!"
+SWEP.Author = ""
+SWEP.Instructions = "<color=green>[PRIMARY FIRE]</color> Torch props."
 SWEP.Contact = ""
 SWEP.Purpose = ""
 SWEP.ViewModelFOV = 75
-SWEP.ViewModelFlip = true
+SWEP.ViewModelFlip = false
 
 SWEP.Spawnable = false
 SWEP.AdminSpawnable = false
@@ -27,8 +27,9 @@ SWEP.Secondary.DefaultClip = 0
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = ""
 
-SWEP.ViewModel = "models/weapons/v_smg_ump45.mdl"
+SWEP.ViewModel = "models/weapons/cstrike/c_smg_ump45.mdl"
 SWEP.WorldModel = "models/weapons/w_smg_ump45.mdl"
+SWEP.UseHands = true
 
 SWEP.ShootSound = Sound("ambient/energy/spark1.wav")
 
@@ -73,10 +74,10 @@ end
 function SWEP:CanPrimaryAttack ( ) return true end
 
 function SWEP:PrimaryAttack()	
-	if self:GetTable().LastNoise == nil then self:GetTable().LastNoise = true end
-	if self:GetTable().LastNoise then
+	if self.LastNoise == nil then self.LastNoise = true end
+	if self.LastNoise then
 		self.Weapon:EmitSound(self.ShootSound, 60)
-		self:GetTable().LastNoise = false
+		self.LastNoise = false
 	else
 		self:GetTable().LastNoise = true
 	end
@@ -88,7 +89,7 @@ function SWEP:PrimaryAttack()
 		return false
 	end
 	
-	
+
 	if !table.HasValue(TorchableEnts, Trace.Entity:GetClass()) then
 		self.Weapon:SetNextPrimaryFire(CurTime() + 1)
 		if SERVER then DarkRP.notify(self.Owner, 1, 4, "Can't use on this entity!") end

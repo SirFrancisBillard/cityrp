@@ -8,8 +8,7 @@ local valid_accents = {
 	["fr"] = true,
 	["it"] = true,
 	["fi"] = true,
-	["ja"] = true,
-	["cn"] = true -- not currently supported, pls fix
+	["ja"] = true
 }
 
 net.Receive("TTS.Parse",  function()
@@ -22,21 +21,26 @@ net.Receive("TTS.Parse",  function()
 	end
 	text = string.sub(string.Replace(text, " ", "%20"), 1, 100)
 
-	sound.PlayURL("http://translate.google.com/translate_tts?tl=" .. accent .. "&q=" .. text .. "&client=tw-ob", "3d", function(sound)
-		if IsValid(sound) then
-			sound:SetPos(ply:GetPos())
+	sound.PlayURL("http://translate.google.com/translate_tts?tl=" .. accent .. "&q=" .. text .. "&client=tw-ob", "3d", function(station)
+		if IsValid(station) then
+			station:SetPos(ply:GetPos())
 			-- sound:SetVolume(1)
-			sound:Play()
-			sound:Set3DFadeDistance(2000, 10000)
-			ply.sound = sound
+			station:Play()
+			station:Set3DFadeDistance(2000, 10000)
+			ply.tts_sound = station
 		end
 	end)
 end)
 
-hook.Add("Think", "FollowPlayerSound", function()
-	for k,v in pairs(player.GetAll()) do
-		if IsValid(v.sound) then
-			v.sound:SetPos(v:GetPos())
+local tts_NextThink
+
+hook.Add("Think", "TTS.FollowPlayerSound", function()
+	if tts_NextThink < CurTime() then
+		for k, v in pairs(player.GetAll()) do
+			if IsValid(v.tts_sound) then
+				v.tts_sound:SetPos(v:GetPos())
+			end
 		end
+		tts_NextThink = CurTime() + 3
 	end
 end)

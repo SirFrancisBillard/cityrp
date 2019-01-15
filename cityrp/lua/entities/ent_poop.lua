@@ -3,7 +3,6 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_anim"
 ENT.PrintName = "Poop"
-ENT.Category = "RP"
 ENT.Spawnable = true
 
 if SERVER then
@@ -19,8 +18,7 @@ if SERVER then
 	end
 
 	function ENT:Use(activator, caller)
-		if math.random(1, 4) == 2 then
-			caller:ChatPrint("You got an STD lol")
+		if math.random(1, 4) == 1 then
 			caller:GiveSTD()
 			self:Remove()
 			return

@@ -15,11 +15,7 @@ function ENT:Initialize()
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
 	end
-	local phys = self:GetPhysicsObject()
-	if IsValid(phys) then
-		phys:Wake()
-		phys:SetMass(60)
-	end
+	self:PhysWake()
 	self:SetProgress(0)
 	self:SetOil(0)
 end

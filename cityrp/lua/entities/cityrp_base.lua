@@ -13,27 +13,21 @@ if SERVER then
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
-		local phys = self:GetPhysicsObject()
-		if phys:IsValid() then
-			phys:Wake()
-		end
-		self:SetUseType(SIMPLE_USE or 3)
+		self:PhysWake()
+		self:SetUseType(SIMPLE_USE)
+
 		if self.PermaMaterial then
 			self:SetMaterial(self.PermaMaterial)
 		end
+
 		if self.PermaColor then
 			self:SetColor(self.PermaColor)
 		end
+
 		if self.PermaScale and (self.PermaScale != 1.0) then
 			self:SetModelScale(self.PermaScale)
 		end
 	end
-	hook.Add("PlayerSpawn", "CityRP_SpawnWithoutStuff", function(ply)
-		ply.CarryingC4Defuser = false
-		ply.FlashlightBattery = false
-		ply.WearingKevlar = false
-		ply.SprayCan = false
-	end)
 end
 
 

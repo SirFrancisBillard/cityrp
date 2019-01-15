@@ -1,9 +1,5 @@
 AddCSLuaFile()
 
--- I don't know where I got this code
--- It's a modified version of SCK base
--- But I guess it works so why not
-
 /********************************************************
 	SWEP Construction Kit base code
 		Created by Clavus
@@ -28,8 +24,6 @@ function SWEP:Initialize()
 
 	// other initialize code goes here
 
-	self:SetHoldType(self.HoldType)
-	self.m_bLoaded = true
 	if CLIENT then
 	
 		// Create a new table for every weapon instance
@@ -54,19 +48,13 @@ function SWEP:Initialize()
 					vm:SetColor(Color(255,255,255,1))
 					// ^ stopped working in GMod 13 because you have to do Entity:SetRenderMode(1) for translucency to kick in
 					// however for some reason the view model resets to render mode 0 every frame so we just apply a debug material to prevent it from drawing
-					vm:SetMaterial("Debug/hsv")
+					vm:SetMaterial("Debug/hsv")			
 				end
 			end
 		end
-	end
-end
-
-function SWEP:Deploy()
-	if not self.m_bLoaded then
-		self:Initialize()
+		
 	end
 
-	return true
 end
 
 function SWEP:Holster()
@@ -83,15 +71,6 @@ end
 
 function SWEP:OnRemove()
 	self:Holster()
-
-	if CLIENT then
-		if not self.vRenderOrder then return end
-		for k, v in pairs( self.vRenderOrder ) do
-			v = self.VElements[v]
-			if not v.modelEnt then continue end
-			if IsValid( v.modelEnt ) then v.modelEnt:Remove() end
-		end
-	end
 end
 
 if CLIENT then
@@ -206,7 +185,7 @@ if CLIENT then
 
 	SWEP.wRenderOrder = nil
 	function SWEP:DrawWorldModel()
-		print("I GOT CALLED")
+		
 		if (self.ShowWorldModel == nil or self.ShowWorldModel) then
 			self:DrawModel()
 		end
@@ -512,12 +491,5 @@ if CLIENT then
 		return res
 		
 	end
-end
-
-function SWEP:PreDrawViewModel( entVM, entWep, pPlayer )
-	if not self.ShowViewModel then render.SetBlend( 0 ) end
-end
-
-function SWEP:PostDrawViewModel( entVM, entWep, pPlayer )
-	if not self.ShowViewModel then render.SetBlend( 1 ) end
+	
 end

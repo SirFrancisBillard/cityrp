@@ -8,13 +8,11 @@ end
 SWEP.Base = "weapon_sck_base"
 
 SWEP.PrintName = "Zipties"
-SWEP.Instructions = "Click on a player to tie them up."
-SWEP.Purpose = "Kidnapping"
+SWEP.Instructions = "<color=green>[PRIMARY FIRE]</color> Tie someone up."
 
 SWEP.Slot = 2
 SWEP.SlotPos = 3
 
-SWEP.Category = "RP"
 SWEP.Spawnable = true
 
 SWEP.Primary.ClipSize = -1

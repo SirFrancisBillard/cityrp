@@ -15,10 +15,8 @@ function ENT:Initialize()
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
 	end
-	local phys = self:GetPhysicsObject()
-	if IsValid(phys) then
-		phys:Wake()
-	end
+
+	self:PhysWake()
 end
 
 if SERVER then

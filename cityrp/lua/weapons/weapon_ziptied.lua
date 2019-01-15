@@ -6,7 +6,7 @@ if CLIENT then
 end
 
 SWEP.PrintName = "Ziptied"
-SWEP.Instructions = "Primary fire to struggle."
+SWEP.Instructions = "<color=green>[PRIMARY FIRE]</color> Struggle."
 SWEP.Slot = 2
 SWEP.SlotPos = 1
 
@@ -16,9 +16,8 @@ SWEP.DrawCrosshair = false
 SWEP.ViewModelFOV = 62
 SWEP.ViewModelFlip = false
 
-SWEP.Spawnable = true	
-SWEP.AdminSpawnable = true
-SWEP.Category = "RP"
+SWEP.Spawnable = false	
+SWEP.AdminSpawnable = false
 
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = 1
@@ -40,10 +39,6 @@ end
 
 function SWEP:Initialize()
 	self:SetWeaponHoldType("normal")
-end
-
-function SWEP:Deploy()
-	self:SendWeaponAnim(ACT_VM_DEPLOY)
 end
 
 function SWEP:OnDrop()
