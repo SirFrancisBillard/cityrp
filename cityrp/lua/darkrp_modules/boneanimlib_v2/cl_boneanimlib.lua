@@ -1,7 +1,3 @@
-if SERVER then return end
-
-include("sh_boneanimlib.lua")
-//include("cl_animeditor.lua")
 
 local ANIMATIONFADEOUTTIME = 0.125
 

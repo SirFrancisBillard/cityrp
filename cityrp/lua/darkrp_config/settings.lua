@@ -337,10 +337,11 @@ GM.Config.DisallowDrop = {
 GM.Config.DefaultWeapons = {
     "keys",
     "weapon_physcannon",
-    "gmod_camera",
+    "weapon_camera", -- our camera not the default
     "gmod_tool",
     "pocket",
     "weapon_physgun",
+    "weapon_lean",
     "weapon_rp_fists"
 }
 
@@ -393,6 +394,7 @@ GM.Config.CategoryOverride = {
 -- The list of weapons admins spawn with, in addition to the default weapons, a job's weapons and GM.Config.AdminsCopWeapons.
 GM.Config.AdminWeapons = {
     "weapon_keypadchecker",
+    "weapon_godstick",
 }
 
 -- These are the default laws, they're unchangeable in-game.

@@ -483,7 +483,7 @@ TEAM_NAZI = DarkRP.createJob("Nazi", {
 	model = "models/player/dod_german.mdl",
 	description = [[Nazis are on a quest to exterminate all jews and correct everyone's grammar.
 		Killing jews in public is legal.]],
-	weapons = {"lite_fiveseven", "weapon_jewdetector"},
+	weapons = {"lite_fiveseven", "weapon_jewdetector", "weapon_heil"},
 	command = "nazi",
 	max = 6,
 	salary = GAMEMODE.Config.normalsalary,

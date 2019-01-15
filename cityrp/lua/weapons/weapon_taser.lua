@@ -26,7 +26,7 @@ SWEP.Secondary.Sound		= Sound( "ambient/energy/spark5.wav" )
 SWEP.HitDistance			= 750
 
 local NextThink = 0	-- Convert the network variables
-local Rate = 0.05
+local Rate = 0.025
 
 local HookCable = Material( "sprites/physbeama" )
 
@@ -45,7 +45,7 @@ if CLIENT then
 	function draw.OutlinedBox( x, y, w, h, thickness, clr )
 		surface.SetDrawColor( clr )
 		for i=0, thickness - 1 do
-			surface.DrawOutlinedRect( x + i, y + i, w - i * 2, h - i * 2 )
+			surface.DrawRect( x + i, y + i, w - i * 2, h - i * 2 )
 		end
 	end
 

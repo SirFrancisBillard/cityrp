@@ -31,8 +31,10 @@ local DefaultBRWeapons = {
 if CLIENT then return end
 
 function PLAYER:InitBR()
-	self:SaveWeaponInventory(true)
-	self:SetBRStatus(BR_STATUS_PLAYING)
+	if self:GetBRStatus() ~= BR_STATUS_PLAYING then
+		self:SaveWeaponInventory(true)
+		self:SetBRStatus(BR_STATUS_PLAYING)
+	end
 
 	for k, v in pairs(DefaultBRWeapons) do
 		self:Give(v)

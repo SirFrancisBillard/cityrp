@@ -1,9 +1,3 @@
-if CLIENT then return end
-
-include("sh_boneanimlib.lua")
-AddCSLuaFile("cl_boneanimlib.lua")
-AddCSLuaFile("sh_boneanimlib.lua")
-//AddCSLuaFile("cl_animeditor.lua")
 
 hook.Add("Initialize", "BAL_Initialize", function()
 	util.AddNetworkString("bal_reset")

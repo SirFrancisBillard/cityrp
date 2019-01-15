@@ -1,4 +1,5 @@
 
+print("============================================================")
 print("g_DarkRPEntData = {")
 
 for k, v in pairs(scripted_ents.GetList()) do
@@ -14,3 +15,4 @@ for k, v in pairs(weapons.GetList()) do
 end
 
 print("}")
+print("============================================================")

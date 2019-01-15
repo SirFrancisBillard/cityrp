@@ -11,7 +11,6 @@ else
 	SWEP.DrawCrosshair = false
 	SWEP.ViewModelFOV = 68
 	SWEP.Category = "RP"
-	SWEP.Author = "code_gs"
 end
 
 SWEP.HoldType = "normal"

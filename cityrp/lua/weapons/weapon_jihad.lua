@@ -46,7 +46,7 @@ function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + 2)
 	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 	if SERVER then
-		self.Owner:SuicideBombDelayed(1, 400, 300)
+		self.Owner:SuicideBombDelayed(1, 400 * 6, 300)
 	end
 end
 

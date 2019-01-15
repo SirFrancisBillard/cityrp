@@ -1,4 +1,6 @@
 
+do return end -- fuck it
+
 hook.Add("HUDShouldDraw", "HideOldCrosshairFromHUD", function(name)
 	if name == "CHudCrosshair" then return false end
 end)

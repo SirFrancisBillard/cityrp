@@ -1,268 +1,99 @@
-ENT.Type = "anim"
-ENT.Base = "base_entity"
-ENT.PrintName = "Weapon Bench"
-ENT.Author = ""
-ENT.Information = ""
-ENT.Spawnable = true
-ENT.AdminSpawnable = true
-ENT.Category = "Weapon Crafting"
-
 AddCSLuaFile()
 
+ENT.Type = "anim"
+ENT.Base = "base_gmodentity"
+ENT.PrintName = "Crafting Bench"
+ENT.Category = "Weapon Crafting"
+ENT.Spawnable = true
+ENT.Model = "models/props_combine/breendesk.mdl"
+
+local RECIPE_PISTOL = {scrap = 4, springs = 1}
+local RECIPE_SMG = {scrap = 8, springs = 2, illegal_parts = 1}
+local RECIPE_SHOTGUN = {scrap = 10, springs = 1}
+local RECIPE_RIFLE = {scrap = 10, springs = 4, illegal_parts = 2}
+local RECIPE_SNIPER = {scrap = 20, springs = 4, illegal_parts = 4}
+
+local Recipes = {
+	["lite_ak47"] = RECIPE_RIFLE
+}
+
 if CLIENT then
-	surface.CreateFont( "LargeWeaponFont", {
-		font = "Arial",
-		size = 75,
-		weight = 500,
-		blursize = 0,
-		scanlines = 0,
-		antialias = true,
-		underline = false,
-		italic = false,
-		strikeout = false,
-		symbol = false,
-		rotary = false,
-		shadow = true,
-		additive = false,
-		outline = false,
-	} )
-
-	surface.CreateFont( "SmallWeaponFont", {
-		font = "Arial",
-		size = 50,
-		weight = 500,
-		blursize = 0,
-		scanlines = 0,
-		antialias = true,
-		underline = false,
-		italic = false,
-		strikeout = false,
-		symbol = false,
-		rotary = false,
-		shadow = true,
-		additive = false,
-		outline = false,
-	} )
+	surface.CreateFont("LargeWeaponFont", {font = "Arial", size = 75, weight = 500, antialias = true, shadow = true})
+	surface.CreateFont("SmallWeaponFont", {font = "Arial", size = 50, weight = 500, antialias = true, shadow = true})
 end
-
-
 
 function ENT:Initialize()
-
-	self:GenerateWeapons()
-	
-
+	self:SetModel(self.Model)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
 	if SERVER then
-	
-		self:SetModel("models/props_combine/breendesk.mdl") 
 		self:PhysicsInit(SOLID_VPHYSICS)
-		self:SetMoveType(MOVETYPE_VPHYSICS)
-		self:SetSolid(SOLID_VPHYSICS)
-		
-		
-		local phys = self:GetPhysicsObject()
-		if phys:IsValid() then
-			phys:Wake()
-			phys:SetBuoyancyRatio(0)
-			phys:SetMass(50)
-		end
-		
-		self:SetNWInt("ScrapCount",0)
-		self:SetNWFloat("BuildPercent",0)
-		
-		self.Building = false
-		
-		
-		
-		--self:SpawnWeapon()
-		
+		self:SetUseType(SIMPLE_USE)
 	end
-	
-	
-	if CLIENT then
-		self.ClientProp = ents.CreateClientProp("models/hunter/plates/plate1x1.mdl")
-		self.ClientProp:SetPos(self:GetPos() + self:GetUp()*40)
-		self.ClientProp:SetAngles(self:GetAngles())
-		self.ClientProp:SetParent(self)
-		self.ClientProp:SetMaterial("models/wireframe")
-		--self.ClientProp:SetModelScale(5)
-		self.ClientProp:Spawn()
-		
-		print(self.ClientProp)
-		
-		
-		
-	end
-	
-	self.NextTick = 0
-	self.SpawnTime = CurTime()
-	
-	
+
+	self:PhysWake()
 end
 
+function ENT:SetupDataTables()
+	self:NetworkVar("Int", 0, "Scrap")
+	self:NetworkVar("Int", 1, "Springs")
+	self:NetworkVar("Int", 2, "IllegalParts")
+	self:NetworkVar("Int", 3, "CraftingStatus")
+	self:NetworkVar("String", 3, "CraftWeapon")
+end
 
-
-
-function ENT:GenerateWeapons()
-
-
-	self.CSSWeaponsTable = {}
-
-	for k,v in pairs(weapons.GetList()) do
-
-		if v.Base == "weapon_cs_base" then
-		
-			if v.WeaponType	~= "Free" and v.WeaponType ~= "Throwable" then
-			
-				table.Add(self.CSSWeaponsTable,{v.ClassName})
-				
+if SERVER then
+	function ENT:StartTouch(cosby)
+		if IsValid(cosby) and cosby.CraftingIngredient then
+			if cosby.CraftingIngredient == "scrap" then
+				self:SetScrap(self:GetScrap() + 1)
+				SafeRemoveEntity(cosby)
 			end
-				
+			if cosby.CraftingIngredient == "spring" then
+				self:SetSprings(self:GetSprings() + 1)
+				SafeRemoveEntity(cosby)
+			end
+			if cosby.CraftingIngredient == "illegal_parts" then
+				self:SetIllegalParts(self:GetIllegalParts() + 1)
+				SafeRemoveEntity(cosby)
+			end
 		end
-			
 	end
 
-end
+	function ENT:Use(activator, caller)
+		if IsValid(caller) and caller:IsPlayer() then
+			local wep = caller:GetActiveWeapon()
 
-
-
-function ENT:PhysicsCollide(data, physobj)
-
-
-end
-
-function ENT:Use(activator,caller,useType,value)
-	if self:GetNWFloat("BuildPercent",0) == 0 and self:GetNWInt("ScrapCount",0) >= 4 then
-		self:SetNWFloat("BuildPercent",1)
-		self:SetNWInt("ScrapCount",self:GetNWInt("ScrapCount",4) - 4)
-		self.Building = true
-	end
-end
-
-
-function ENT:Think()
-
-	if SERVER then
-		if self.Building == true then
-			if self.NextTick <= CurTime() then
-			
-				local AddBuild = self:GetNWFloat("BuildPercent",0) + math.random(1,2)
-			
-				if AddBuild >= 100 then
-					self.Building = false
-					self:SpawnWeapon()
-					self:SetNWFloat("BuildPercent",0)
-				else
-					self:SetNWFloat("BuildPercent",AddBuild)
-					--self:EmitSound("ambient/machines/pneumatic_drill_"..math.random(1,4)..".wav")
+			if self:GetCraftWeapon() and IsValid(wep) then
+				if not caller:HasWeapon(self:GetCraftWeapon()) then
+					self:SetCraftWeapon("")
+					caller:Give(self:GetCraftWeapon(), true)
 				end
-
-				self.NextTick = CurTime() + 0.25
-				
+				if Recipes[wep:GetClass()] and not self:GetCraftWeapon() then
+					self:SetCraftWeapon(wep:GetClass())
+					caller:StripWeapon(wep:GetClass())
+				end
+			elseif IsValid(wep) and Recipes[wep:GetClass()] then
+				self:SetCraftWeapon(wep:GetClass())
+				caller:StripWeapon(wep:GetClass())
 			end
 		end
 	end
-	
-	if CLIENT then
-		if self.NextTick <= CurTime() then
-			local Choice = self.CSSWeaponsTable[math.random(1,table.Count(self.CSSWeaponsTable))]
-			self.ClientProp:SetModel(weapons.GetStored(Choice).WorldModel)
-			self.NextTick = CurTime() + 2
-		end
-		
-		local Vec,Ang = LocalToWorld(Vector(0,0,0),Angle(0,CurTime()*180,0),self:GetPos(),self:GetAngles())
-
-		self.ClientProp:SetAngles(Ang)
-	end
-	
-	
 end
 
-
-
-
-
-function ENT:Draw()
-	if CLIENT then
+if CLIENT then
+	function ENT:Draw()
 		self:DrawModel()
 
-		local AdjVec, AdjAng = LocalToWorld(Vector(0,0,self:OBBMaxs().z),Angle(0,90,0),self:GetPos(),self:GetAngles())
+		local Ang = self:GetAngles()
+		Ang:RotateAroundAxis(Ang:Forward(), 90)
+		Ang:RotateAroundAxis(Ang:Right(), -90)
 
-		if not self.PulseOne then
-			self.PulseOne = 0
-		end
+		local is_queued = LocalPlayer():GetBRStatus() == BR_STATUS_QUEUED
 
-		if self.PulseOne <= 255 then
-			self.PulseOne = self.PulseOne + (255*RealFrameTime())
-		else
-			self.PulseOne = 0
-		end
-
-		local ObjectNameText = "[WEAPON WORKBENCH]"
-		local InsertScrapText = "[INSERT SCRAP]"
-		local PressEText = "[PRESS E]"
-		local BuildPercentText = self:GetNWFloat("BuildPercent",0) .. "%"
-		local ScrapCountText = "[Scrap: ".. self:GetNWInt("ScrapCount",0) .."/4]"
-
-		cam.Start3D2D( AdjVec, AdjAng  , 0.1 )
-			surface.SetFont( "LargeWeaponFont" )
-			local Width,Height = surface.GetTextSize( ObjectNameText )
-			surface.SetTextColor( 255, 255, 255, 255 )
-			surface.SetTextPos( -Width/2, -Height/2 - self:OBBMaxs().y*4 )
-			surface.DrawText( ObjectNameText )
-
-			if self:GetNWFloat("BuildPercent",0) == 0 and self:GetNWInt("ScrapCount",0) < 4 then
-				local Width,Height = surface.GetTextSize( InsertScrapText )
-				surface.SetTextPos( -Width/2, -Height/2 )
-				surface.SetTextColor( 255, 255, 255, self.PulseOne )
-				surface.DrawText( InsertScrapText )
-			elseif self:GetNWFloat("BuildPercent",0) == 0 and self:GetNWInt("ScrapCount",0) >= 4 then
-				local Width,Height = surface.GetTextSize( PressEText )
-				surface.SetTextPos( -Width/2, Height/2 )
-				surface.SetTextColor( 255, 255, 255, self.PulseOne )
-				surface.DrawText( PressEText )
-			else
-				local Width,Height = surface.GetTextSize( BuildPercentText )
-				surface.SetTextPos( -Width/2, -Height/2 )
-				surface.SetTextColor( 255, 255, 255, 255 )
-				surface.DrawText( BuildPercentText )
-			end
-
-			surface.SetFont( "SmallWeaponFont" )
-			local Width,Height = surface.GetTextSize( ScrapCountText )
-			surface.SetTextPos( -Width/2, -Height/2 + self:OBBMaxs().y*4 )
-
-			if self:GetNWInt("ScrapCount",0) < 4 and self:GetNWFloat("BuildPercent",0) == 0 then
-				surface.SetTextColor( 255, 255, 255, self.PulseOne )
-			else
-				surface.SetTextColor( 255, 255, 255, 255 )
-			end
-
-			surface.DrawText( ScrapCountText )
+		cam.Start3D2D(self:GetPos() + (self:GetUp() * 100), Ang, 0.35)
+			draw.SimpleTextOutlined("Battle Royale", "Trebuchet24", 0, 0, Color(255, 0,0, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, Color(25, 25, 25))
+			draw.SimpleTextOutlined(is_queued and "In queue" or "Queue up to play", "Trebuchet24", 0, 40, Color(255, 0,0, 255), TEXT_ALIGN_CENTER, TEXT_ALIGN_TOP, 1, Color(25, 25, 25))
 		cam.End3D2D()
 	end
-end
-
-
-
-
-function ENT:SpawnWeapon()
-
-	local Choice = self.CSSWeaponsTable[math.random(1,table.Count(self.CSSWeaponsTable))]
-	
-	local gun = ents.Create("spawned_weapon")
-	gun:SetModel(weapons.GetStored(Choice).WorldModel)
-	gun:SetWeaponClass(Choice)
-	gun:SetPos(self:GetPos() + self:GetUp()*40)
-	gun.ShareGravgun = true
-	gun.nodupe = true
-	gun:Spawn()
-	self.sparking = true
-
-end
-
-function ENT:OnRemove()
-
-	SafeRemoveEntity(self.ClientProp)
-
 end

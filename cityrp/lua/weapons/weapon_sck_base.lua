@@ -54,7 +54,7 @@ function SWEP:Initialize()
 					vm:SetColor(Color(255,255,255,1))
 					// ^ stopped working in GMod 13 because you have to do Entity:SetRenderMode(1) for translucency to kick in
 					// however for some reason the view model resets to render mode 0 every frame so we just apply a debug material to prevent it from drawing
-					vm:SetMaterial("Debug/hsv")			
+					vm:SetMaterial("Debug/hsv")
 				end
 			end
 		end
@@ -206,7 +206,7 @@ if CLIENT then
 
 	SWEP.wRenderOrder = nil
 	function SWEP:DrawWorldModel()
-		
+		print("I GOT CALLED")
 		if (self.ShowWorldModel == nil or self.ShowWorldModel) then
 			self:DrawModel()
 		end

@@ -2,15 +2,18 @@ AddCSLuaFile()
 
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
-ENT.PrintName = "Sodium"
-ENT.Category = "Meth Cooking"
+
+ENT.PrintName = "Illegal Gun Parts"
+ENT.Category = "Weapon Crafting"
 ENT.Spawnable = true
-ENT.Model = "models/props_junk/garbage_plasticbottle002a.mdl"
+
+ENT.Model = "models/weapons/w_pist_elite_dropped.mdl"
+ENT.CraftingIngredient = "illegal_parts"
 
 function ENT:Initialize()
 	self:SetModel(self.Model)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
+	self:SetSolid(SOLID_BBOX)
 	self:PhysicsInit(SOLID_VPHYSICS)
 	if SERVER then
 		self:SetUseType(SIMPLE_USE)

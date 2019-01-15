@@ -38,7 +38,7 @@ local Loot = {
 		"lite_p90",
 		"lite_scout"
 	},
-	[EPIC] = {
+	[EPIC] = { -- ok now this is epic
 		"lite_m249",
 		"lite_awp",
 		"lite_g3sg1",
@@ -74,13 +74,13 @@ function ENT:Initialize()
 	self:SetModel(self.Model)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
-	self:PhysicsInit(SOLID_VPHYSICS)
 	if SERVER then
+		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
+		self:SetRarity(RandomRarity()) -- only do random stuff on the server
 	end
 
 	self:PhysWake()
-	self:SetRarity(RandomRarity())
 	self:SetColor(RarityColors[self:GetRarity()])
 end
 
