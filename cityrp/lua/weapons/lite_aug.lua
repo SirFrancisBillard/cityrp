@@ -10,7 +10,7 @@ SWEP.IconLetter = "e"
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
 
-SWEP.HoldType = "ar2"
+SWEP.HoldType = "smg"
 
 SWEP.WorldModel = Model( "models/weapons/w_rif_aug.mdl" )
 SWEP.ViewModel = Model( "models/weapons/cstrike/c_rif_aug.mdl" )

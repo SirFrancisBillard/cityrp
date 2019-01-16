@@ -37,9 +37,9 @@ SWEP.ViewModelFOV = 70
 SWEP.ViewModelFlip = false
 SWEP.UseHands = true
 SWEP.ViewModel = "models/weapons/c_grenade.mdl"
-SWEP.WorldModel = ""
+SWEP.WorldModel = "models/weapons/w_grenade.mdl"
 SWEP.ShowViewModel = true
-SWEP.ShowWorldModel = true
+SWEP.ShowWorldModel = false
 
 SWEP.ViewModelBoneMods = {
 	["ValveBiped.Grenade_body"] = {scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0)}

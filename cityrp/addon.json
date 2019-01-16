@@ -1,0 +1,9 @@
+{
+	"title"		: "CityRP [Beta]",
+	"type"		: "ServerContent",
+	"tags"		: [ "fun", "roleplay" ],
+	"ignore"	: [
+		"*.md",
+		"*.txt"
+	]
+}

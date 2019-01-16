@@ -39,11 +39,13 @@ SWEP.Secondary.DefaultClip = 0
 SWEP.Secondary.Automatic = true
 SWEP.Secondary.Ammo = ""
 
-SWEP.ViewModel 			= "";
-SWEP.WorldModel 		= "";
+SWEP.ViewModel = ""
+SWEP.WorldModel = "models/weapons/w_pistol.mdl"
+SWEP.ShowViewModel = false
+SWEP.ShowWorldModel = false
+
 SWEP.BobScale			= 2
 SWEP.SwayScale			= 2
-SWEP.HoldType           = "camera";
 
 SWEP.Volume = 7
 SWEP.Influence = 0
@@ -62,7 +64,7 @@ function SWEP:Initialize()
 	self.zoomLevel = 70
 	self.MaxZoomLevel = 70
 	self.MinZoomLevel = 20
-	self:SetHoldType("rpg")
+	self.BaseClass.Initialize(self)
 end
 
 function SWEP:Deploy()

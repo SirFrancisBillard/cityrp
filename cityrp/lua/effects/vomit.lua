@@ -12,19 +12,19 @@ end
 
 function EFFECT:Init(data)
 	self.Barfer = data:GetEntity()
-	self.DieTime = CurTime() + math.Rand(.25, 1.5)
-	
+	self.DieTime = CurTime() + math.Rand(.25, .75)
+
 	if not self.Barfer or not IsValid(self.Barfer) or not self.Barfer:IsPlayer() then return false end
-	
+
 	self.Emitter = ParticleEmitter(self.Barfer:EyePos())
 
-	sound.Play(Sound("npc/zombie/zombie_pain3.wav"), self.Barfer:EyePos(), 75, 100)
+	sound.Play(Sound("gross/vomit" .. math.random(2) .. ".wav"), self.Barfer:EyePos(), 75, 100)
 end
 
 function EFFECT:Think()
 	if not self.Barfer or not IsValid(self.Barfer) or not self.Barfer:IsPlayer() or CurTime() > self.DieTime then self.Emitter:Finish() return false end
 	
-	local SpawnPos = self.Barfer:EyePos() + self.Barfer:EyeAngles():Forward() * 10
+	local SpawnPos = self.Barfer:EyePos() + (self.Barfer:EyeAngles():Forward() * 10) + (self.Barfer:EyeAngles():Up() * -6)
 	local Dir = self.Barfer:GetAimVector()
 
 	local part = self.Emitter:Add("effects/blood_core", SpawnPos)
@@ -35,8 +35,8 @@ function EFFECT:Think()
 	part:SetStartAlpha(255)
 	part:SetEndAlpha(100)
 	
-	part:SetStartSize(math.random(15, 20))
-	part:SetEndSize(math.random(10, 15))
+	part:SetStartSize(math.random(10, 15))
+	part:SetEndSize(math.random(5, 10))
 	
 	part:SetColor(128, 80, 0)
 	part:SetCollide(true)

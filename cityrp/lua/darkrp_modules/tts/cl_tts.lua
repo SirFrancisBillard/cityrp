@@ -35,7 +35,7 @@ end)
 local tts_NextThink
 
 hook.Add("Think", "TTS.FollowPlayerSound", function()
-	if tts_NextThink < CurTime() then
+	if tts_NextThink and tts_NextThink < CurTime() then
 		for k, v in pairs(player.GetAll()) do
 			if IsValid(v.tts_sound) then
 				v.tts_sound:SetPos(v:GetPos())

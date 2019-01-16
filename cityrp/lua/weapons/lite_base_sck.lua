@@ -1,5 +1,7 @@
 AddCSLuaFile()
 
+SWEP.Base = "lite_base"
+
 /********************************************************
 	SWEP Construction Kit base code
 		Created by Clavus
@@ -22,7 +24,15 @@ AddCSLuaFile()
 
 function SWEP:Initialize()
 
-	self:SetHoldType(self.HoldType or "pistol")
+	self:SetIronsights( false )
+
+	self:SetReloading( false )
+	self:SetReloadTime( 0 )
+
+	self:SetRecoil( 0 )
+	self:SetNextIdle( 0 )
+
+	self:SetHoldType( self.HoldType )
 
 	if CLIENT then
 	
@@ -58,6 +68,21 @@ function SWEP:Initialize()
 end
 
 function SWEP:Holster()
+	self:SetIronsights( false )
+	self:SetIronsightsRecoil( 0 )
+
+	self:SetReloading( false )
+	self:SetReloadTime( 0 )
+
+	self:SetRecoil( 0 )
+	self:SetNextIdle( 0 )
+
+	if CLIENT then
+		self.ViewModelPos = Vector( 0, 0, 0 )
+		self.ViewModelAng = Angle( 0, 0, 0 )
+		self.FOV = nil
+	end
+
 	if CLIENT and IsValid(self.Owner) then
 		local vm = self.Owner:GetViewModel()
 		if IsValid(vm) then
@@ -69,7 +94,12 @@ function SWEP:Holster()
 end
 
 function SWEP:OnRemove()
-	self:Holster()
+	if CLIENT and IsValid(self.Owner) then
+		local vm = self.Owner:GetViewModel()
+		if IsValid(vm) then
+			self:ResetBonePositions(vm)
+		end
+	end
 end
 
 if CLIENT then

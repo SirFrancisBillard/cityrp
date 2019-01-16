@@ -8,6 +8,8 @@ SWEP.AdminSpawnable = false
 SWEP.PrintName = "Newspaper"
 SWEP.Purpose = "What's going on in the world today?"
 
+SWEP.Slot = 3
+
 SWEP.Primary.Ammo = "None"
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = -1
@@ -19,14 +21,14 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
 
 SWEP.ViewModel = "models/weapons/c_slam.mdl"
-SWEP.WorldModel = ""
+SWEP.WorldModel = "models/weapons/w_slam.mdl"
 
 SWEP.HoldType = "slam"
 SWEP.ViewModelFOV = 70
 SWEP.ViewModelFlip = false
 SWEP.UseHands = true
 SWEP.ShowViewModel = true
-SWEP.ShowWorldModel = true
+SWEP.ShowWorldModel = false
 SWEP.ViewModelBoneMods = {
 	["Detonator"] = {scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0)},
 	["Slam_panel"] = {scale = Vector(0.996, 0.996, 0.996), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0)},
@@ -42,8 +44,6 @@ SWEP.VElements = {
 SWEP.WElements = {
 	["paper"] = {type = "Model", model = "models/props_junk/garbage_newspaper001a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.519, 5.426, -2.177), angle = Angle(93.78, 0, 1.71), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}}
 }
-
-
 
 local Starts = {
 	"Florida man",

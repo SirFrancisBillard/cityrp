@@ -5,6 +5,7 @@ SWEP.Base = "weapon_sck_base"
 SWEP.PrintName = "Axe"
 SWEP.Instructions = [[
 <color=green>[PRIMARY FIRE]</color> Brutally slaughter someone.
+
 Hitting doors can open them.]]
 
 SWEP.HoldType = "melee2"
@@ -18,7 +19,7 @@ SWEP.ShowWorldModel = false
 
 SWEP.ViewModelBoneMods = {
 	["ValveBiped.Bip01_R_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(3.888, -1.297, -2.408), angle = Angle(0, 0, 0) },
-	["Python"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
+	["Python"] = { scale = Vector(0, 0, 0), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
 	["ValveBiped.Bip01_L_Finger42"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(-6.211, 32.226, 0) },
 	["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(9.965, 4.522, 3.088), angle = Angle(0, 0, 0) },
 	["ValveBiped.Bip01_R_Hand"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(40.321, -5.857, -80.337) }

@@ -4,5 +4,5 @@
 local OldPrint = OldPrint or print
 
 function print(...)
-	return OldPrint("[" .. debug.getinfo(0).short_src .. "]", ...)
+	return OldPrint("[" .. debug.getinfo(2).short_src .. "]", ...)
 end 
