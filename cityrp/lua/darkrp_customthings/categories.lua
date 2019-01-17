@@ -77,6 +77,7 @@ EasyCategory("shipments", "Toys", DefaultCategoryColor)
 EasyCategory("shipments", "Fruit", DefaultCategoryColor)
 EasyCategory("shipments", "Explosives", DefaultCategoryColor)
 EasyCategory("shipments", "Grenades", DefaultCategoryColor)
+EasyCategory("shipments", "Scrap Weapons", DefaultCategoryColor)
 
 EasyCategory("weapons", "Pistols", DefaultCategoryColor)
 EasyCategory("weapons", "Submachine Guns", DefaultCategoryColor)
@@ -87,5 +88,4 @@ EasyCategory("weapons", "Black Market", DefaultCategoryColor)
 EasyCategory("weapons", "Explosives", DefaultCategoryColor)
 EasyCategory("weapons", "Toys", DefaultCategoryColor)
 EasyCategory("weapons", "Grenades", DefaultCategoryColor)
-
-
+EasyCategory("weapons", "Scrap Weapons", DefaultCategoryColor)

@@ -131,6 +131,11 @@ function SWEP:PrimaryAttack()
 
 	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 	self:SetReloadTime( CurTime() + self.Primary.Delay )
+
+	if SERVER and self.Blowback then
+		local forward = self.Owner:EyeAngles():Forward()
+		self.Owner:SetVelocity(forward * -self.Blowback)
+	end
 end
 
 function SWEP:SecondaryAttack() 

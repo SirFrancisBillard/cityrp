@@ -1,10 +1,10 @@
 -- Now THIS is maturity
 
-local function MakePoo(player)
+local function MakePoo(ply)
 	local turd = ents.Create("ent_poop")
-	turd:SetPos(player:GetPos() + Vector(0,0,32))
+	turd:SetPos(ply:GetPos() + Vector(0,0,32))
 	turd:Spawn()
-	player:EmitSound("ambient/levels/canals/swamp_bird2.wav", 50, 80)
+	ply:EmitSound("ambient/levels/canals/swamp_bird2.wav", 50, 80)
 	timer.Simple(30, function() if turd:IsValid() then turd:Remove() end end)
 end
 

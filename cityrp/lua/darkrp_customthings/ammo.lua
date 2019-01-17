@@ -1,102 +1,42 @@
---[[---------------------------------------------------------------------------
-Ammo types
----------------------------------------------------------------------------
-Ammo boxes that can be purchased in the F4 menu.
-
-Add your custom ammo types in this file. Here's the syntax:
-DarkRP.createAmmoType("ammoType", {
-    name = "Ammo name",
-    model = "Model",
-    price = 1234,
-    amountGiven = 5678,
-    customCheck = function(ply) return ply:IsAdmin()
-})
-
-ammoType: The name of the ammo that Garry's mod recognizes
-	If you open your SWEP's shared.lua, you can find the ammo name next to
-	SWEP.Primary.Ammo = "AMMO NAME HERE"
-	or
-	SWEP.Secondary.Ammo = "AMMO NAME HERE"
-
-name: The name you want to give to the ammo. This can be anything.
-
-model: The model you want the ammo to have in the F4 menu
-
-price: the price of your ammo in dollars
-
-amountGiven: How much bullets of this ammo is given every time the player buys it
-
-customCheck: (Optional! Advanced!) a Lua function that describes who can buy the ammo.
-	Similar to the custom check function for jobs and shipments
-	Parameters:
-		ply: the player who is trying to buy the ammo
-
-Examples are below!
-
-Pistol ammo type. Used by p228, desert eagle and all other pistols
-Example 1:
-
-DarkRP.createAmmoType("pistol", {
-	name = "Pistol ammo",
-	model = "models/Items/BoxSRounds.mdl",
-	price = 30,
-	amountGiven = 24
-})
-
-Buckshot ammo, used by the shotguns
-Example 2:
-
-DarkRP.createAmmoType("buckshot", {
-	name = "Shotgun ammo",
-	model = "models/Items/BoxBuckshot.mdl",
-	price = 50,
-	amountGiven = 8
-})
-
-Rifle ammo, usually used by assault rifles
-Example 3:
-
-DarkRP.createAmmoType("smg1", {
-	name = "Rifle ammo",
-	model = "models/Items/BoxMRounds.mdl",
-	price = 80,
-	amountGiven = 30
-})
-
-Add new ammo types under the next line!
----------------------------------------------------------------------------]]
 
 DarkRP.createAmmoType("Pistol", {
 	name = "Pistol Ammo",
 	model = "models/Items/BoxSRounds.mdl",
-	price = 30,
-	amountGiven = 20
+	price = 120,
+	amountGiven = 80
 })
 
 DarkRP.createAmmoType("Buckshot", {
 	name = "Shotgun Ammo",
 	model = "models/Items/BoxBuckshot.mdl",
-	price = 60,
-	amountGiven = 8
+	price = 200,
+	amountGiven = 24
 })
 
 DarkRP.createAmmoType("SMG1", {
 	name = "Rifle Ammo",
 	model = "models/Items/BoxMRounds.mdl",
-	price = 40,
-	amountGiven = 30
+	price = 200,
+	amountGiven = 180
 })
 
 DarkRP.createAmmoType("Sniper Rifle", {
 	name = "Sniper Ammo",
 	model = "models/items/357ammo.mdl",
-	price = 200,
-	amountGiven = 10
+	price = 300,
+	amountGiven = 20
+})
+
+DarkRP.createAmmoType("tranq", {
+	name = "Tranquilizer Darts",
+	model = "models/props_lab/box01a.mdl",
+	price = 500,
+	amountGiven = 8
 })
 
 DarkRP.createAmmoType("bbgun", {
 	name = "Box of BBs",
 	model = "models/props_lab/box01a.mdl",
-	price = 20,
-	amountGiven = 10
+	price = 40,
+	amountGiven = 100
 })

@@ -1,57 +1,6 @@
 
 local ANIMATIONFADEOUTTIME = 0.125
 
---[[usermessage.Hook("resetluaanim", function(um)
-	local ent = um:ReadEntity()
-	local anim = um:ReadString()
-	local time = um:ReadFloat()
-	local power = um:ReadFloat()
-	local timescale = um:ReadFloat()
-	if ent:IsValid() then
-		ent:ResetLuaAnimation(anim, time ~= -1 and time, power ~= -1 and power, timescale ~= -1 and timescale)
-	end
-end)
-
-usermessage.Hook("setluaanim", function(um)
-	local ent = um:ReadEntity()
-	local anim = um:ReadString()
-	local time = um:ReadFloat()
-	local power = um:ReadFloat()
-	local timescale = um:ReadFloat()
-	if ent:IsValid() then
-		ent:SetLuaAnimation(anim, time ~= -1 and time, power ~= -1 and power, timescale ~= -1 and timescale)
-	end
-end)
-
-usermessage.Hook("stopluaanim", function(um)
-	local ent = um:ReadEntity()
-	local anim = um:ReadString()
-	local tim = um:ReadFloat()
-	if tim == 0 then tim = nil end
-	if ent:IsValid() then
-		ent:StopLuaAnimation(anim, tim)
-	end
-end)
-
-usermessage.Hook("stopluaanimgp", function(um)
-	local ent = um:ReadEntity()
-	local animgroup = um:ReadString()
-	local tim = um:ReadFloat()
-	if tim == 0 then tim = nil end
-	if ent:IsValid() then
-		ent:StopLuaAnimationGroup(animgroup, tim)
-	end
-end)
-
-usermessage.Hook("stopallluaanim", function(um)
-	local ent = um:ReadEntity()
-	local tim = um:ReadFloat()
-	if tim == 0 then tim = nil end
-	if ent:IsValid() then
-		ent:StopAllLuaAnimations(tim)
-	end
-end)]]
-
 net.Receive("bal_reset", function(length)
 	local ent = net.ReadEntity()
 	local anim = net.ReadString()

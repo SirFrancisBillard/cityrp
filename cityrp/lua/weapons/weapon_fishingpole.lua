@@ -1,9 +1,7 @@
 
 AddCSLuaFile()
 
-SWEP.PrintName			= "SRP Fishing Pole"
-SWEP.Author				= "The Maw"
-SWEP.Purpose    		= "Fish"
+SWEP.PrintName			= "Fishing Pole"
 
 SWEP.Spawnable			= true
 SWEP.UseHands			= true

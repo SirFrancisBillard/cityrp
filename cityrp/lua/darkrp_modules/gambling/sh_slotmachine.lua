@@ -13,13 +13,7 @@ function meta:SM_IsAdmin()
 end
 
 function meta:SM_GetPlayerMoneyM()
-	if GMD == 1 then -- 1 for DarkRP
-		return self:getDarkRPVar("money")
-	end
-	if GMD == 2 then -- 2 for DarkRP2.5.0
-		return self:getDarkRPVar("money")
-	end
-	
+	return self:getDarkRPVar("money")
 end
 if SERVER then
 	function meta:SM_AddPlayerMoneyM(int)

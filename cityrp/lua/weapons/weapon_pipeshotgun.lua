@@ -46,6 +46,8 @@ SWEP.IronsightsCrosshair = true
 SWEP.LoweredPos = Vector( 1.6397, -5.089, 4 )
 SWEP.LoweredAng = Angle( -17.2767, 28.3565, -0.4145 )
 
+SWEP.Blowback = 1200
+
 SWEP.HoldType = "shotgun"
 SWEP.ViewModelFOV = 70
 SWEP.ViewModelFlip = false
@@ -71,5 +73,5 @@ SWEP.IronsightsPos = Vector(-6.52, 0, 3.68)
 SWEP.IronsightsAng = Angle(-2.1, -0.201, 3.2)
 
 if CLIENT then
-	killicon.AddFont( "weapon_pipeshotgun", "Trebuchet24", "Pipe Shotgun", Color( 255, 80, 0, 255 ) )
+	killicon.AddFont( "weapon_pipeshotgun", "Trebuchet24", "BLEW", Color( 255, 80, 0, 255 ) )
 end

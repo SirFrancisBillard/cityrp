@@ -26,7 +26,7 @@ function PLAYER:SuicideBombDelayed(delay, radius, damage)
 		local pos = self:GetPos()
 
 		ParticleEffect("explosion_huge", pos, vector_up:Angle())
-		self:EmitSound(Sound("Jihad.Explode"))
+		self:EmitSound(Sound("Arena.Explosion"))
 
 		util.Decal("Rollermine.Crater", pos, pos - Vector(0, 0, 500), self)
 		util.Decal("Scorch", pos, pos - Vector(0, 0, 500), self)
@@ -56,7 +56,7 @@ function LargeExplosion(pos, radius, damage)
 	end
 
 	ParticleEffect("explosion_huge", pos, vector_up:Angle())
-	sound.Play(Sound("Generic.Explode"), pos)
+	sound.Play(Sound("Arena.Explosion"), pos)
 
 	util.Decal("Rollermine.Crater", pos, pos - Vector(0, 0, 500))
 	util.Decal("Scorch", pos, pos - Vector(0, 0, 500))

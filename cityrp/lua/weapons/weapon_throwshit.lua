@@ -2,11 +2,11 @@ AddCSLuaFile()
 
 SWEP.Base = "weapon_sck_base"
 
-SWEP.PrintName = "Shit"
+SWEP.PrintName = "Throw Shit"
 SWEP.Instructions = [[
 <color=green>[PRIMARY FIRE]</color> Throw shit.]]
 
-SWEP.Slot = 2
+SWEP.Slot = 5
 SWEP.SlotPos = 1
 
 SWEP.DrawAmmo = false

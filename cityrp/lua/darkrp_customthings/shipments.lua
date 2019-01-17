@@ -40,26 +40,6 @@ local function EntityShipment(who, cat, what, com, amt)
 	})
 end
 
---[[---------------------------------------------------------------------------
-DarkRP custom shipments and guns
----------------------------------------------------------------------------
-
-This file contains your custom shipments and guns.
-This file should also contain shipments and guns from DarkRP that you edited.
-
-Note: If you want to edit a default DarkRP shipment, first disable it in darkrp_config/disabled_defaults.lua
-	Once you've done that, copy and paste the shipment to this file and edit it.
-
-The default shipments and guns can be found here:
-https://github.com/FPtje/DarkRP/blob/master/gamemode/config/addentities.lua
-
-For examples and explanation please visit this wiki page:
-http://wiki.darkrp.com/index.php/DarkRP:CustomShipmentFields
-
-
-Add shipments and guns under the following line:
----------------------------------------------------------------------------]]
-
 WeaponShipment(nil, "Pistols", "lite_glock", 600)
 WeaponShipment(nil, "Pistols", "lite_dualberettas", 800)
 WeaponShipment(nil, "Pistols", "lite_deagle", 1000)
@@ -100,6 +80,9 @@ WeaponShipment(TEAM_BLACKMARKET, "Black Market", "keypad_cracker", 2400)
 WeaponShipment({TEAM_BLACKMARKET, TEAM_DOCTOR}, "Black Market", "med_kit", 2000)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "unarrest_stick", 4200)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "weapon_zipties", 5400)
+WeaponShipment(nil, "Black Market", "weapon_xbow", 8000)
+WeaponShipment(nil, "Black Market", "weapon_tranq", 9000)
+WeaponShipment(nil, "Black Market", "weapon_flamethrower", 12000)
 
 WeaponShipment(nil, "Explosives", "weapon_grenadelauncher", 12000)
 WeaponShipment(nil, "Explosives", "weapon_c4", 14000)
@@ -108,10 +91,12 @@ WeaponShipment(nil, "Explosives", "weapon_remotemine", 18000)
 WeaponShipment(nil, "Explosives", "weapon_stickylauncher", 20000)
 WeaponShipment(nil, "Explosives", "weapon_jihad", 25000)
 
-WeaponShipment(nil, "Toys", "weapon_bbgun", 1000)
+WeaponShipment(nil, "Scrap Weapons", "weapon_pipeshotgun", 2000)
 
-EntityShipment(nil, "Chemicals", "ent_bleach", "bleach", 400)
-EntityShipment(nil, "Chemicals", "ent_volatile", "volatilewaste", 800)
+WeaponShipment(nil, "Toys", "weapon_bbgun", 200)
+
+EntityShipment(nil, "Chemicals", "ent_bleach", "bleach", 20)
+EntityShipment(nil, "Chemicals", "ent_volatile", "volatilewaste", 8000)
 
 --[[
 

@@ -43,7 +43,7 @@ SWEP.UseHands = true
 SWEP.ViewModelBoneMods = {
 	["ValveBiped.Bip01_R_Finger21"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 85.318, 0) },
 	["ValveBiped.Bip01_R_Finger11"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 43.699, 0) },
-	["ValveBiped.base"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, -30, -30), angle = Angle(0, 0, 0) },
+	["ValveBiped.base"] = { scale = Vector(0, 0, 0), pos = Vector(0, -30, -30), angle = Angle(0, 0, 0) },
 	["ValveBiped.Bip01_R_Hand"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(45, 0, -65) },
 	["ValveBiped.Bip01_R_Forearm"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, 45, 0) },
 	["ValveBiped.Bip01_R_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(15, 0, -3), angle = Angle(0, -45, 2) },
@@ -63,10 +63,11 @@ function SWEP:Think()
 end
 
 function SWEP:PrimaryAttack()
-	self.Weapon:SetNextPrimaryFire(CurTime() + 1)
-	self.Weapon:SetNextSecondaryFire(CurTime() + 1)
+	self:SetNextPrimaryFire(CurTime() + 1)
+	self:SetNextSecondaryFire(CurTime() + 1)
 
-	self.Weapon:EmitSound("heil.mp3")
+	self:EmitSound("heil.mp3")
+	self.Owner:SetLuaAnimation("heil")
 
 	if CLIENT then return false end
 end

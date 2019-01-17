@@ -7,30 +7,6 @@ local function RegisterJobCategory(name, color)
 	g_RegisterJobWithCategory = name or "Other"
 end
 
---[[---------------------------------------------------------------------------
-DarkRP custom jobs
----------------------------------------------------------------------------
-
-This file contains your custom jobs.
-This file should also contain jobs from DarkRP that you edited.
-
-Note: If you want to edit a default DarkRP job, first disable it in darkrp_config/disabled_defaults.lua
-	Once you've done that, copy and paste the job to this file and edit it.
-
-The default jobs can be found here:
-https://github.com/FPtje/DarkRP/blob/master/gamemode/config/jobrelated.lua
-
-For examples and explanation please visit this wiki page:
-http://wiki.darkrp.com/index.php/DarkRP:CustomJobFields
-
-
-Add jobs under the following line:
----------------------------------------------------------------------------]]
-
---[[---------------------------------------------------------------------------
-CITIZENS
----------------------------------------------------------------------------]]
-
 local Models = {
 	Citizens = {
 		"models/player/Group01/Female_01.mdl",
@@ -152,7 +128,7 @@ TEAM_DJ = DarkRP.createJob("DJ", {
 	model = "models/player/odessa.mdl",
 	description = [[DJs are allowed to play music.
 		They can set up a club or roam around.]],
-	weapons = {},
+	weapons = {"weapon_jukebox"},
 	command = "dj",
 	max = 4,
 	salary = GAMEMODE.Config.normalsalary,
@@ -166,10 +142,10 @@ TEAM_BANKER = DarkRP.createJob("Banker", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/magnusson.mdl",
 	description = [[Bankers can legally own money printers.
-		Bankers loan money to people and allow pople to invest in a money printer business.]],
+		Bankers loan money to people and allow pople to invest in a money printing businesses.]],
 	weapons = {"weapon_jewdetector"},
 	command = "banker",
-	max = 6,
+	max = 4,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,
@@ -181,7 +157,7 @@ TEAM_LAWYER = DarkRP.createJob("Lawyer", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/gman_high.mdl",
 	description = [[Lawyers use their knowledge of the law to release people from jail.
-		Releasing people from jail is perfectly legal.]],
+		Releasing people from jail is legal, and you can charge for your services.]],
 	weapons = {"unarrest_stick"},
 	command = "lawyer",
 	max = 4,
@@ -264,6 +240,9 @@ TEAM_GATOR = DarkRP.createJob("Gator Hunter", {
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
+	ammo = {
+		["buckshot"] = 64
+	},
 	vote = false,
 	hasLicense = true,
 	candemote = false,
@@ -282,7 +261,7 @@ TEAM_RAPPER = DarkRP.createJob("Rapper", {
 	description = [[Like DJs, but with more gang shit.
 		Don't let the other rappers diss you or your coast.
 		Feud with other rappers and eliminate them at all costs.]],
-	weapons = {"lite_mac10", "lite_glock"},
+	weapons = {"lite_mac10", "lite_glock", "weapon_lean"},
 	command = "rapper",
 	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
@@ -450,14 +429,30 @@ TEAM_HITMAN = DarkRP.createJob("Hitman", {
 	category = g_RegisterJobWithCategory,
 })
 
+TEAM_ANTIFA = DarkRP.createJob("Antifa", {
+	color = g_RegisterJobWithColor,
+	model = Models.Gangsters,
+	description = [[Antifa is all about bashing fash.
+		What that means? Nobody really knows for sure.
+		Go make innocent white people's lives worse.]],
+	weapons = {"weapon_molotov", "weapon_protest"},
+	command = "antifa",
+	max = 2,
+	salary = GAMEMODE.Config.normalsalary,
+	admin = 0,
+	vote = false,
+	hasLicense = false,
+	category = g_RegisterJobWithCategory
+})
+
 TEAM_TERROR = DarkRP.createJob("Terrorist", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/guerilla.mdl",
 	description = [[Terrorists spread terror throughout the city and are in a constant war with the government.]],
 	weapons = {"lite_ak47", "weapon_jihad"},
 	command = "terrorist",
-	max = 6,
-	salary = GAMEMODE.Config.normalsalary,
+	max = 2,
+	salary = 0,
 	admin = 0,
 	vote = false,
 	hasLicense = false,
@@ -471,7 +466,7 @@ TEAM_TERRORLEADER = DarkRP.createJob("Terrorist Leader", {
 	weapons = {"lite_ak47", "weapon_jihad", "weapon_c4"},
 	command = "terroristleader",
 	max = 1,
-	salary = GAMEMODE.Config.normalsalary,
+	salary = 0,
 	admin = 0,
 	vote = false,
 	hasLicense = false,
@@ -482,10 +477,10 @@ TEAM_NAZI = DarkRP.createJob("Nazi", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/dod_german.mdl",
 	description = [[Nazis are on a quest to exterminate all jews and correct everyone's grammar.
-		Killing jews in public is legal.]],
+		Killing jews in public is legal, but they can fight back.]],
 	weapons = {"lite_fiveseven", "weapon_jewdetector", "weapon_heil"},
 	command = "nazi",
-	max = 6,
+	max = 4,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,
@@ -558,7 +553,7 @@ TEAM_HOBO = DarkRP.createJob("Hobo", {
 		Beg for your food and money.
 		Sing for everyone who passes to get money.
 		Make your own wooden home somewhere in a corner or outside someone else's door.]],
-	weapons = {"weapon_bugbait"},
+	weapons = {"weapon_throwshit"},
 	command = "hobo",
 	max = 6,
 	salary = 0,
@@ -573,16 +568,19 @@ TEAM_HOBO = DarkRP.createJob("Hobo", {
 TEAM_SUPERHOBO = DarkRP.createJob("Super Hobo", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/charple.mdl",
-	description = [[Slighter higher than the lowest member of society.
+	description = [[Slightly higher than the lowest member of society.
 		Hobos look up to you, but to everyone else, you're just another hobo.
-		You can lead the hobos to a rebellion against the government.
+		You can lead the hobos to a rebellion against the higher class.
 		You carry a bent paperclip that can be used to pick locks.
-		You also carry a BB gun your father gave you before he died.]],
-	weapons = {"lite_fiveseven", "lockpick", "weapon_bugbait"},
+		You also carry your family heirloom, a crudely made shotgun.]],
+	weapons = {"weapon_pipeshotgun", "lockpick", "weapon_throwshit"},
 	command = "superhobo",
 	max = 1,
 	salary = 0,
 	admin = 0,
+	ammo = {
+		["buckshot"] = 10
+	},
 	vote = false,
 	hasLicense = false,
 	candemote = false,
@@ -595,7 +593,7 @@ TEAM_SEWER = DarkRP.createJob("Sewer Monster", {
 	model = "models/player/zombie_soldier.mdl",
 	description = [[There isn't even a sewer.
 		How did you get here?]],
-	weapons = {"weapon_bugbait", "weapon_knife"},
+	weapons = {"weapon_throwshit", "weapon_knife"},
 	command = "sewermonster",
 	max = 1,
 	salary = 0,

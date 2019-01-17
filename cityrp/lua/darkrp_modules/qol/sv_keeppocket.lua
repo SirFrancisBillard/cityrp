@@ -11,7 +11,6 @@ forever = ( GetConVar( addon_name.."_forever" ):GetInt()~=0 )
 local function loadCustomDarkRPItems()
 	darkrp_keep_pocket = darkrp_keep_pocket or {}
 	
-	
 	-- Copy of garrysmod\gamemodes\DarkRP\entities\weapons\pocket\sv_init.lua
 	local function sendPocketItems( ply )
 		net.Start( "DarkRP_Pocket" )
