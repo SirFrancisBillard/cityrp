@@ -20,7 +20,7 @@ end
 if SERVER then
 	timer.Create("VolatileWasteCountdown", 1, 0, function()
 		for k, v in pairs(player.GetAll()) do
-			if IsValid(v) and v:IsVolatile() and v:Alive() then
+			if IsValid(v) and v:GetVolatile() and v:Alive() then
 				if v:Health() <= 10 then
 					v:SuicideBombDelayed(0, 200 + (40 * self:GetVolatile()), 120 + (40 * self:GetVolatile()))
 				else
