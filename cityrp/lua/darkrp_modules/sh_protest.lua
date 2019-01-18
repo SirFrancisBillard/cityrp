@@ -1,6 +1,7 @@
 
 -- burn a book, save a tree!
 -- sign text used in weapon_protest.lua
+-- #NoSimplerr#
 
 local PLAYER = FindMetaTable("Player")
 
@@ -22,14 +23,14 @@ if SERVER then
 		if string.len(text) > 64 then return end
 		if CurTime() - self.LastProtestUpdate < 10 then return end
 		self.LastProtestUpdate = CurTime()
-		ply:SetProtestText()
+		ply:SetProtestText(text)
 	end)
 else
-	function PLAYER:SetProtestText(text)
+	function SendProtestText(text)
 		if self ~= LocalPlayer() then return end
 		if string.len(text) > 64 then return end
-		if CurTime() - self.LastProtestUpdate < 10 then return end
-		self.LastProtestUpdate = CurTime()
+		if CurTime() - LocalPlayer().LastProtestUpdate < 10 then return end
+		LocalPlayer().LastProtestUpdate = CurTime()
 		net.Start("UpdateProtestSign")
 		net.WriteString(text)
 		net.SendToServer()

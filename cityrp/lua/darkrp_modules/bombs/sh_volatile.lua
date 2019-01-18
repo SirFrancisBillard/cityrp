@@ -1,7 +1,10 @@
 
+do return end -- WHAT THE FUCK IS WRONG WITH THIS MODULE
+
 local PLAYER = FindMetaTable("Player")
 
 function PLAYER:GetVolatile()
+	print(self:GetNWInt("volatile_waste", 0))
 	return self:GetNWInt("volatile_waste", 0)
 end
 
@@ -22,7 +25,7 @@ if SERVER then
 		for k, v in pairs(player.GetAll()) do
 			if IsValid(v) and v:GetVolatile() and v:Alive() then
 				if v:Health() <= 10 then
-					v:SuicideBombDelayed(0, 200 + (40 * self:GetVolatile()), 120 + (40 * self:GetVolatile()))
+					v:SuicideBombDelayed(0, 200 + (40 * v:GetVolatile()), 120 + (40 * v:GetVolatile()))
 				else
 					v:SetHealth(math.Clamp(v:Health() - 5, 0, v:GetMaxHealth()))
 				end
@@ -33,7 +36,7 @@ if SERVER then
 	hook.Add("DoPlayerDeath", "VolatileWasteDeathBoom", function(ply)
 		if IsValid(ply) and ply:GetVolatile() then
 			ply:SetVolatile(0)
-			LargeExplosion(ply:GetPos(), 200 + (40 * self:GetVolatile()), 120 + (40 * self:GetVolatile()))
+			LargeExplosion(ply:GetPos(), 200 + (40 * ply:GetVolatile()), 120 + (40 * ply:GetVolatile()))
 		end
 	end)
 end

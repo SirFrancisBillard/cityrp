@@ -62,9 +62,9 @@ SWEP.DrawCrosshair = true
 local Damage = 30
 local SwingDist = 100
 
-local SwingSound = Sound("Weapon_Knife.Slash")
-local HitSound = Sound("physics/wood/wood_box_impact_hard3.wav")
-local StabSound = Sound("Weapon_Knife.Hit")
+local SwingSound = Sound("Weapon_Crowbar.Single")
+local HitSound = Sound("Wood.ImpactHard")
+local StabSound = Sound("Weapon_Crowbar.Melee_Hit")
 
 local doors = {
 	["prop_door"] = true,

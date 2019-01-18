@@ -4,6 +4,8 @@ SWEP.Base = "lite_base_sck"
 
 SWEP.PrintName = "Pipe Shotgun"
 SWEP.Category = "Lite Weapons"
+SWEP.DrawWeaponInfoBox = false
+SWEP.IconLetter = "B"
 
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
@@ -58,7 +60,7 @@ SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = false
 
 SWEP.ViewModelBoneMods = {
-	["v_weapon.xm1014_Parent"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
+	["v_weapon.xm1014_Parent"] = { scale = Vector(0.01, 0.01, 0.01), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 }
 
 SWEP.VElements = {
@@ -73,5 +75,5 @@ SWEP.IronsightsPos = Vector(-6.52, 0, 3.68)
 SWEP.IronsightsAng = Angle(-2.1, -0.201, 3.2)
 
 if CLIENT then
-	killicon.AddFont( "weapon_pipeshotgun", "Trebuchet24", "BLEW", Color( 255, 80, 0, 255 ) )
+	killicon.AddFont( "weapon_pipeshotgun", "Trebuchet24", "Pipe Shotgun", Color( 255, 80, 0, 255 ) )
 end
