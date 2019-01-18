@@ -54,7 +54,7 @@ if CLIENT then
 	function ENT:Draw()
 		self:DrawModel()
 
-		if LocalPlayer():GetEyeTrace().Entity ~= self or  then return end
+		if LocalPlayer():GetEyeTrace().Entity ~= self then return end
 
 		local w = ScrW()
 		local h = ScrH()

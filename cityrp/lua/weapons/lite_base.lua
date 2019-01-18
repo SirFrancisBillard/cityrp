@@ -88,7 +88,6 @@ end
 
 function SWEP:ShootEffects()
 	if not self:GetIronsights() or not self.UseIronsightsRecoil then
-		--self:SendWeaponAnim( self:Clip1() > 0 and ACT_VM_PRIMARYATTACK or ACT_VM_DRYFIRE )
 		self:SendWeaponAnim( ACT_VM_PRIMARYATTACK )
 		self:QueueIdle()
 	else
@@ -127,7 +126,11 @@ function SWEP:PrimaryAttack()
 	self:AddRecoil()
 	self:ViewPunch()
 
-	self:EmitSound( self.Primary.Sound )
+	if self.Primary.PitchOverride then
+		self:EmitSound(self.Primary.Sound, 75, self.Primary.PitchOverride)
+	else
+		self:EmitSound(self.Primary.Sound)
+	end
 
 	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
 	self:SetReloadTime( CurTime() + self.Primary.Delay )

@@ -30,6 +30,7 @@ SWEP.Slot = 3
 SWEP.SlotPos = 1
 
 SWEP.Primary.Sound = Sound("weapons/usp/usp1.wav")
+SWEP.Primary.PitchOverride = 120
 SWEP.Primary.Recoil = 3
 SWEP.Primary.Damage = 10
 SWEP.Primary.NumShots = 1

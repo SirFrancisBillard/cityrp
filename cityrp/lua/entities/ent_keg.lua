@@ -7,36 +7,35 @@ ENT.Category = "Alcohol Distilling"
 ENT.Spawnable = true
 ENT.Model = "models/props_c17/woodbarrel001.mdl"
 
-function ENT:Initialize()
-	self:SetModel(self.Model)
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
-	if SERVER then
-		self:PhysicsInit(SOLID_VPHYSICS)
-		self:SetUseType(SIMPLE_USE)
-	end
-	local phys = self:GetPhysicsObject()
-	if IsValid(phys) then
-		phys:Wake()
-	end
-	self:SetFermentingProgress(0)
-	self:SetAlcohol("None")
-	self:SetIsFermenting(false)
-end
+
 function ENT:SetupDataTables()
 	self:NetworkVar("Int", 0, "FermentingProgress")
 	self:NetworkVar("String", 0, "Alcohol")
 	self:NetworkVar("String", 1, "AlcoholClass")
 	self:NetworkVar("Bool", 0, "IsFermenting")
 end
+
 function ENT:CanFerment()
 	return (self:GetAlcohol() != "None")
 end
+
 function ENT:DoneFermenting()
 	return (self:GetFermentingProgress() >= 100)
 end
 
 if SERVER then
+	function ENT:Initialize()
+		self:SetModel(self.Model)
+		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetSolid(SOLID_VPHYSICS)
+		self:PhysicsInit(SOLID_VPHYSICS)
+		self:SetUseType(SIMPLE_USE)
+		self:PhysWake()
+		self:SetFermentingProgress(0)
+		self:SetAlcohol("None")
+		self:SetIsFermenting(false)
+	end
+
 	function ENT:StartTouch(ent)
 		if IsValid(ent) then
 			if ent.MakesAlcohol and not self:GetIsFermenting() then
@@ -55,6 +54,7 @@ if SERVER then
 		self:NextThink(CurTime() + 1)
 		return true
 	end
+
 	function ENT:Use(activator, caller)
 		if IsValid(caller) and caller:IsPlayer() then
 			if self:DoneFermenting() then

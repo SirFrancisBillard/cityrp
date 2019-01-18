@@ -33,6 +33,8 @@ SWEP.ViewModel = "models/weapons/c_arms.mdl"
 SWEP.WorldModel = ""
 SWEP.UseHands = true
 
+SWEP.OwnerIsCaptive = true
+
 function SWEP:SetupDataTables()
 	self:NetworkVar("Int", 0, "Struggle")
 end

@@ -2,11 +2,9 @@ AddCSLuaFile()
 
 SWEP.Base = "weapon_sck_base"
 
-SWEP.PrintName = "Axe"
+SWEP.PrintName = "Bike Lock"
 SWEP.Instructions = [[
-<color=green>[PRIMARY FIRE]</color> Brutally slaughter someone.
-
-Hitting doors can open them.]]
+<color=green>[PRIMARY FIRE]</color> Brutally slaughter someone.]]
 
 SWEP.HoldType = "melee2"
 SWEP.ViewModelFOV = 60
@@ -66,15 +64,6 @@ local SwingSound = Sound("Weapon_Knife.Slash")
 local HitSound = Sound("physics/wood/wood_box_impact_hard3.wav")
 local StabSound = Sound("Weapon_Knife.Hit")
 
-local doors = {
-	["prop_door"] = true,
-	["prop_door_rotating"] = true,
-	["func_door"] = true,
-	["func_door_rotating"] = true,
-	["func_rotating"] = true,
-	["func_movelinear"] = true,
-}
-
 function SWEP:CanPrimaryAttack()
 	return true
 end
@@ -101,7 +90,7 @@ function SWEP:PrimaryAttack()
 	-- hit or miss
 	-- i guess they nev- *dies*
 	if IsValid(hitEnt) or tr_main.HitWorld then
-		-- self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
+		self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
 
 		if not (CLIENT and (not IsFirstTimePredicted())) then
 			local edata = EffectData()
@@ -111,11 +100,6 @@ function SWEP:PrimaryAttack()
 			edata:SetSurfaceProp(tr_main.SurfaceProps)
 			edata:SetHitBox(tr_main.HitBox)
 			edata:SetEntity(hitEnt)
-
-			if door[hitEnt:GetClass()] and math.random(3) == 3 then
-				hitEnt:Fire("unlock")
-				hitEnt:Fire("open")
-			end
 
 			if hitEnt:IsPlayer() or hitEnt:GetClass() == "prop_ragdoll" then
 				self:EmitSound(StabSound)
@@ -130,8 +114,9 @@ function SWEP:PrimaryAttack()
 	else
 		-- miss
 		self:EmitSound(SwingSound)
-		-- self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+		self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 	end
+
 
 	if SERVER then
 		-- do another trace that sees nodraw stuff like func_button

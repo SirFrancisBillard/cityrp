@@ -10,14 +10,14 @@ ENT.Spawnable = true
 ENT.Model = "models/weapons/w_pist_elite_dropped.mdl"
 ENT.CraftingIngredient = "illegal_parts"
 
-function ENT:Initialize()
-	self:SetModel(self.Model)
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_BBOX)
-	self:PhysicsInit(SOLID_VPHYSICS)
-	if SERVER then
+if SERVER then
+	function ENT:Initialize()
+		self:SetModel(self.Model)
+		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetSolid(SOLID_BBOX)
+		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
-	end
 
-	self:PhysWake()
+		self:PhysWake()
+	end
 end

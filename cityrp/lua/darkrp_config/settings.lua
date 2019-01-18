@@ -1,20 +1,3 @@
---[[-------------------------------------------------------------------------
-DarkRP config settings.
------------------------------------------------------------------------------
-
-This is the settings file of DarkRP. Every DarkRP setting is listed here.
-
-Warning:
-If this file is missing settings (because of e.g. an update), DarkRP will assume default values for these settings.
-You need not worry about updating this file. If a new setting is added you can manually add them to this file.
----------------------------------------------------------------------------]]
-
-
---[[
-Toggle settings.
-Set to true or false.
-]]
-
 -- voice3D - Enable/disable 3DVoice is enabled.
 GM.Config.voice3D                       = true
 -- AdminsCopWeapons - Enable/disable admins spawning with cop weapons.
@@ -197,7 +180,7 @@ GM.Config.doorcost                      = 50
 -- entremovedelay - how long to wait before removing a bought entity after disconnect.
 GM.Config.entremovedelay                = 0
 -- gunlabweapon - The weapon that the gunlab spawns.
-GM.Config.gunlabweapon                  = "swb_ak47"
+GM.Config.gunlabweapon                  = "lite_ak47"
 -- jailtimer - Sets the jailtimer (in seconds).
 GM.Config.jailtimer                     = 120
 -- lockdowndelay - The amount of time a mayor must wait before starting the next lockdown.

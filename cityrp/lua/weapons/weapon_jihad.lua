@@ -6,7 +6,8 @@ SWEP.SlotPos = 1
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = false
 
-SWEP.Instructions = [[<color=green>[PRIMARY FIRE]</color> Explode almost instantly.
+SWEP.Instructions = [[
+<color=green>[PRIMARY FIRE]</color> Explode almost instantly.
 
 Martyrdom, death in holy war, is glorious. Allah will secure you as a citizen of eternal paradise.
 
@@ -51,3 +52,7 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack() end
+
+if CLIENT then
+	killicon.AddFont("weapon_jihad", "Trebuchet24", "JIHAD", Color(255, 80, 0, 255))
+end

@@ -14,15 +14,14 @@ ENT.Models = {
 }
 ENT.CraftingIngredient = "scrap"
 
-function ENT:Initialize()
-	local srand = util.SharedRandom("billard", 0, #self.Models)
-	self:SetModel(self.Models[srand])
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_BBOX)
-	self:PhysicsInit(SOLID_VPHYSICS)
-	if SERVER then
+if SERVER then
+	function ENT:Initialize()
+		self:SetModel(self.Models[math.random(#self.Models)])
+		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetSolid(SOLID_BBOX)
+		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
-	end
 
-	self:PhysWake()
+		self:PhysWake()
+	end
 end

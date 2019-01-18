@@ -435,7 +435,7 @@ TEAM_ANTIFA = DarkRP.createJob("Antifa", {
 	description = [[Antifa is all about bashing fash.
 		What that means? Nobody really knows for sure.
 		Go make innocent white people's lives worse.]],
-	weapons = {"weapon_molotov", "weapon_protest"},
+	weapons = {"weapon_bikelock", "weapon_molotov", "weapon_protest"},
 	command = "antifa",
 	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
@@ -456,7 +456,11 @@ TEAM_TERROR = DarkRP.createJob("Terrorist", {
 	admin = 0,
 	vote = false,
 	hasLicense = false,
-	category = g_RegisterJobWithCategory
+	category = g_RegisterJobWithCategory,
+	PlayerDeath = function(ply, weapon, killer)
+		ply:teamBan()
+		ply:changeTeam(GAMEMODE.DefaultTeam, true)
+	end
 })
 
 TEAM_TERRORLEADER = DarkRP.createJob("Terrorist Leader", {
@@ -470,7 +474,11 @@ TEAM_TERRORLEADER = DarkRP.createJob("Terrorist Leader", {
 	admin = 0,
 	vote = false,
 	hasLicense = false,
-	category = g_RegisterJobWithCategory
+	category = g_RegisterJobWithCategory,
+	PlayerDeath = function(ply, weapon, killer)
+		ply:teamBan()
+		ply:changeTeam(GAMEMODE.DefaultTeam, true)
+	end
 })
 
 TEAM_NAZI = DarkRP.createJob("Nazi", {

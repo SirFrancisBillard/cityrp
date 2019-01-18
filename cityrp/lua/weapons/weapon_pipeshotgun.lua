@@ -13,7 +13,7 @@ SWEP.SlotPos = 1
 
 SWEP.CSMuzzleFlashes = true
 
-SWEP.Primary.Sound = Sound( "Weapon_XM1014.Single" )
+SWEP.Primary.Sound = Sound("Weapon_XM1014.Single")
 SWEP.Primary.Recoil = 50
 SWEP.Primary.Damage = 5
 SWEP.Primary.NumShots = 20

@@ -2,11 +2,8 @@ AddCSLuaFile()
 
 SWEP.Base = "weapon_sck_base"
 
-SWEP.PrintName = "Jew Detector"
-SWEP.Instructions = [[
-<color=green>[PRIMARY FIRE]</color> Detect if someone is a Jew.
-
-<color=gray>Definitely not anti-Jew.</color>]]
+SWEP.PrintName = "Bolt Cutters"
+SWEP.Instructions = "<color=green>[PRIMARY FIRE]</color> Free someone from captivity."
 
 SWEP.Slot = 2
 SWEP.SlotPos = 3
@@ -63,15 +60,18 @@ function SWEP:PrimaryAttack()
 		return
 	end
 
+	local wep = trace.Entity:GetActiveWeapon()
+	if not IsValid(wep) or not wep.OwnerIsCaptive then return end
+
 	self:SetIsTying(true)
 	self:SetStartTie(CurTime())
-	self:SetEndTie(CurTime() + 4)
+	self:SetEndTie(CurTime() + 1)
 
-	self:SetNextSoundTime(CurTime() + 0.5)
+	self:SetNextSoundTime(CurTime() + 0.2)
 
 	if CLIENT then
 		self.Dots = ""
-		self.NextDotsTime = CurTime() + 0.5
+		self.NextDotsTime = CurTime() + 0.2
 	end
 end
 
@@ -81,28 +81,14 @@ function SWEP:Holster()
 	return self.BaseClass.Holster(self)
 end
 
-local Jewness = {
-	[TEAM_BANKER] = 6,
-	[TEAM_MAYOR] = 4,
-}
-
 function SWEP:Succeed(ply)
 	if not IsValid(self.Owner) then return end
 	self:SetIsTying(false)
 
 	if CLIENT then return end
 
-	local raw = ply:GetNWInt("torah_amount", 0)
-	if Jewness[ply:GetTeam()] then
-		raw = raw + Jewness[ply:GetTeam()]
-	end
-	local jew_percent = math.Clamp(raw * 10, 0, 100)
-
-	if raw > 10 then
-		DarkRP.notify(self.Owner, 1, 4, "Holy smokes! " .. ply:Nick() .. " is JEW OVERLOAD!!!")
-	else
-		DarkRP.notify(self.Owner, 1, 4, ply:Nick() .. " is " .. jew_percent .. "% Jewish!")
-	end
+	ply:StripWeapon()
+	DarkRP.notify(self.Owner, 1, 4, "You have freed " .. ply:Nick() .. " from captivity!")
 end
 
 function SWEP:Fail()
@@ -110,7 +96,6 @@ function SWEP:Fail()
 	if CLIENT then return end
 	self:SetIsTying(false)
 	self:SetNextSoundTime(0)
-	DarkRP.notify(self.Owner, 1, 4, "Detection failed!")
 end
 
 function SWEP:Think()
@@ -121,13 +106,15 @@ function SWEP:Think()
 		if not IsValid(trace.Entity) or trace.HitPos:DistToSqr(self:GetOwner():GetShootPos()) > 10000 or not trace.Entity:IsPlayer() then
 			self:Fail()
 		end
+		local wep = trace.Entity:GetActiveWeapon()
+		if not IsValid(wep) or not wep.OwnerIsCaptive then self:Fail() end
 		if self:GetEndTie() <= CurTime() then
 			self:Succeed(trace.Entity)
 		end
 	end
     if self:GetNextSoundTime() ~= 0 and CurTime() >= self:GetNextSoundTime() then
 		if self:GetIsTying() then
-			self:SetNextSoundTime(CurTime() + 0.5)
+			self:SetNextSoundTime(CurTime() + 0.2)
 			self:EmitSound("npc/combine_soldier/gear5.wav", 100, 100)
 		else
 			self:SetNextSoundTime(0)
@@ -135,7 +122,7 @@ function SWEP:Think()
 		end
 	end
 	if CLIENT and self.NextDotsTime and CurTime() >= self.NextDotsTime then
-		self.NextDotsTime = CurTime() + 0.5
+		self.NextDotsTime = CurTime() + 0.2
 		self.Dots = self.Dots or ""
 		local len = string.len(self.Dots)
 		local dots = {
@@ -162,6 +149,6 @@ function SWEP:DrawHUD()
 
 		draw.RoundedBox(8, x, y, width, height, Color(10, 10, 10, 120))
 		draw.RoundedBox(cornerRadius, x + 8, y + 8, BarWidth, height - 16, Color(0, 0 + (status * 255), 255 - (status * 255), 255))
-		draw.DrawNonParsedSimpleText("Detecting" .. self.Dots, "Trebuchet24", w / 2, y + height / 2, Color(255, 255, 255, 255), 1, 1)
+		draw.DrawNonParsedSimpleText("Freeing" .. self.Dots, "Trebuchet24", w / 2, y + height / 2, Color(255, 255, 255, 255), 1, 1)
 	end
 end
