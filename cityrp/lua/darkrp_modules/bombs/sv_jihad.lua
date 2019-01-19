@@ -1,4 +1,6 @@
 
+-- #NoSimplerr#
+
 local PLAYER = FindMetaTable("Player")
 
 function PLAYER:SuicideBombDelayed(delay, radius, damage)
@@ -26,6 +28,7 @@ function PLAYER:SuicideBombDelayed(delay, radius, damage)
 		local pos = self:GetPos()
 
 		ParticleEffect("explosion_huge", pos, vector_up:Angle())
+		util.ScreenShake(pos, 5, 5, 1, 4000)
 		self:EmitSound(Sound("Arena.Explosion"))
 
 		util.Decal("Rollermine.Crater", pos, pos - Vector(0, 0, 500), self)
@@ -56,6 +59,7 @@ function LargeExplosion(pos, radius, damage)
 	end
 
 	ParticleEffect("explosion_huge", pos, vector_up:Angle())
+	util.ScreenShake(pos, 5, 5, 1, 4000)
 	sound.Play(Sound("Arena.Explosion"), pos)
 
 	util.Decal("Rollermine.Crater", pos, pos - Vector(0, 0, 500))

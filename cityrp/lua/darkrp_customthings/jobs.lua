@@ -138,6 +138,21 @@ TEAM_DJ = DarkRP.createJob("DJ", {
 	category = g_RegisterJobWithCategory,
 })
 
+TEAM_FOLKSINGER = DarkRP.createJob("Folk Singer", {
+	color = g_RegisterJobWithColor,
+	model = "models/player/odessa.mdl",
+	description = [[You dropped out of college and all you got is a guitar.
+		Better hope you're good enough to make a living...]],
+	weapons = {"weapon_guitar"},
+	command = "folksinger",
+	max = 2,
+	salary = GAMEMODE.Config.normalsalary,
+	admin = 0,
+	vote = false,
+	hasLicense = false,
+	category = g_RegisterJobWithCategory,
+})
+
 TEAM_BANKER = DarkRP.createJob("Banker", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/magnusson.mdl",
@@ -731,22 +746,19 @@ SPECIAL
 
 RegisterJobCategory("Special", Color(255, 0, 255))
 
-TEAM_KARDASHIAN = DarkRP.createJob("Kim Kardashian", {
+TEAM_HELLENKELLER = DarkRP.createJob("Hellen Keller", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/alyx.mdl",
-	description = [[You aren't very bright.
-		You make lots of money.
-		You are always KOS.]],
+	description = [[You were dealt a bad hand.
+		Very unfortunate.]],
 	weapons = {},
-	command = "kardashian",
+	command = "hellenkeller",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary * 4,
 	admin = 0,
 	vote = false,
 	hasLicense = false,
-	category = g_RegisterJobWithCategory,
-	customCheck = function(ply) return #player.GetAll() > 3 end,
-	CustomCheckFailMsg = "There must be at least four players on the server to play as Kim Kardashian!"
+	category = g_RegisterJobWithCategory
 })
 
 TEAM_EDGYTEEN = DarkRP.createJob("Edgy Teen", {

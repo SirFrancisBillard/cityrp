@@ -15,7 +15,7 @@ local OutlineColor = Color(0, 0, 0, 0)
 local function GetActionOfEntity(ent)
 	if ent:IsNPC() then return "Interact" end
 	if ent:IsVehicle() then return "Drive" end
-	return UseHintOverrides[ent:GetClass()] or ent.Action or "Use"
+	return ent.Action or UseHintOverrides[ent:GetClass()] or false
 end
 
 hook.Add("HUDPaint", "DrawUseHints", function()
@@ -23,7 +23,7 @@ hook.Add("HUDPaint", "DrawUseHints", function()
 	local halfScrH = ScrH() / 2
 	local halfScrW = ScrW() / 2
 	local trent = tr.Entity
-	if IsValid(trent) and not trent:IsPlayer() and trent:GetPos():Distance(LocalPlayer():EyePos()) <= 200 and (istable(scripted_ents.Get(trent:GetClass())) or not isstring(trent.Base)) then
+	if IsValid(trent) and not trent:IsPlayer() and trent:GetPos():Distance(LocalPlayer():EyePos()) <= 200 and GetActionOfEntity(trent) and (istable(scripted_ents.Get(trent:GetClass())) or not isstring(trent.Base)) then
 		local a = Lerp(FrameTime(), HintColor.a, 255)
 		HintColor.a = a
 		OutlineColor.a = a

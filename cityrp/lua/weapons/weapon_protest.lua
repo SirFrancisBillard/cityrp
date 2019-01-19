@@ -88,7 +88,7 @@ end
 function SWEP:Reload()
 	if (CLIENT or game.SinglePlayer()) and IsFirstTimePredicted() and self.CanSetText then
 		self.CanSetText = false
-		Derma_StringRequest("Protest Sign", "What cause are you going to support today?", "Burn a book, save a tree!", function(text)
+		local frame = Derma_StringRequest("Protest Sign", "What cause are you going to support today?", "Burn a book, save a tree!", function(text)
 			if IsValid(self) then
 				SendProtestText(text)
 				self.CanSetText = true
@@ -99,6 +99,7 @@ function SWEP:Reload()
 				self.CanSetText = true
 			end
 		end)
+		frame:SetSkin("DarkRP")
 	end
 end
 

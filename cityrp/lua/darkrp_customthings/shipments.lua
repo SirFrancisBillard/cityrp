@@ -75,6 +75,7 @@ WeaponShipment(nil, "Grenades", "lite_smokegrenade", 2000)
 
 WeaponShipment(nil, "Black Market", "weapon_molotov", 400)
 WeaponShipment(nil, "Black Market", "weapon_knife", 600)
+WeaponShipment(nil, "Black Market", "weapon_boltcutters", 1000)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "lockpick", 1600)
 WeaponShipment(TEAM_BLACKMARKET, "Black Market", "keypad_cracker", 2400)
 WeaponShipment({TEAM_BLACKMARKET, TEAM_DOCTOR}, "Black Market", "med_kit", 2000)
@@ -93,7 +94,10 @@ WeaponShipment(nil, "Explosives", "weapon_jihad", 25000)
 
 WeaponShipment(nil, "Scrap Weapons", "weapon_pipeshotgun", 2000)
 
-WeaponShipment(nil, "Toys", "weapon_bbgun", 200)
+WeaponShipment(nil, "Fun", "weapon_monkeymilk", 40)
+WeaponShipment(nil, "Fun", "weapon_bbgun", 200)
+WeaponShipment(nil, "Fun", "weapon_tennis", 300)
+WeaponShipment(nil, "Fun", "weapon_guitar", 600)
 
 EntityShipment(nil, "Chemicals", "ent_bleach", "bleach", 20)
 EntityShipment(nil, "Chemicals", "ent_volatile", "volatilewaste", 8000)

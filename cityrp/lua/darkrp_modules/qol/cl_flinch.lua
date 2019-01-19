@@ -1,7 +1,6 @@
 
 net.Receive("ShowPlayerFlinch", function(len)
-	local index = net.ReadEntity()
-	local ply = Entity(index)
+	local ply = net.ReadEntity()
 	if IsValid(ply) and ply:IsPlayer() then
 		ply:AnimRestartGesture(GESTURE_SLOT_FLINCH, ACT_FLINCH_HEAD, true)
 	end

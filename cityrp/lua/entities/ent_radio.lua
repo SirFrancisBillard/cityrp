@@ -4,7 +4,7 @@ ENT.Type = "anim"
 ENT.Base = "base_entity"
 ENT.PrintName = "Radio"
 ENT.Spawnable = true
-ENT.Model = "models/props/cs_italy/bananna.mdl"
+ENT.Model = "models/props/cs_office/radio.mdl"
 
 local RadioSongs = {
 	[1] = "https://sirfrancisbillard.github.io/billard-radio/music/california_love.mp3",

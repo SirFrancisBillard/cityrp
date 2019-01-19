@@ -1,5 +1,3 @@
-print("Serverside loaded") 
-print("Made by Minty Fresh")
 	util.AddNetworkString("ClientMenu") --Opens a list of all players
 	util.AddNetworkString("RequestScreen") -- Requests Player's screen
 	util.AddNetworkString("WarrantRequest") -- Requests server to ask for a screenshot

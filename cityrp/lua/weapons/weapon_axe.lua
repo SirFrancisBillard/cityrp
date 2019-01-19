@@ -163,3 +163,7 @@ end
 function SWEP:SecondaryAttack() end
 function SWEP:Reload() end
 function SWEP:Think() end
+
+if CLIENT then
+	killicon.AddFont("weapon_axe", "Trebuchet24", SWEP.PrintName, Color(255, 80, 0, 255))
+end

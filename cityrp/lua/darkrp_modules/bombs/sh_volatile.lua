@@ -1,4 +1,6 @@
 
+-- #NoSimplerr#
+
 do return end -- WHAT THE FUCK IS WRONG WITH THIS MODULE
 
 local PLAYER = FindMetaTable("Player")

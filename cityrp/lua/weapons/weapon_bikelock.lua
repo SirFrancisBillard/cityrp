@@ -6,30 +6,29 @@ SWEP.PrintName = "Bike Lock"
 SWEP.Instructions = [[
 <color=green>[PRIMARY FIRE]</color> Brutally slaughter someone.]]
 
-SWEP.HoldType = "melee2"
-SWEP.ViewModelFOV = 60
+SWEP.HoldType = "melee"
+SWEP.ViewModelFOV = 70
 SWEP.ViewModelFlip = false
 SWEP.UseHands = true
-SWEP.ViewModel = "models/weapons/c_357.mdl"
+SWEP.ViewModel = "models/weapons/cstrike/c_knife_t.mdl"
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 SWEP.ShowViewModel = true
 SWEP.ShowWorldModel = false
 
 SWEP.ViewModelBoneMods = {
-	["ValveBiped.Bip01_R_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(3.888, -1.297, -2.408), angle = Angle(0, 0, 0) },
-	["Python"] = { scale = Vector(0, 0, 0), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) },
-	["ValveBiped.Bip01_L_Finger42"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(-6.211, 32.226, 0) },
-	["ValveBiped.Bip01_L_UpperArm"] = { scale = Vector(1, 1, 1), pos = Vector(9.965, 4.522, 3.088), angle = Angle(0, 0, 0) },
-	["ValveBiped.Bip01_R_Hand"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(40.321, -5.857, -80.337) }
+	["v_weapon.Knife_Handle"] = { scale = Vector(0.009, 0.009, 0.009), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0) }
 }
 
 SWEP.VElements = {
-	["axe"] = { type = "Model", model = "models/props/CS_militia/axe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.493, 1.682, -5.781), angle = Angle(1.485, -16.361, 90), size = Vector(1.08, 1.08, 1.08), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["tube"] = { type = "Model", model = "models/props_wasteland/horizontalcoolingtank04.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "arch", pos = Vector(0, 0, 0), angle = Angle(0, -91.488, -180), size = Vector(0.039, 0.014, 0.014), color = Color(255, 255, 255, 255), surpresslightning = false, material = "phoenix_storms/metalfloor_2-3", skin = 0, bodygroup = {} },
+	["arch"] = { type = "Model", model = "models/props/de_train/tunnelarch.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(8.616, -0.142, -3.945), angle = Angle(7.267, -75.945, 32.497), size = Vector(0.032, 0.032, 0.032), color = Color(255, 255, 255, 255), surpresslightning = false, material = "phoenix_storms/side", skin = 0, bodygroup = {} }
 }
 
 SWEP.WElements = {
-	["axe"] = { type = "Model", model = "models/props/CS_militia/axe.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.302, 1.279, -3.52), angle = Angle(0, -1.17, 87.662), size = Vector(1.014, 1.014, 1.014), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
+	["tube"] = { type = "Model", model = "models/props_wasteland/horizontalcoolingtank04.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "arch", pos = Vector(0, 0, 0), angle = Angle(0, -91.488, -180), size = Vector(0.039, 0.014, 0.014), color = Color(255, 255, 255, 255), surpresslightning = false, material = "phoenix_storms/metalfloor_2-3", skin = 0, bodygroup = {} },
+	["arch"] = { type = "Model", model = "models/props/de_train/tunnelarch.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(10.463, 0.214, -1.606), angle = Angle(0, -79.925, 65.258), size = Vector(0.032, 0.032, 0.032), color = Color(255, 255, 255, 255), surpresslightning = false, material = "phoenix_storms/side", skin = 0, bodygroup = {} }
 }
+
 
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
@@ -60,9 +59,9 @@ SWEP.DrawCrosshair = true
 local Damage = 30
 local SwingDist = 100
 
-local SwingSound = Sound("Weapon_Knife.Slash")
-local HitSound = Sound("physics/wood/wood_box_impact_hard3.wav")
-local StabSound = Sound("Weapon_Knife.Hit")
+local SwingSound = Sound("Weapon_Crowbar.Single")
+local HitSound = Sound("MetalVent.ImpactHard")
+local StabSound = Sound("Weapon_Crowbar.Melee_Hit")
 
 function SWEP:CanPrimaryAttack()
 	return true
@@ -117,7 +116,6 @@ function SWEP:PrimaryAttack()
 		self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
 	end
 
-
 	if SERVER then
 		-- do another trace that sees nodraw stuff like func_button
 		local tr_all = nil
@@ -148,3 +146,7 @@ end
 function SWEP:SecondaryAttack() end
 function SWEP:Reload() end
 function SWEP:Think() end
+
+if CLIENT then
+	killicon.AddFont("weapon_bikelock", "Trebuchet24", SWEP.PrintName, Color(255, 80, 0, 255))
+end
