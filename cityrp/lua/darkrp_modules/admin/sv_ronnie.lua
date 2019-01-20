@@ -80,6 +80,7 @@ end)
 
 concommand.Add("ronnie_playurl", function(ply, cmd, args)
 	if not ply:IsSuperAdmin() then return end
+	if not args[1] then return end
 	if not args[2] then return end
 	local found = FindPlayer(args[1])
 	if not found then return end

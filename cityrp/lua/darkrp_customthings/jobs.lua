@@ -426,6 +426,10 @@ TEAM_SHOOTER = DarkRP.createJob("Mass Shooter", {
 		ply:changeTeam(GAMEMODE.DefaultTeam, true)
 		net.Start("SchoolShooterDied")
 		net.Broadcast()
+	end,
+	customCheck = function(ply)
+		if ply:GetNWBool("shooter_quiz") then return true end
+		ply:SendLua("TakeShooterQuiz()")
 	end
 })
 
@@ -475,6 +479,10 @@ TEAM_TERROR = DarkRP.createJob("Terrorist", {
 	PlayerDeath = function(ply, weapon, killer)
 		ply:teamBan()
 		ply:changeTeam(GAMEMODE.DefaultTeam, true)
+	end,
+	customCheck = function(ply)
+		if ply:GetNWBool("terror_quiz") then return true end
+		ply:SendLua("TakeTerroristQuiz()")
 	end
 })
 
@@ -493,6 +501,10 @@ TEAM_TERRORLEADER = DarkRP.createJob("Terrorist Leader", {
 	PlayerDeath = function(ply, weapon, killer)
 		ply:teamBan()
 		ply:changeTeam(GAMEMODE.DefaultTeam, true)
+	end,
+	customCheck = function(ply)
+		if ply:GetNWBool("terror_quiz") then return true end
+		ply:SendLua("TakeTerroristQuiz()")
 	end
 })
 

@@ -29,9 +29,7 @@ if SERVER then
 			return false
 		end
 	end)
-end
-
-if CLIENT then
+else -- CLIENT
 	-- Declare our convars and variables
 	local hm_toggle = CreateClientConVar("hm_enabled", "1", true, true)	
 	local hm_type = CreateClientConVar("hm_hitmarkertype", "lines", true, true)
@@ -89,13 +87,19 @@ if CLIENT then
 		alpha = 255 
 	end)
 
+	gHitsound = "hitmarkers/mlg.wav"
 	hook.Add("HUDPaint", "HitmarkerDrawer", function() 
 		if hm_toggle:GetBool() == false then return end -- Enables/Disables the hitmarkers
 		if alpha == 0 then DrawHitM = false CanPlayS = true end -- Removes them after they decay 
 
 		if DrawHitM == true then
 			if CanPlayS and hm_sound:GetBool() == true then
-				surface.PlaySound("hitmarkers/mlg.wav")
+				surface.PlaySound(gHitsound)
+				sound.PlayURL(gHitsound, "mono", function(station)
+					if IsValid(station) then
+						station:Play()
+					end
+				end)
 				CanPlayS = false
 			end
 

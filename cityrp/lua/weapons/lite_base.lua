@@ -116,6 +116,62 @@ function SWEP:IsSprinting()
 		and self.Owner:IsOnGround()
 end
 
+-- BULLET DROP CODE START
+
+-- Speed of bullet as it is fired from the chamber in units per second.
+SWEP.BulletSpeed = 1000 
+
+function SWEP:ShootBullet(ang)
+	--Create a normal vector from the angle, and multiply it by our constant.
+	local v0 = ang:Forward() * self.BulletSpeed 
+
+	--We need to trace the path of our bullet as it goes.
+	--If we want our bullet to land within the same frame, we use a loop.
+	--If we wanted our bullet to take time to land, we would use a think hook.
+	local landed, v, pos, traceResult = false, v0, self.Owner:GetShootPos(), {} --Initialize our base stuff.
+	local deltaTime = .1 -- Simulated time for our loop. would be FrameTime() in a think hook. Lower number is more physics accuracy and less fps.
+	local gravity = GetConVarNumber("sv_gravity")
+	repeat
+		util.TraceLine({
+			start = pos, --Trace from our bullet's current pos
+			endpos = pos + (v * deltaTime), --to its new possible pos
+			filter = {self,self.Owner}, --Bullet doesn't hit gun or player.
+			output = traceResult, --Save a bit of memory and garbage collection
+			mask = MASK_SHOT --Bullet hits anything that would stop a bullet.
+		}
+		if traceResult.Hit then --we hit something. Stop tracing.
+			landed = true
+		else --No hit. Continue the trace with new position and velocity.
+			v.z = v.z - (gravity * deltaTime) --Change velocity by gravity.
+			pos = pos + (v * deltaTime) --Update position.
+			debugoverlay.Cross(pos,3,2,Color(255,100,0),false)
+		end
+
+
+	until landed --Stop when we hit something.
+
+	--You can now use the traceResult table to determine what to do.
+	if not traceResult.HitSky then --Sky hits should kill the bullet.
+		local aimcone = self:CalculateSpread()
+
+		local bullet = {}
+		bullet.Num 	= self.Primary.NumShots
+		bullet.Src 	= self.Owner:GetShootPos() -- Source
+		bullet.Dir 	= self.Owner:GetAimVector() -- Dir of bullet
+		bullet.Spread 	= Vector(aimcone, aimcone, 0)	-- Aim Cone
+		bullet.Tracer	= 1 -- Show a tracer on every x bullets
+		bullet.Force	= 1 -- Amount of force to give to phys objects
+		bullet.Damage	= self.Primary.Damage
+		bullet.AmmoType = self.Primary.Ammo
+
+		self.Owner:FireBullets(bullet)
+
+		self:ShootEffects()
+	end
+end
+
+-- BULLET DROP CODE END
+
 function SWEP:PrimaryAttack()
 	if not self:CanShoot() then return end
 
