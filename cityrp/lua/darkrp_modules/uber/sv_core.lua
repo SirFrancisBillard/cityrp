@@ -47,7 +47,7 @@ net.Receive("uber.uberPrompt", function(l, client)
 	if (not uber:isUberDriver(target)) then return end	
 	if (not client:canAfford(target:getUberPrice())) then return end
 
-	local tab = [target, client]
+	local tab = {target, client}
 	if (table.HasValue(uberCache, tab)) then return end
 
 	net.Start("uber.uberPromptGUI")
