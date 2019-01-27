@@ -19,7 +19,8 @@ hook.Add( "PostDrawTranslucentRenderables", "PostDrawTranslucentRenderablesDrawE
 		local dist = echo.pos:Distance(localplayer_pos)
 		local opacity = ((echo.radius - (dist/2))/echo.radius) * 0.25
 		local p = (realtime - echo.start) / (echo.lifetime)
-		if p < 1.0and opacity > 0thenlocal outer_r = Lerp(p, 0, echo.radius)
+		if p < 1.0 and opacity > 0 then
+			local outer_r = Lerp(p, 0, echo.radius)
 			local inner_r = math.max(outer_r-echo_thickness,0)
 			local color = echo.color
 			color.a = 255*opacity*math.pow(1-p, 2)

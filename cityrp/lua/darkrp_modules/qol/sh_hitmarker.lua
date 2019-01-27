@@ -4,8 +4,6 @@
 -- https://github.com/Exho1/Hitmarkers
 
 if SERVER then
-	AddCSLuaFile()
-
 	util.AddNetworkString("DrawHitMarker")
 	util.AddNetworkString("OpenMixer")
 

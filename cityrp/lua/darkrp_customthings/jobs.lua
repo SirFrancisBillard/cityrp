@@ -429,7 +429,8 @@ TEAM_SHOOTER = DarkRP.createJob("Mass Shooter", {
 	end,
 	customCheck = function(ply)
 		if ply:GetNWBool("shooter_quiz") then return true end
-		ply:SendLua("TakeShooterQuiz()")
+		if SERVER then return false end
+		TakeShooterQuiz()
 	end
 })
 
@@ -482,7 +483,8 @@ TEAM_TERROR = DarkRP.createJob("Terrorist", {
 	end,
 	customCheck = function(ply)
 		if ply:GetNWBool("terror_quiz") then return true end
-		ply:SendLua("TakeTerroristQuiz()")
+		if SERVER then return false end
+		TakeTerroristQuiz()
 	end
 })
 
@@ -504,7 +506,8 @@ TEAM_TERRORLEADER = DarkRP.createJob("Terrorist Leader", {
 	end,
 	customCheck = function(ply)
 		if ply:GetNWBool("terror_quiz") then return true end
-		ply:SendLua("TakeTerroristQuiz()")
+		if SERVER then return false end
+		TakeTerroristQuiz()
 	end
 })
 
@@ -846,6 +849,7 @@ GAMEMODE.CivilProtection = {
 	[TEAM_POLICE] = true,
 	[TEAM_CHIEF] = true,
 	[TEAM_MAYOR] = true,
+	[TEAM_ADMIN] = true,
 }
 
 --[[---------------------------------------------------------------------------

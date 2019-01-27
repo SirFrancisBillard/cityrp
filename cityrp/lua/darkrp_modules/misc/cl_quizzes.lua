@@ -14,7 +14,7 @@ function DermaQuiz(title, qs, func, recurse)
 	end
 
 	local unpackme = {}
-	for j = 1, #qs[i].answers do
+	for j = 1, #(qs[i].answers) do
 		table.insert(unpackme, qs[recurse].answers[j])
 
 		if j == qs[i].correct then
