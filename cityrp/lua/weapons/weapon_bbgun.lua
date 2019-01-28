@@ -64,5 +64,5 @@ SWEP.LoweredPos = Vector( 1.6397, -5.089, 2.4904 )
 SWEP.LoweredAng = Angle( -17.2767, 28.3565, -0.4145 )
 
 if CLIENT then
-	killicon.AddFont( "weapon_bbgun", "CSKillIcons", "BB GUN", Color( 255, 80, 0, 255 ) )
+	killicon.AddFont( "weapon_bbgun", "Default", "BB GUN", Color( 255, 80, 0, 255 ) )
 end

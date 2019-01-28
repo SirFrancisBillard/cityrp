@@ -31,7 +31,7 @@ SWEP.AutoSwitchFrom = false
 
 SWEP.Slot = 3
 SWEP.SlotPos = 1
-SWEP.DrawAmmo = true
+SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = true
 
 SWEP.IsStickyLauncher = true

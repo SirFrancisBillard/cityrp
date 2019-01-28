@@ -1,4 +1,6 @@
 
+-- #NoSimplerr#
+
 if SERVER then
 	util.AddNetworkString("ShowRandomCrit")
 
@@ -26,7 +28,7 @@ if SERVER then
 		end
 
 		ply.AlwaysCrit = not ply.AlwaysCrit
-		ply:ChatPrint("Always crit " .. ply.AlwaysCrit and "ENABLED." or "DISABLED.")
+		ply:ChatPrint("Always crit " .. (ply.AlwaysCrit and "ENABLED." or "DISABLED."))
 	end)
 else
 	local ShowCritTime = 2
@@ -54,21 +56,26 @@ else
 	end)
 
 	local offset = Vector(0, 0, 85)
-	hook.Add("PostPlayerDraw", "DrawName", function(ply)
+	hook.Add("PostPlayerDraw", "DrawRandomCrit", function(ply)
 		if not IsValid(ply) then return end
 		if not ply:Alive() then return end
+		ply.GotCrit = ply.GotCrit or 0
 		if CurTime() - ply.GotCrit > ShowCritTime then return end
 
-		local frac = (CurTime() - ply.GotCrit) / ShowCritTime
+		local Distance = LocalPlayer():GetPos():Distance(ply:GetPos())
 
-		local ang = LocalPlayer():EyeAngles()
-		local pos = ply:GetPos() + offset + ang:Up()
+		if Distance < 1000 then
+			local frac = (CurTime() - ply.GotCrit) / ShowCritTime
+			local offset = Vector( 0, 0, 85 )
+			local ang = LocalPlayer():EyeAngles()
+			local pos = ply:GetPos() + offset + ang:Up() + Vector(0, 0, frac * 12)
 
-		ang:RotateAroundAxis(ang:Forward(), 90)
-		ang:RotateAroundAxis(ang:Right(), 90)
+			ang:RotateAroundAxis( ang:Forward(), 90 )
+			ang:RotateAroundAxis( ang:Right(), 90 )
 
-		cam.Start3D2D(pos, Angle(0, ang.y, 90), 0.25)
-			draw.DrawText(ply:GetName(), "HudSelectionText", 2, 2, Color(255, 0, 255, Lerp(dist, 255, 0)), TEXT_ALIGN_CENTER)
-		cam.End3D2D()
+			cam.Start3D2D(pos, Angle(0, ang.y, 90), 0.25)
+				draw.DrawText("CRITICAL HIT", "RandomCrit", 2, 2, Color(frac * 255, 255 - (frac * 255), 0, 255 - (frac * 255)), TEXT_ALIGN_CENTER)
+			cam.End3D2D()
+		end
 	end)
 end

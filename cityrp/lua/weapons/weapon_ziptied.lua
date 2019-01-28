@@ -6,7 +6,7 @@ if CLIENT then
 end
 
 SWEP.PrintName = "Ziptied"
-SWEP.Instructions = "<color=green>[PRIMARY FIRE]</color> Struggle."
+SWEP.Instructions = [[<color=green>[PRIMARY FIRE]</color> Struggle.]]
 SWEP.Slot = 2
 SWEP.SlotPos = 1
 

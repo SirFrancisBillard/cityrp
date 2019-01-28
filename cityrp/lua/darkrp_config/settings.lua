@@ -101,7 +101,7 @@ GM.Config.needwantedforarrest           = false
 -- noguns - Enabling this feature bans Guns and Gun Dealers.
 GM.Config.noguns                        = false
 -- norespawn - Enable/Disable that people don't have to respawn when they change job.
-GM.Config.norespawn                     = false
+GM.Config.norespawn                     = true
 -- npcarrest - Enable/disable arresting npc's.
 GM.Config.npcarrest                     = true
 -- ooc - Whether or not OOC tags are enabled.

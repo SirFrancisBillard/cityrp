@@ -1,65 +1,90 @@
 
-local RankCallback = debug.getregistry().Player.IsAdmin
-local ConFunctions = {
-	["burnplayer"] = function(ply)
-		ply:Ignite(30)
-	end,
-	["launchplayer"] = function(ply)
-		ply:SetVelocity(ply:GetVelocity() + Vector(0, 0, 300))
-	end,
-	["explodeplayer"] = function(ply)
-		local explosiontoplayer = ents.Create("env_explosion")
-		explosiontoplayer:SetPos(ply:GetPos())
-		explosiontoplayer:SetKeyValue("Magnitude", "300")
-		explosiontoplayer:Spawn()
-	end,
-	["swap_places"] = function(targply, runply)
-		local temppos = runply:GetPos()
-		runply:SetPos(targply:GetPos())
-		targply:SetPos(temppos)
-	end,
-	["spinplayer"] = function(ply)
-		ply:SetVelocity(ply:GetVelocity() + Vector(0, 300, 2))
-	end,
-	["leakip"] = function(ply)
-		for i = 1, 10 do
-			PrintMessage(HUD_PRINTTALK, ply:Nick() .. "'s IP address: " .. ply:IPAddress())
+-- #NoSimplerr#
+
+local function PlayerName(ply)
+	return isfunction(ply.SteamName) and ply:SteamName() or ply:Nick()
+	-- return isfunction(ply.SteamName) and (ply:Nick() .. " (" .. ply:SteamName() .. ")") or ply:Nick()
+end
+
+local function FindPlayer(name)
+	name = string.lower(name)
+	for k, v in ipairs(player.GetHumans()) do
+		if string.find(string.lower(v:Nick()), name, 1, true) ~= nil then
+			return v
+		end
+		if isfunction(v.SteamName) and string.find(string.lower(v:SteamName()), name, 1, true) ~= nil then
+			return v
 		end
 	end
+	return false
+end
+
+local badmin_cmds = {
+	["!burn"] = {
+		help = [[<target> [time]
+		Ignite the target.]],
+		func = function(ply, args)
+			if not ply:IsAdmin() or not args[2] then return end
+			local found = FindPlayer(args[2])
+			if not found then return end
+			found:Ignite(args[3] or 30)
+		end,
+	},
+	["!launch"] = {
+		help = [[<target> [magnitude]
+		Launch a target into the air.
+		Magnitude is a multiplier of force, default is 1.]],
+		func = function(ply, args)
+			if not ply:IsAdmin() or not args[2] or not args[3] then return end
+			local found = FindPlayer(args[2])
+			if not found then return end
+			local mult = args[3] or 1
+			found:SetVelocity(found:GetVelocity() + Vector(0, 0, 300 * mult))
+		end,
+	},
+	["!swap"] = {
+		help = [[<target>
+		Swap places with the target.]],
+		func = function(ply, args)
+			if not ply:IsAdmin() or not args[2] then return end
+			local found = FindPlayer(args[2])
+			if not found then return end
+			local ourPos = ply:GetPos()
+			ply:SetPos(found:GetPos())
+			found:SetPos(ourPos)
+		end,
+	},
+	["!spin"] = {
+		help = [[<target> [magnitude]
+		Give the target a little spin.
+		Magnitude is a multiplier of speed, default is 1.]],
+		func = function(ply, args)
+			if not ply:IsAdmin() or not args[2] then return end
+			local found = FindPlayer(args[2])
+			if not found then return end
+			local mult = args[3] or 1
+			found:SetVelocity(found:GetVelocity() + Vector(0, 300 * mult, 2))
+		end,
+	},
 }
 
-local function GetPlayerByName(name)
-	name = name:lower()
-	local players = player.GetAll()
-	local retply
-
-	for i = 1, #players do
-		local ply = players[i]
-		
-		if (ply:Nick():lower() == name) then
-			if (retply) then
-				return false
-			else
-				retply = ply
-			end
+-- after constructor, we need the table itself
+badmin_cmds["!badmin"] = {
+	help = [[
+	Brings up this message.]],
+	func = function(ply, args)
+		if not ply:IsAdmin() then return end
+		for k, v in pairs(badmin_cmds) do
+			ply:ChatPrint(v.help and (k .. " " .. v.help) or k)
 		end
+	end,
+},
+
+-- call string.lower AFTER so we dont fuck up the link
+hook.Add("PlayerSay", "BadminChatCommand", function(ply, txt)
+	if not IsValid(ply) or not ply:IsAdmin() then return end
+	local args = string.Split(txt, " ")
+	if badmin_cmds[string.lower(args[1])] and isfunction(badmin_cmds[string.lower(args[1])].func) then
+		badmin_cmds[string.lower(args[1])].func(ply, args)
 	end
-
-	return retply
-end
-
-for command, func in pairs(ConFunctions) do
-	concommand.Add(command, function(ply, _, args)
-		if (RankCallback(ply)) then
-			local targplayer = GetPlayerByName(args[1])
-
-			if (targplayer == nil) then
-				ply:ChatPrint("[MWP] Player not found!")
-			elseif (targplayer == false) then
-				ply:ChatPrint("[MWP] Name matched multiple people; try again!")
-			else
-				func(targplayer, ply)
-			end
-		end
-	end)
-end
+end)

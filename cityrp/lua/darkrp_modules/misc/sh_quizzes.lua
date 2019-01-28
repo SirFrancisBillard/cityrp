@@ -45,8 +45,10 @@ else
 			{question = "Allahu akbar?", answers = {"ALLAHU AKBAR!", "nah"}, correct = 1},
 		},
 		function(correct, total)
+			local pass = correct == total
+			OurResults(pass)
 			net.Start("TakeTerroristQuiz")
-			net.WriteBool(correct == total)
+			net.WriteBool(pass)
 			net.SendToServer()
 		end)
 	end
@@ -63,8 +65,10 @@ else
 			{question = "When is lethal force necessary?", answers = {"Always.", "When they're black.", "When they're gonna kill me.", "Never. All people are part of God's creation!"}, correct = 3},
 		},
 		function(correct, total)
+			local pass = correct == total
+			OurResults(pass)
 			net.Start("TakePoliceQuiz")
-			net.WriteBool(correct == total)
+			net.WriteBool(pass)
 			net.SendToServer()
 		end)
 	end
@@ -80,8 +84,10 @@ else
 			{question = "What are you going to do?", answers = {"Go raiding because I spawn with guns.", "Kill multiple civillians, then myself.", "Kill people who don't want to be bothered.", "Mug people and steal shit."}, correct = 2},
 		},
 		function(correct, total)
+			local pass = correct == total
+			OurResults(pass)
 			net.Start("TakeShooterQuiz")
-			net.WriteBool(correct == total)
+			net.WriteBool(pass)
 			net.SendToServer()
 		end)
 	end

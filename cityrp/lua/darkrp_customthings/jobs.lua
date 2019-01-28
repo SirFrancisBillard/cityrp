@@ -187,7 +187,7 @@ TEAM_GUARD = DarkRP.createJob("Guard", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/barney.mdl",
 	description = [[Guards can be paid to protect certain areas or people.]],
-	weapons = {"lite_p228", "stunstick"},
+	weapons = {"lite_beretta", "stunstick"},
 	command = "guard",
 	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
@@ -195,6 +195,9 @@ TEAM_GUARD = DarkRP.createJob("Guard", {
 	vote = false,
 	hasLicense = true,
 	candemote = false,
+	ammo = {
+		["pistol"] = 60,
+	},
 	category = g_RegisterJobWithCategory,
 })
 
@@ -203,7 +206,7 @@ TEAM_VIGILANTE = DarkRP.createJob("Vigilante", {
 	model = "models/player/barney.mdl",
 	description = [[You aren't a cop, but you hate crime just as much.
 		Only kill scumbugs who commit crimes.]],
-	weapons = {"lite_usp"},
+	weapons = {"lite_beretta"},
 	command = "vigilante",
 	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
@@ -211,6 +214,9 @@ TEAM_VIGILANTE = DarkRP.createJob("Vigilante", {
 	vote = false,
 	hasLicense = true,
 	candemote = false,
+	ammo = {
+		["pistol"] = 60,
+	},
 	category = g_RegisterJobWithCategory,
 })
 
@@ -276,7 +282,7 @@ TEAM_RAPPER = DarkRP.createJob("Rapper", {
 	description = [[Like DJs, but with more gang shit.
 		Don't let the other rappers diss you or your coast.
 		Feud with other rappers and eliminate them at all costs.]],
-	weapons = {"lite_mac10", "lite_glock", "weapon_lean"},
+	weapons = {"lite_gangsta_mac10", "lite_gangsta_glock", "weapon_lean"},
 	command = "rapper",
 	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
@@ -291,7 +297,7 @@ TEAM_THUG = DarkRP.createJob("Thug", {
 	model = Models.Gangsters,
 	description = [[The lowest person of crime.
 		Thugs commit petty unorganized crimes and can form gangs.]],
-	weapons = {"weapon_knife", "weapon_pickpocket"},
+	weapons = {"weapon_knife", "lite_gangsta_glock", "weapon_pickpocket"},
 	command = "thug",
 	max = 8,
 	salary = GAMEMODE.Config.normalsalary,
@@ -307,13 +313,16 @@ TEAM_MAFIA = DarkRP.createJob("Mafia", {
 	description = [[The goons of the Mafia.
 		The Mafia must work for the Godfather who runs the crime family.
 		The Godfather sets your agenda and you follow it or you can be killed.]],
-	weapons = {"lite_fiveseven", "weapon_pickpocket"},
+	weapons = {"lite_beretta", "weapon_pickpocket"},
 	command = "mafia",
 	max = 6,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,
 	hasLicense = false,
+	ammo = {
+		["pistol"] = 60,
+	},
 	category = g_RegisterJobWithCategory,
 })
 
@@ -324,13 +333,17 @@ TEAM_GODFATHER = DarkRP.createJob("Godfather", {
 		With his power he coordinates the mafia and forms an efficient crime organization.
 		He has the ability to break into houses by using a lockpick.
 		The Godfather posesses the ability to unarrest you.]],
-	weapons = {"lite_ak47", "lite_fiveseven", "lockpick", "weapon_pickpocket", "unarrest_stick"},
+	weapons = {"lite_ak47", "lite_beretta", "lockpick", "weapon_pickpocket", "unarrest_stick"},
 	command = "godfather",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary * 1.75,
 	admin = 0,
 	vote = true,
 	hasLicense = false,
+	ammo = {
+		["pistol"] = 60,
+		["smg1"] = 90,
+	},
 	category = g_RegisterJobWithCategory,
 })
 
@@ -428,7 +441,9 @@ TEAM_SHOOTER = DarkRP.createJob("Mass Shooter", {
 		net.Broadcast()
 	end,
 	customCheck = function(ply)
-		if ply:GetNWBool("shooter_quiz") then return true end
+		return ply:GetNWBool("shooter_quiz")
+	end,
+	CustomCheckFailMsg = function(ply)
 		if SERVER then return false end
 		TakeShooterQuiz()
 	end
@@ -439,13 +454,17 @@ TEAM_HITMAN = DarkRP.createJob("Hitman", {
 	model = "models/player/leet.mdl",
 	description = [[Hitmen are paid to kill.
 		However, killing is still illegal.]],
-	weapons = {"lite_scout", "lite_usp"},
+	weapons = {"lite_scout", "lite_beretta"},
 	command = "hitman",
 	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,
 	hasLicense = false,
+	ammo = {
+		["pistol"] = 60,
+		["smg1"] = 20,
+	},
 	category = g_RegisterJobWithCategory,
 })
 
@@ -457,7 +476,7 @@ TEAM_ANTIFA = DarkRP.createJob("Antifa", {
 		Go make innocent white people's lives worse.]],
 	weapons = {"weapon_bikelock", "weapon_molotov", "weapon_protest"},
 	command = "antifa",
-	max = 2,
+	max = 4,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,
@@ -476,13 +495,18 @@ TEAM_TERROR = DarkRP.createJob("Terrorist", {
 	admin = 0,
 	vote = false,
 	hasLicense = false,
+	ammo = {
+		["smg1"] = 60,
+	},
 	category = g_RegisterJobWithCategory,
 	PlayerDeath = function(ply, weapon, killer)
 		ply:teamBan()
 		ply:changeTeam(GAMEMODE.DefaultTeam, true)
 	end,
 	customCheck = function(ply)
-		if ply:GetNWBool("terror_quiz") then return true end
+		return ply:GetNWBool("terror_quiz")
+	end,
+	CustomCheckFailMsg = function(ply)
 		if SERVER then return false end
 		TakeTerroristQuiz()
 	end
@@ -499,13 +523,18 @@ TEAM_TERRORLEADER = DarkRP.createJob("Terrorist Leader", {
 	admin = 0,
 	vote = false,
 	hasLicense = false,
+	ammo = {
+		["smg1"] = 60,
+	},
 	category = g_RegisterJobWithCategory,
 	PlayerDeath = function(ply, weapon, killer)
 		ply:teamBan()
 		ply:changeTeam(GAMEMODE.DefaultTeam, true)
 	end,
 	customCheck = function(ply)
-		if ply:GetNWBool("terror_quiz") then return true end
+		return ply:GetNWBool("terror_quiz")
+	end,
+	CustomCheckFailMsg = function(ply)
 		if SERVER then return false end
 		TakeTerroristQuiz()
 	end
@@ -516,13 +545,16 @@ TEAM_NAZI = DarkRP.createJob("Nazi", {
 	model = "models/player/dod_german.mdl",
 	description = [[Nazis are on a quest to exterminate all jews and correct everyone's grammar.
 		Killing jews in public is legal, but they can fight back.]],
-	weapons = {"lite_fiveseven", "weapon_jewdetector", "weapon_heil"},
+	weapons = {"lite_beretta", "weapon_jewdetector", "weapon_heil"},
 	command = "nazi",
 	max = 4,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,
 	hasLicense = false,
+	ammo = {
+		["pistol"] = 60,
+	},
 	category = g_RegisterJobWithCategory,
 })
 
@@ -659,7 +691,7 @@ TEAM_POLICE = DarkRP.createJob("Police Officer", {
 		The Battering Ram can break down the door of a criminal, with a warrant for their arrest.
 		The Battering Ram can also unfreeze frozen props (if enabled).
 		Type /wanted <name> to alert the public to the presence of a criminal.]],
-	weapons = {"arrest_stick", "unarrest_stick", "lite_fiveseven", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
+	weapons = {"arrest_stick", "unarrest_stick", "lite_beretta", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
 	command = "police",
 	max = 8,
 	salary = GAMEMODE.Config.normalsalary * 1.5,
@@ -780,9 +812,9 @@ TEAM_EDGYTEEN = DarkRP.createJob("Edgy Teen", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/p2_chell.mdl",
 	description = [[Your tumblr is filled with suicidal memes.]],
-	weapons = {},
+	weapons = {"weapon_cutter"},
 	command = "edgyteen",
-	max = 1,
+	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
 	admin = 0,
 	vote = false,

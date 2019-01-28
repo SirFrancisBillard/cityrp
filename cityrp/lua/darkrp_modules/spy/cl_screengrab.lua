@@ -1,4 +1,3 @@
-print("Clientside loaded")
 
 	function Box(w, h, col)
 		surface.SetDrawColor(col)

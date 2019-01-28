@@ -42,7 +42,7 @@ end
 
 WeaponShipment(nil, "Pistols", "lite_glock", 600)
 WeaponShipment(nil, "Pistols", "lite_dualberettas", 800)
-WeaponShipment(nil, "Pistols", "lite_deagle", 1000)
+WeaponShipment(nil, "Pistols", "lite_deagle", 10000)
 WeaponShipment(nil, "Pistols", "lite_fiveseven", 800)
 WeaponShipment(nil, "Pistols", "lite_p228", 600)
 

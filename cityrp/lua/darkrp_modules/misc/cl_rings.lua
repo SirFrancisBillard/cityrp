@@ -1,3 +1,6 @@
+
+do return end
+
 local echoes = echoes or {}
 local echo_thickness = 75.0
 local color_mask = Color(0,0,0,0)

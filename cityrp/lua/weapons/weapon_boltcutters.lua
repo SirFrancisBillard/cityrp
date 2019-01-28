@@ -3,7 +3,8 @@ AddCSLuaFile()
 SWEP.Base = "weapon_sck_base"
 
 SWEP.PrintName = "Bolt Cutters"
-SWEP.Instructions = "<color=green>[PRIMARY FIRE]</color> Free someone from captivity."
+SWEP.Instructions = [[
+<color=green>[PRIMARY FIRE]</color> Free someone from captivity.]]
 
 SWEP.Slot = 2
 SWEP.SlotPos = 3
@@ -41,114 +42,67 @@ SWEP.WElements = {
 	["ties"] = {type = "Model", model = "models/Items/CrossbowRounds.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.151, 1.075, -2.597), angle = Angle(106.364, 66.593, -1.293), size = Vector(0.912, 1.029, 0.953), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}}
 }
 
-function SWEP:SetupDataTables()
-	self:NetworkVar("Bool", 0, "IsTying")
-	self:NetworkVar("Float", 0, "StartTie")
-	self:NetworkVar("Float", 1, "EndTie")
-	self:NetworkVar("Float", 2, "NextSoundTime")
+local function CanFree(us, them, weps)
+	if not IsValid(them) or not them:IsPlayer() or them:GetPos():DistToSqr(us:GetPos()) > 10000 then
+		return false
+	end
+	local wep = them:GetActiveWeapon()
+	if not IsValid(wep) or not wep.OwnerIsCaptive then
+		return false
+	end
+	return true
 end
 
+function SWEP:CanPrimaryAttack()
+	return true
+end
+
+local BreakFreeSound = Sound("physics/metal/chain_impact_hard1.wav")
+
 function SWEP:PrimaryAttack()
-	if self:GetIsTying() then return end
-	self:SetNextPrimaryFire(CurTime() + 0.3)
+	self:SetNextPrimaryFire(CurTime() + 0.5)
 
 	self:GetOwner():LagCompensation(true)
 	local trace = self:GetOwner():GetEyeTrace()
 	self:GetOwner():LagCompensation(false)
 
-	if not IsValid(trace.Entity) or not trace.Entity:IsPlayer() or trace.Entity:GetPos():DistToSqr(self:GetOwner():GetPos()) > 10000 then
-		return
-	end
+	local ent = trace.Entity
+	if not CanFree(self.Owner, ent) then return end
 
-	local wep = trace.Entity:GetActiveWeapon()
-	if not IsValid(wep) or not wep.OwnerIsCaptive then return end
-
-	self:SetIsTying(true)
-	self:SetStartTie(CurTime())
-	self:SetEndTie(CurTime() + 1)
-
-	self:SetNextSoundTime(CurTime() + 0.2)
-
-	if CLIENT then
-		self.Dots = ""
-		self.NextDotsTime = CurTime() + 0.2
-	end
-end
-
-function SWEP:Holster()
-	self:SetIsTying(false)
-	self:SetNextSoundTime(0)
-	return self.BaseClass.Holster(self)
-end
-
-function SWEP:Succeed(ply)
-	if not IsValid(self.Owner) then return end
-	self:SetIsTying(false)
-
-	if CLIENT then return end
-
-	ply:StripWeapon()
-	DarkRP.notify(self.Owner, 1, 4, "You have freed " .. ply:Nick() .. " from captivity!")
-end
-
-function SWEP:Fail()
-	self:SetHoldType("normal")
-	if CLIENT then return end
-	self:SetIsTying(false)
-	self:SetNextSoundTime(0)
-end
-
-function SWEP:Think()
-	if self:GetIsTying() and self:GetEndTie() ~= 0 then
-		self:GetOwner():LagCompensation(true)
-		local trace = self:GetOwner():GetEyeTrace()
-		self:GetOwner():LagCompensation(false)
-		if not IsValid(trace.Entity) or trace.HitPos:DistToSqr(self:GetOwner():GetShootPos()) > 10000 or not trace.Entity:IsPlayer() then
-			self:Fail()
-		end
-		local wep = trace.Entity:GetActiveWeapon()
-		if not IsValid(wep) or not wep.OwnerIsCaptive then self:Fail() end
-		if self:GetEndTie() <= CurTime() then
-			self:Succeed(trace.Entity)
+	if SERVER then
+		local wep = ent:GetActiveWeapon()
+		if IsValid(wep) then
+			ent:StripWeapon(wep:GetClass())
+			self.Owner:EmitSound(BreakFreeSound)
 		end
 	end
-    if self:GetNextSoundTime() ~= 0 and CurTime() >= self:GetNextSoundTime() then
-		if self:GetIsTying() then
-			self:SetNextSoundTime(CurTime() + 0.2)
-			self:EmitSound("npc/combine_soldier/gear5.wav", 100, 100)
-		else
-			self:SetNextSoundTime(0)
-			self:EmitSound("npc/combine_soldier/gear5.wav", 50, 100)
-		end
-	end
-	if CLIENT and self.NextDotsTime and CurTime() >= self.NextDotsTime then
-		self.NextDotsTime = CurTime() + 0.2
-		self.Dots = self.Dots or ""
-		local len = string.len(self.Dots)
-		local dots = {
-			[0] = ".",
-			[1] = "..",
-			[2] = "...",
-			[3] = ""
-		}
-		self.Dots = dots[len]
-	end
 end
+
+function SWEP:CanSecondaryAttack()
+	return true
+end
+
+function SWEP:SecondaryAttack() end
+function SWEP:Think() end
+
+local red = Color(255, 0, 0)
 
 function SWEP:DrawHUD()
-	if self:GetIsTying() and self:GetEndTie() ~= 0 then
-		self.Dots = self.Dots or ""
-		local w = ScrW()
-		local h = ScrH()
-		local x, y, width, height = w / 2 - w / 10, h / 2, w / 5, h / 15
-		local time = self:GetEndTie() - self:GetStartTie()
-		local curtime = CurTime() - self:GetStartTie()
-		local status = math.Clamp(curtime / time, 0, 1)
-		local BarWidth = status * (width - 16)
-		local cornerRadius = math.Min(8, BarWidth / 3 * 2 - BarWidth / 3 * 2 % 2)
+	local tr = self.Owner:GetEyeTrace()
+	if CanFree(self.Owner, tr.Entity) then
+		local x = ScrW() / 2
+		local y = ScrH() / 2
 
-		draw.RoundedBox(8, x, y, width, height, Color(10, 10, 10, 120))
-		draw.RoundedBox(cornerRadius, x + 8, y + 8, BarWidth, height - 16, Color(0, 0 + (status * 255), 255 - (status * 255), 255))
-		draw.DrawNonParsedSimpleText("Freeing" .. self.Dots, "Trebuchet24", w / 2, y + height / 2, Color(255, 255, 255, 255), 1, 1)
+		surface.SetDrawColor(red)
+
+		local outer = 20
+		local inner = 10
+		surface.DrawLine(x - outer, y - outer, x - inner, y - inner)
+		surface.DrawLine(x + outer, y + outer, x + inner, y + inner)
+
+		surface.DrawLine(x - outer, y + outer, x - inner, y + inner)
+		surface.DrawLine(x + outer, y - outer, x + inner, y - inner)
+
+		draw.SimpleText("FREE", "TabLarge", x, y - 30, red, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
 	end
 end

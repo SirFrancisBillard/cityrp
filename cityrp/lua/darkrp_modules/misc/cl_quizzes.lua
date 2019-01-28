@@ -14,10 +14,10 @@ function DermaQuiz(title, qs, func, recurse)
 	end
 
 	local unpackme = {}
-	for j = 1, #(qs[i].answers) do
+	for j = 1, #(qs[recurse].answers) do
 		table.insert(unpackme, qs[recurse].answers[j])
 
-		if j == qs[i].correct then
+		if j == qs[recurse].correct then
 			table.insert(unpackme, function()
 				correct = correct + 1
 				surface.PlaySound(blip)
@@ -31,5 +31,5 @@ function DermaQuiz(title, qs, func, recurse)
 		end
 	end
 
-	Derma_Query(qs[i].question, title, unpack(unpackme))
+	Derma_Query(qs[recurse].question, title, unpack(unpackme))
 end

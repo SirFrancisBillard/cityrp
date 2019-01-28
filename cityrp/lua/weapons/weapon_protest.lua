@@ -65,10 +65,13 @@ SWEP.Weight = 5
 SWEP.AutoSwitchTo = false
 SWEP.AutoSwitchFrom = false
 
-SWEP.Slot = 2
+SWEP.Slot = 3
 SWEP.SlotPos = 1
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = false
+
+-- draw our protest text
+SWEP.IsProtestSign = true
 
 local Damage = 30
 local SwingDist = 100
@@ -99,7 +102,7 @@ function SWEP:Reload()
 				self.CanSetText = true
 			end
 		end)
-		frame:SetSkin("DarkRP")
+		frame:SetSkin("PinkFlat")
 	end
 end
 

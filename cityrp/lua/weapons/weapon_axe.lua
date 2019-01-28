@@ -112,7 +112,7 @@ function SWEP:PrimaryAttack()
 			edata:SetHitBox(tr_main.HitBox)
 			edata:SetEntity(hitEnt)
 
-			if door[hitEnt:GetClass()] and math.random(3) == 3 then
+			if SERVER and doors[hitEnt:GetClass()] and math.random(3) == 3 then
 				hitEnt:Fire("unlock")
 				hitEnt:Fire("open")
 			end

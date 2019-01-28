@@ -29,15 +29,51 @@ if SERVER then
 		self:Ignite(9999)
 	end
 
+	local UnfreezeProps = {
+		["prop_physics"] = true,
+		["prop_physics_multiplayer"] = true,
+		["prop_physics_override"] = true,
+	}
+
+	local OpenDoor = {
+		["func_door"] = true,
+		["func_door_rotating"] = true,
+		["prop_door"] = true,
+		["prop_door_rotating"] = true,
+	}
+
+	local BurnTime = 12
+
 	function ENT:PhysicsCollide(data, phys)
 		if IsValid(data.HitEntity) then
-			local d = DamageInfo()
-			d:SetDamage(15)
-			d:SetAttacker(self:GetOwner())
-			d:SetInflictor(self)
-			d:SetDamageType(DMG_BURN)
-			data.HitEntity:TakeDamageInfo( d )
-			data.HitEntity:Ignite(6)
+			local ent = data.HitEntity
+			local dmg = DamageInfo()
+			dmg:SetDamage(15)
+			dmg:SetAttacker(self:GetOwner())
+			dmg:SetInflictor(self)
+			dmg:SetDamageType(DMG_BURN)
+			ent:TakeDamageInfo(dmg)
+			ent:Ignite(BurnTime)
+			local cls = ent:GetClass()
+			if UnfreezeProps[cls] or OpenDoor[cls] then
+				timer.Simple(BurnTime, function()
+					if not IsValid(ent) then return end
+					if ent.BurnDownHealth == nil then ent.BurnDownHealth = 60 end
+					ent.BurnDownHealth = ent.BurnDownHealth - 1
+					if ent.BurnDownHealth < 0 then
+						ent.BurnDownHealth = 60
+						if UnfreezeProps[cls] then
+							local phys = ent:GetPhysicsObject()
+							if IsValid(phys) then
+								phys:EnableMotion(true)
+							end
+						elseif OpenDoor[cls] then
+							ent:Fire("unlock")
+							ent:Fire("open")
+						end
+					end
+				end)
+			end
 			SafeRemoveEntity(self)
 		elseif not self.landed then
 			self:GetPhysicsObject():EnableMotion(false)
