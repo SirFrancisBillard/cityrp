@@ -10,18 +10,24 @@ local Magenta = Color(255, 0, 255)
 local GreenBlue = Color(100, 100, 255)
 local BlueGreen = Color(100, 255, 100)
 
+local DisabledHintsOnceAlready = false
+
 local ChatCommands = {
 	["!hints"] = function()
 		if gShowChatHints == nil then gShowChatHints = true end
 		gShowChatHints = not gShowChatHints
 		local on = gShowChatHints
 		chat.AddText(White, "Chat hints are now ", on and Green or Red, on and "enabled" or "disabled", White, ".")
+		if not on and not DisabledHintsOnceAlready then
+			DisabledHintsOnceAlready = true
+			chat.AddText(Red, "Sorry for the annoyance!")
+		end
 	end,
 	["!headshot"] = function()
 		if gPlayHeadshotSound == nil then gPlayHeadshotSound = true end
 		gPlayHeadshotSound = not gPlayHeadshotSound
 		local on = gPlayHeadshotSound
-		chat.AddText(White, "Headshot sound now ", on and Green or Red, on and "enabled" or "disabled", White, ".")
+		chat.AddText(White, "Headshot sound is now ", on and Green or Red, on and "enabled" or "disabled", White, ".")
 	end,
 	["!rules"] = function()
 		chat.AddText(Magenta, "GENERAL RULES")

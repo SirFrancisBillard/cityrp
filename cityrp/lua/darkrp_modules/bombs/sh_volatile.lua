@@ -1,8 +1,6 @@
 
 -- #NoSimplerr#
 
-do return end -- WHAT THE FUCK IS WRONG WITH THIS MODULE
-
 local PLAYER = FindMetaTable("Player")
 
 function PLAYER:GetVolatile()
@@ -27,7 +25,8 @@ if SERVER then
 		for k, v in pairs(player.GetAll()) do
 			if IsValid(v) and v:GetVolatile() and v:Alive() then
 				if v:Health() <= 10 then
-					v:SuicideBombDelayed(0, 200 + (40 * v:GetVolatile()), 120 + (40 * v:GetVolatile()))
+					v.CauseOfDeath = "volatile_waste"
+					v:SuicideBombDelayed(1, 200 + (40 * v:GetVolatile()), 120 + (40 * v:GetVolatile()))
 				else
 					v:SetHealth(math.Clamp(v:Health() - 5, 0, v:GetMaxHealth()))
 				end
@@ -35,10 +34,16 @@ if SERVER then
 		end
 	end)
 
-	hook.Add("DoPlayerDeath", "VolatileWasteDeathBoom", function(ply)
-		if IsValid(ply) and ply:GetVolatile() then
-			ply:SetVolatile(0)
+	-- important: must be called AFTER death so we don't infinitely kill ourselves with the explosion
+	-- also don't explode here if the timer already did it for us
+	hook.Add("PostPlayerDeath", "VolatileWasteDeathBoom", function(ply)
+		if v.CauseOfDeath and v.CauseOfDeath == "volatile_waste" then
+			v.CauseOfDeath = nil
+			return
+		end
+		if IsValid(ply) and ply:GetVolatile() > 0 then
 			LargeExplosion(ply:GetPos(), 200 + (40 * ply:GetVolatile()), 120 + (40 * ply:GetVolatile()))
+			ply:SetVolatile(0)
 		end
 	end)
 end

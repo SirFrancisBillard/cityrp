@@ -1,6 +1,6 @@
 
-hook.Add("DoPlayerDeath", "BattleRoyale.CheckForEndGame", function(ply, attacker, dmg)
-	if IsValid(ply) and ply:GetBRStatus() == BR_STATUS_PLAYING then
+hook.Add("PostPlayerDeath", "BattleRoyale.CheckForEndGame", function(ply)
+	if IsValid(ply) and ply:IsBRStatus(BR_STATUS_PLAYING) then
 		ply:SetBRStatus(BR_STATUS_NONE)
 		ply.WillResetBR = true
 
@@ -10,7 +10,7 @@ hook.Add("DoPlayerDeath", "BattleRoyale.CheckForEndGame", function(ply, attacker
 			-- and to the victor go the spoils
 			victor:WinBR()
 			timer.Simple(5, function()
-				if IsValid(victor) and victor:IsPlayer() and victor:Alive() and victor:GetBRStatus() == BR_STATUS_PLAYING then
+				if IsValid(victor) and victor:IsPlayer() and victor:Alive() and victor:IsBRStatus(BR_STATUS_PLAYING) then
 					victor:Kill() -- just fucking kill them lmao
 				end
 			end)

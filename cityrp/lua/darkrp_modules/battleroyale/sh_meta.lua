@@ -13,6 +13,10 @@ function PLAYER:GetBRStatus()
 	return self:GetNWInt("br_status", BR_STATUS_NONE)
 end
 
+function PLAYER:IsBRStatus(status)
+	return self:GetBRStatus() == status
+end
+
 function PLAYER:TryQueueBR()
 	local status = self:GetBRStatus()
 	if status == BR_STATUS_NONE then
@@ -25,18 +29,19 @@ function PLAYER:TryQueueBR()
 end
 
 local DefaultBRWeapons = {
-	"weapon_fists",
+	"weapon_rp_fists",
+	"battleroyale_compass"
 }
 
 if CLIENT then return end
 
 function PLAYER:InitBR()
-	if self:GetBRStatus() ~= BR_STATUS_PLAYING then
+	if not self:IsBRStatus(BR_STATUS_PLAYING) then
 		self:SaveWeaponInventory(true)
 		self:SetBRStatus(BR_STATUS_PLAYING)
 	end
 
-	for k, v in pairs(DefaultBRWeapons) do
+	for k, v in ipairs(DefaultBRWeapons) do
 		self:Give(v)
 	end
 end

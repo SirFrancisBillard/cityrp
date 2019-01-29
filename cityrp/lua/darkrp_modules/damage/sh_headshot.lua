@@ -22,6 +22,7 @@ else
 	end)
 
 	net.Receive("SendHeadshotSound", function()
+		if not gPlayHeadshotSound then return end
 		gHeadshotSoundStation:SetTime(0)
 		gHeadshotSoundStation:Play()
 	end)

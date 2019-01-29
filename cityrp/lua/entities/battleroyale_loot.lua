@@ -13,26 +13,14 @@ local EPIC = 3
 
 local Loot = {
 	[COMMON] = {
-		"lite_glock",
-		"lite_usp",
-		"lite_p228",
-		"lite_fiveseven",
-		"lite_dualberettas",
+		"lite_beretta",
 		"lite_deagle",
-		"lite_tmp",
 		"lite_mac10",
-		"lite_ump45",
-		"lite_mp5",
 		"lite_hegrenade",
-		"lite_flashbang",
-		"lite_smokegrenade"
 	},
 	[RARE] = {
-		"lite_mp5",
 		"lite_ak47",
 		"lite_m4a1",
-		"lite_galil",
-		"lite_famas",
 		"lite_m3",
 		"lite_xm1014",
 		"lite_p90",
@@ -70,6 +58,14 @@ local function RandomLoot(rarity)
 	return Loot[rarity][math.random(#Loot[rarity])]
 end
 
+local function GiveWepAmmo(ply, wep)
+	local tab = weapons.GetStored(wep)
+	if not istable(wep) then return end
+	local ammo = tab.Primary.Ammo
+	if not ammo or string.lower(ammo) == "none" then return end
+	ply:GiveAmmo(30, ammo, true)
+end
+
 function ENT:Initialize()
 	self:SetModel(self.Model)
 	self:SetMoveType(MOVETYPE_VPHYSICS)
@@ -91,7 +87,9 @@ end
 if SERVER then
 	function ENT:Use(activator, caller)
 		if IsValid(caller) and caller:IsPlayer() then
-			caller:Give(RandomLoot(self:GetRarity()))
+			local wep = RandomLoot(self:GetRarity())
+			caller:Give(wep)
+			GiveWepAmmo(caller, wep)
 			SafeRemoveEntity(self)
 		end
 	end

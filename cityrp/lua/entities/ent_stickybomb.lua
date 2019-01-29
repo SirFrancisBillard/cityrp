@@ -57,7 +57,10 @@ if SERVER then
 
 	function ENT:PhysicsCollide(data, phys)
 		if not IsValid(data.HitEntity) then
-			self:SetMoveType(MOVETYPE_NONE)
+			timer.Simple(0, function()
+				if not IsValid(self) then return end
+				self:SetMoveType(MOVETYPE_NONE)
+			end
 		end
 	end
 
@@ -74,7 +77,7 @@ if SERVER then
 		if not ply:Alive() then
 			self:Fizzle()
 		end
-		if ply:KeyDown(IN_ATTACK2) and IsValid(ply:GetActiveWeapon()) and ply:GetActiveWeapon().IsStickyLauncher then
+		if ply:KeyDown(IN_ATTACK2) and IsValid(ply:GetActiveWeapon()) and ply:GetActiveWeapon().IsStickyLauncher and CurTime() < self.prime_time then
 			ply:EmitSound(BeepSound)
 			self:Detonate()
 		end

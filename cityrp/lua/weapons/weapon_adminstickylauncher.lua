@@ -11,7 +11,7 @@ SWEP.WorldModel = "models/weapons/w_shotgun.mdl"
 SWEP.UseHands = true
 
 SWEP.Spawnable = true
-SWEP.AdminOnly = false
+SWEP.AdminOnly = true
 
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = -1

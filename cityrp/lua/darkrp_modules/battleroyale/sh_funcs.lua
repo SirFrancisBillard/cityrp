@@ -4,7 +4,7 @@ BattleRoyale = {}
 BattleRoyale.GetPlayersWithStatus = function(status)
 	local queued = {}
 	for k, v in pairs(player.GetAll()) do
-		if v:GetBRStatus() == status then
+		if v:IsBRStatus(status) then
 			table.insert(queued, v)
 		end
 	end
@@ -32,7 +32,7 @@ end
 BattleRoyale.GetCountWithStatus = function(status)
 	local queued = 0
 	for k, v in pairs(player.GetAll()) do
-		if v:GetBRStatus() == status then
+		if v:IsBRStatus(status) then
 			queued = queued + 1
 		end
 	end

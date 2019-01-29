@@ -31,10 +31,13 @@ if SERVER then
 
 	function ENT:PhysicsCollide(data, phys)
 		if data.HitEntity:IsWorld() and not self:GetNWBool("stuck", false) then
-			self:SetNWBool("stuck", true)
-			self:SetMoveType(MOVETYPE_NONE)
-			self:EmitSound(StuckSound)
-			SafeRemoveEntityDelayed(self, 10)
+			timer.Simple(0, function()
+				if not IsValid(self) then return end
+				self:SetNWBool("stuck", true)
+				self:SetMoveType(MOVETYPE_NONE)
+				self:EmitSound(StuckSound)
+				SafeRemoveEntityDelayed(self, 10)
+			end
 		end
 	end
 

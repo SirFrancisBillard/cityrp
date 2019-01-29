@@ -2,7 +2,12 @@
 AddCSLuaFile()
 
 SWEP.PrintName = "Fists"
-SWEP.Purpose = "Well we sure as hell didn't use guns! We would just wrestle Hunters to the ground with our bare hands! I used to kill ten, twenty a day, just using my fists."
+SWEP.Instructions = [[
+<color=green>[PRIMARY FIRE]</color> Left hook.
+<color=green>[SECONDARY FIRE]</color> Right hook.
+
+<color=red>Every third punch will uppercut, dealing critial damage.</color>]]
+
 
 SWEP.Slot = 0
 SWEP.SlotPos = 4

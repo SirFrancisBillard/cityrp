@@ -60,7 +60,7 @@ concommand.Add("br_debugstart", function(ply, cmd, args)
 
 	local PlayersSpawned = 1
 	for k, v in pairs(player.GetAll()) do
-		if PlayersSpawned > #MapTable or (v:GetBRStatus() == 0 and not v:IsBot()) then continue end
+		if PlayersSpawned > #MapTable or (v:IsBRStatus(BR_STATUS_NONE) and not v:IsBot()) then continue end
 		v:InitBR()
 		v:SetPos(MapTable[PlayersSpawned].pos)
 		v:SetEyeAngles(MapTable[PlayersSpawned].ang)
