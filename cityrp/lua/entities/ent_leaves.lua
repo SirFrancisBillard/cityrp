@@ -3,7 +3,7 @@ AddCSLuaFile()
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 ENT.PrintName = "Coca Leaves"
-ENT.Category = "Crime+"
+ENT.Category = "Cocaine Production"
 ENT.Spawnable = true
 ENT.Model = "models/props_junk/cardboard_box003a.mdl"
 
@@ -15,10 +15,7 @@ function ENT:Initialize()
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
 	end
-	local phys = self:GetPhysicsObject()
-	if IsValid(phys) then
-		phys:Wake()
-	end
+	self:PhysWake()
 end
 
 if CLIENT then

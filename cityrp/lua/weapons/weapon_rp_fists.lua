@@ -133,7 +133,8 @@ function SWEP:DealDamage()
 			dmginfo:SetDamageForce( self.Owner:GetRight() * -4912 + self.Owner:GetForward() * 9989 )
 		elseif ( anim == "fists_uppercut" ) then
 			dmginfo:SetDamageForce( self.Owner:GetUp() * 5158 + self.Owner:GetForward() * 10012 )
-			dmginfo:SetDamage( math.random( 12, 24 ) )
+			-- dmginfo:SetDamage( math.random( 12, 24 ) )
+			self.Owner.NextHitCrit = true
 		end
 
 		tr.Entity:TakeDamageInfo( dmginfo )

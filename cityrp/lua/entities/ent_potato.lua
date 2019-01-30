@@ -8,20 +8,17 @@ ENT.Spawnable = true
 ENT.Model = "models/props/cs_italy/orange.mdl"
 ENT.MakesAlcohol = {"Vodka", "ent_vodka"}
 
-function ENT:Initialize()
-	self:SetModel(self.Model)
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
-	if SERVER then
+if SERVER then
+	function ENT:Initialize()
+		self:SetModel(self.Model)
+		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetSolid(SOLID_VPHYSICS)
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
+		self:PhysWake()
 	end
-	local phys = self:GetPhysicsObject()
-	if IsValid(phys) then
-		phys:Wake()
+else
+	function ENT:Think()
+		self:SetColor(Color(100, 120, 20))
 	end
-end
-
-function ENT:Think()
-	self:SetColor(Color(100, 120, 20))
 end

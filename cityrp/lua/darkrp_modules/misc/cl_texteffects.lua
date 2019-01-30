@@ -1,3 +1,4 @@
+
 local surface_SetFont = surface.SetFont
 local surface_GetTextSize = surface.GetTextSize
 local surface_SetDrawColor = surface.SetDrawColor
@@ -14,7 +15,6 @@ local Realtime = RealTime
 local Frametime = FrameTime
 local Curtime = CurTime
 local Color = Color
-
 
 /*---------------------------------------------------------------------------
 Align Text Helper
@@ -183,39 +183,3 @@ function DrawSnowingText(intensity, text, font, x, y, color, color2, xalign, yal
         surface_DrawLine(x + lx, y + ly, x + lx, y + ly + 1)
     end
 end
-
-
-
-/*---------------------------------------------------------------------------
-Example Command to see Text Effects -- You should exclude this if you're not using it.
----------------------------------------------------------------------------*/
-
-local MOAT_SHOW_EFFECT_EXAMPLES = false
-
-function moat_DrawEffectExamples()
-    if (not MOAT_SHOW_EFFECT_EXAMPLES) then return end
-
-    draw.RoundedBox(0, 50, 50, 700, 500, Color(0, 0, 0, 200))
-
-    local font = "DermaLarge"
-    local x = 100
-    local y = 100
-
-    DrawGlowingText(false, "GLOWING TEXT", font, x, y, Color(255, 0, 0, 255))
-    y = y + 50
-    DrawFadingText(1, "FADING COLORS TEXT", font, x, y, Color(255, 0, 0), Color(0, 0, 255))
-    y = y + 50
-    DrawRainbowText(1, "RAINBOW TEXT", font, x, y)
-    y = y + 50
-    DrawEnchantedText(2, "ENCHANTED TEXT", font, x, y, Color(255, 0, 0), Color(0, 0, 255))
-    y = y + 50
-    DrawFireText(0.5, "INFERNO TEXT", font, x, y, Color(255, 0, 0), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP, true, true)
-    y = y + 50
-    DrawElectricText(1, "ELECTRIC TEXT", font, x, y, Color(255, 0, 0), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
-    y = y + 50
-    DrawBouncingText(3, 3, "BOUNCING AND WAVING TEXT", font, x, y, Color(255, 0, 0), TEXT_ALIGN_LEFT, TEXT_ALIGN_TOP)
-    y = y + 50
-    DrawSnowingText(10, "SPARKLING/SNOWING TEXT", font, x, y, Color(255, 0, 0), Color(255, 255, 255))
-end
-hook.Add("HUDPaint", "moat_TextEffectsExample", moat_DrawEffectExamples)
-concommand.Add("moat_textexamples", function() MOAT_SHOW_EFFECT_EXAMPLES = not MOAT_SHOW_EFFECT_EXAMPLES end)

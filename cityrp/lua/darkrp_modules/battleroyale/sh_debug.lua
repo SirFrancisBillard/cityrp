@@ -14,14 +14,14 @@ end)
 
 local SpawnPoints = {
 	["rp_downtown_v4c_v2"] = {
-		{pos = Vector(3762.098389, -4681.362305, -134.968750), ang = Angle(2.359634, -134.699875, 0)},
-		{pos = Vector(2758.201172, -4583.227539, -134.968750), ang = Angle(0.302634, -90.837486, 0)},
-		{pos = Vector(1645.156494, -4788.036133, -134.968750), ang = Angle(-0.907367, -49.757748, 0)},
-		{pos = Vector(1503.023315, -5716.068848, -134.968750), ang = Angle(-0.604868, -2.991198, 0)},
-		{pos = Vector(1553.342407, -6641.727051, -134.968750), ang = Angle(-2.238368, 31.493793, 0)},
-		{pos = Vector(2410.653564, -7162.333496, -134.462219), ang = Angle(-2.359373, 74.932732, 0)},
-		{pos = Vector(3442.490723, -7060.241211, -134.539978), ang = Angle(-0.302375, 126.115860, 0)},
-		{pos = Vector(3638.252686, -6098.387695, -134.968750), ang = Angle(2.904099, 175.181091, 0)}
+		{pos = Vector(3762, -4681, -130), ang = Angle(0, -135, 0)},
+		{pos = Vector(2758, -4583, -130), ang = Angle(0, -90, 0)},
+		{pos = Vector(1645, -4788, -130), ang = Angle(0, -45, 0)},
+		{pos = Vector(1503, -5716, -130), ang = Angle(0, 0, 0)},
+		{pos = Vector(1553, -6641, -130), ang = Angle(0, 30, 0)},
+		{pos = Vector(2410, -7162, -130), ang = Angle(0, 75, 0)},
+		{pos = Vector(3442, -7060, -130), ang = Angle(0, 125, 0)},
+		{pos = Vector(3638, -6098, -130), ang = Angle(0, 180, 0)}
 	}
 }
 
@@ -47,19 +47,18 @@ local PermaEnts = {
 	{class = "battleroyale_loot", mdl = "models/items/item_item_crate.mdl", pos = Vector(1493, -5978, -199), ang = Angle(0, 74, 0)},
 	{class = "battleroyale_loot", mdl = "models/items/item_item_crate.mdl", pos = Vector(1870, -6439, -199), ang = Angle(0, 126, 0)},
 	{class = "battleroyale_loot", mdl = "models/items/item_item_crate.mdl", pos = Vector(2740, -6452, -199), ang = Angle(0, -60, 0)},
-
 }
 
 gBattleRoyaleCleanupEnts = {}
 
-concommand.Add("br_debugstart", function(ply, cmd, args)
-	if not ply:IsAdmin() then return end
+BattleRoyale = BattleRoyale or {}
 
+BattleRoyale.Start = function()
 	local MapTable = SpawnPoints[game.GetMap()]
 	if not MapTable then return end
 
 	local PlayersSpawned = 1
-	for k, v in pairs(player.GetAll()) do
+	for k, v in RandomPairs(player.GetAll()) do
 		if PlayersSpawned > #MapTable or (v:IsBRStatus(BR_STATUS_NONE) and not v:IsBot()) then continue end
 		v:InitBR()
 		v:SetPos(MapTable[PlayersSpawned].pos)
@@ -67,17 +66,15 @@ concommand.Add("br_debugstart", function(ply, cmd, args)
 		PlayersSpawned = PlayersSpawned + 1
 	end
 
-	-- delete all our old shit
-	for k, v in pairs(gBattleRoyaleCleanupEnts) do
+	for _, v in ipairs(gBattleRoyaleCleanupEnts) do
 		if IsValid(v) then
 			SafeRemoveEntity(v)
 		end
 	end
 
-	-- reset the table just in case
 	gBattleRoyaleCleanupEnts = {}
 
-	for k, v in pairs(PermaEnts) do
+	for _, v in ipairs(PermaEnts) do
 		local new = ents.Create(v.class)
 		new:SetPos(v.pos)
 		new:SetAngles(v.ang)
@@ -85,4 +82,12 @@ concommand.Add("br_debugstart", function(ply, cmd, args)
 		new:Spawn()
 		table.insert(gBattleRoyaleCleanupEnts, new)
 	end
+end
+
+BattleRoyale.End = function() end
+
+concommand.Add("br_debugstart", function(ply, cmd, args)
+	if not ply:IsAdmin() then return end
+
+	BattleRoyale.Start()
 end)

@@ -5,7 +5,7 @@ VoiceChatMeter.IsTTT = false // SET THIS TO TRUE IF YOU ARE RUNNING A TTT SERVER
 // This will put the voice backgrounds in the top left.
 // You could also customize it as much as you want below:
 
-VoiceChatMeter.DarkRPSelfSquare = false // Do you want the voice chat indicator to show when you yourself talk (for DarkRP)
+VoiceChatMeter.DarkRPSelfSquare = true // Do you want the voice chat indicator to show when you yourself talk (for DarkRP)
 
 VoiceChatMeter.SizeX = 250 // The width for voice chat
 VoiceChatMeter.SizeY = 40 // The height for voice chat

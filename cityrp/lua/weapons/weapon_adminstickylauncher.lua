@@ -34,14 +34,13 @@ SWEP.SlotPos = 1
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = true
 
+SWEP.HoldType = "shotgun"
 SWEP.IsStickyLauncher = true
 
 local ShootSound = Sound("weapons/grenade_launcher1.wav")
 
 function SWEP:Initialize()
-	self.BaseClass.Initialize(self)
-
-	self:SetHoldType("shotgun")
+	self:SetHoldType(self.HoldType)
 end
 
 function SWEP:CanPrimaryAttack()

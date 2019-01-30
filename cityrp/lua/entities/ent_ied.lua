@@ -34,6 +34,12 @@ function ENT:Initialize()
 end
 
 if SERVER then
+	local IsDoor = {
+		["func_door"] = true,
+		["func_door_rotating"] = true,
+		["prop_door"] = true,
+		["prop_door_rotating"] = true,
+	}
 	function ENT:Explode()
 		local boom = EffectData()
 		boom:SetOrigin(self:GetPos())
@@ -47,7 +53,7 @@ if SERVER then
 					phys:EnableMotion(true)
 					phys:Wake()
 				end
-			elseif v:GetClass() == "func_door" or v:GetClass() == "func_door_rotating" or v:GetClass() == "prop_door_rotating" then
+			elseif IsDoor[v:GetClass()] then
 				v:Fire("Unlock")
 				v:Fire("Open")
 			end

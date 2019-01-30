@@ -11,13 +11,18 @@ if SERVER then
 
 	hook.Add("EntityTakeDamage", "RandomCrits", function(ply, dmg)
 		local atk = dmg:GetAttacker()
-		if IsValid(atk) and atk:IsPlayer() and ply:IsPlayer() and (atk.AlwaysCrit or (math.random(30) == 1)) then
+		if IsValid(atk) and atk:IsPlayer() and ply:IsPlayer() and (atk.NextHitCrit or atk.AlwaysCrit or (math.random(30) == 1)) then
+			atk.NextHitCrit = nil
 			dmg:ScaleDamage(CritDamages[dmg:GetDamageType()] or DefaultCritScale)
 			net.Start("ShowRandomCrit")
 			net.WriteEntity(ply)
 			net.WriteEntity(atk)
 			net.Broadcast()
 		end
+	end)
+
+	hook.Add("PostPlayerDeath", "RandomCritsReset", function(ply)
+		ply.NextHitCrit = nil
 	end)
 
 	concommand.Add("debug_alwayscrit",function(ply, cmd, args)

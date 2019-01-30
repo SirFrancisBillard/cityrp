@@ -1,9 +1,10 @@
-surface.CreateFont("Roboto Light", { -- font is not found otherwise
+
+surface.CreateFont("Roboto Light", {
 	size = 19,
 	weight = 300,
 	antialias = true,
 	shadow = false,
-	font = "Arial"
+	font = "Verdana"
 })
 
 surface.CreateFont("F4MenuFont01", {
@@ -11,7 +12,7 @@ surface.CreateFont("F4MenuFont01", {
 	weight = 400,
 	antialias = true,
 	shadow = false,
-	font = "Arial"
+	font = "Verdana"
 })
 
 surface.CreateFont("F4MenuFont02", {
@@ -19,5 +20,5 @@ surface.CreateFont("F4MenuFont02", {
 	weight = 800,
 	antialias = true,
 	shadow = false,
-	font = "Arial"
+	font = "Verdana"
 })

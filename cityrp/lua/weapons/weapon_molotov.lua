@@ -8,9 +8,9 @@ end
 SWEP.Base = "weapon_sck_base"
 
 SWEP.PrintName = "Molotov Cocktail"
-SWEP.Instructions = "Primary fire to dispense Soviet hospitality.\nSecondary fire to light without throwing."
-SWEP.Purpose = "Revolution"
-SWEP.Author = "Vyacheslav Mikhailovich Molotov"
+SWEP.Instructions = [[
+<color=green>[PRIMARY FIRE]</color> Dispense Soviet hospitality.
+<color=green>[SECONDARY FIRE]</color> Light without throwing.]]
 
 SWEP.Slot = 2
 SWEP.SlotPos = 1
@@ -20,7 +20,6 @@ SWEP.DrawCrosshair = false
 
 SWEP.Spawnable = true	
 SWEP.AdminSpawnable = true
-SWEP.Category = "RP"
 
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = 1
@@ -30,7 +29,7 @@ SWEP.Primary.Ammo = "molotov"
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = 0
 SWEP.Secondary.Automatic = false
-SWEP.Secondary.Ammo = ""
+SWEP.Secondary.Ammo = "none"
 
 SWEP.HoldType = "grenade"
 SWEP.ViewModelFOV = 70

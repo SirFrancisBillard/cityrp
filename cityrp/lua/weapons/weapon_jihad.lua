@@ -12,7 +12,6 @@ SWEP.Instructions = [[
 Martyrdom, death in holy war, is glorious. Allah will secure you as a citizen of eternal paradise.
 
 <color=red>Allahu akbar.</color>]]
-SWEP.Purpose = "Sacrifice yourself for Allah."
 
 SWEP.UseHands = true
 SWEP.ViewModel = "models/weapons/cstrike/c_c4.mdl"
@@ -27,21 +26,25 @@ SWEP.Category = "Explosives"
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Automatic = false
-SWEP.Primary.Ammo = ""
+SWEP.Primary.Ammo = "none"
 
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
-SWEP.Secondary.Ammo = ""
+SWEP.Secondary.Ammo = "none"
+
+SWEP.HoldType = "slam"
 
 function SWEP:Initialize()
-	self:SetHoldType("slam")
+	self:SetHoldType(self.HoldType)
 
 	util.PrecacheModel("models/Humans/Charple01.mdl")
 	util.PrecacheModel("models/Humans/Charple02.mdl")
 	util.PrecacheModel("models/Humans/Charple03.mdl")
 	util.PrecacheModel("models/Humans/Charple04.mdl")
 end
+
+function SWEP:CanPrimaryAttack() return true end
 
 function SWEP:PrimaryAttack()
 	self:SetNextPrimaryFire(CurTime() + 2)
@@ -51,6 +54,7 @@ function SWEP:PrimaryAttack()
 	end
 end
 
+function SWEP:CanSecondaryAttack() return false end
 function SWEP:SecondaryAttack() end
 
 if CLIENT then

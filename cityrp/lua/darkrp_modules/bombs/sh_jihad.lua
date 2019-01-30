@@ -8,13 +8,21 @@ sound.Add({
 	sound = {"jihad/jihad_1.wav", "jihad/jihad_2.wav"}
 })
 
+-- same as Arena.Explosion, just much louder
+
+local SoundNames = {}
+
+for i = 0, 6, 1 do
+	SoundNames[#SoundNames + 1] = "^phx/explode0" .. i .. ".wav"
+end
+
 sound.Add({
 	name = "Jihad.Explode",
 	channel = CHAN_AUTO,
 	volume = 1.0,
 	level = 150,
-	pitch = {100},
-	sound = {"ambient/explosions/explode_1.wav", "ambient/explosions/explode_3.wav", "ambient/explosions/explode_4.wav"}
+	pitch = {95, 110},
+	sound = SoundNames
 })
 
 sound.Add({
@@ -24,13 +32,4 @@ sound.Add({
 	level = 150,
 	pitch = {100},
 	sound = {"music/islam.wav"}
-})
-
-sound.Add({
-	name = "Generic.Explode",
-	channel = CHAN_AUTO,
-	volume = 1.0,
-	level = 150,
-	pitch = {100},
-	sound = {">explosion.wav"}
 })

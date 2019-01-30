@@ -21,7 +21,6 @@ if SERVER then
 
 	function ENT:Use(ply, activator)
 		if CurTime() - self.LastUse < 5 then return end
-
 		self.LastUse = CurTime()
 
 		self:EmitSound("ambient/office/coinslot1.wav", 50, 100)

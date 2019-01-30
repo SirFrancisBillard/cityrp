@@ -2,14 +2,14 @@
 --[[What Groups are allowed to use these logs.]]
 LOGS_ALLOWEDGROUPS =
 {
-"admin",
-"superadmin",
-"moderator",
-"trialmod",
-"donatoradmin+",
-"donatormod+",
-"donatoradmin", -- Note Last item in list does not have an "," after it
-"donatormod"
+	"admin",
+	"superadmin",
+	"moderator",
+	"trialmod",
+	"donatoradmin+",
+	"donatormod+",
+	"donatoradmin",
+	"donatormod"
 }
 --[[Command to open Logs Menu (type bind key "say /dlogs" to open it via key)]]--
 LOGS_COMMAND = "/logs"

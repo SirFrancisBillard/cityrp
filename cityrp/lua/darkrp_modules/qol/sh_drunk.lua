@@ -1,23 +1,23 @@
 
 local PLAYER = FindMetaTable("Player")
 
-function PLAYER:SetDrunkenness(amt)
-	return self:SetNWInt("drunkenness", amt)
-end
-
 function PLAYER:GetDrunkenness()
 	return self:GetNWInt("drunkenness", 0)
 end
 
-function PLAYER:AddDrunkenness(amt)
-	return self:SetDrunkenness(self:GetDrunkenness() + amt)
-end
+if SERVER then
+	function PLAYER:SetDrunkenness(amt)
+		return self:SetNWInt("drunkenness", amt)
+	end
 
-function PLAYER:SoberUp()
-	return self:SetDrunkenness(0)
-end
+	function PLAYER:AddDrunkenness(amt)
+		return self:SetDrunkenness(self:GetDrunkenness() + amt)
+	end
 
-if CLIENT then
+	function PLAYER:SoberUp()
+		return self:SetDrunkenness(0)
+	end
+else
 	hook.Add("RenderScreenspaceEffects", "DrunkenMotionBlur", function()
 		local drunk = LocalPlayer():GetDrunkenness()
 		if drunk > 0 then

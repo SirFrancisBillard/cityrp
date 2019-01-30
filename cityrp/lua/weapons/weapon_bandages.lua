@@ -8,11 +8,25 @@ end
 SWEP.Base = "weapon_sck_base"
 
 SWEP.PrintName = "Bandages"
-SWEP.Purpose = "Bandages can be used to stop bleeding and restore health."
-SWEP.Instructions = "<color=green>[PRIMARY FIRE]</color> Use on yourself.\n<color=green>[SECONDARY FIRE]</color> Use on someone else."
+SWEP.Instructions = [[
+<color=green>[PRIMARY FIRE]</color> Use on yourself.
+<color=green>[SECONDARY FIRE]</color> Use on someone else.
 
+Bandages stop bleeding and restore health.]]
+
+SWEP.Spawnable = true
 SWEP.Slot = 3
 SWEP.SlotPos = 100
+
+SWEP.Primary.ClipSize = -1
+SWEP.Primary.DefaultClip = 1
+SWEP.Primary.Automatic = false
+SWEP.Primary.Ammo = "bandages"
+
+SWEP.Secondary.ClipSize = -1
+SWEP.Secondary.DefaultClip = -1
+SWEP.Secondary.Automatic = false
+SWEP.Secondary.Ammo = "none"
 
 SWEP.HoldType = "slam"
 SWEP.ViewModelFOV = 70
@@ -26,19 +40,6 @@ SWEP.ShowWorldModel = false
 SWEP.ViewModelBoneMods = {
 	["ValveBiped.Grenade_body"] = {scale = Vector(0, 0, 0), pos = Vector(0, 0, 0), angle = Angle(0, 0, 0)}
 }
-
-SWEP.Spawnable = true
-SWEP.Category = "RP"
-
-SWEP.Primary.ClipSize = -1
-SWEP.Primary.DefaultClip = 1
-SWEP.Primary.Automatic = false
-SWEP.Primary.Ammo = "bandages"
-
-SWEP.Secondary.ClipSize = -1
-SWEP.Secondary.DefaultClip = -1
-SWEP.Secondary.Automatic = false
-SWEP.Secondary.Ammo = ""
 
 SWEP.VElements = {
 	["bandage"] = {type = "Model", model = "models/props/cs_office/Paper_towels.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.43, 4.143, 0), angle = Angle(-95.865, 7.394, -18.122), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}}
@@ -55,10 +56,9 @@ end
 function SWEP:Deploy()
 	self:SendWeaponAnim(ACT_VM_DRAW)
 	self:SetNextPrimaryFire(CurTime() + 1)
+	self:SetHoldType(self.HoldType)
 	return self.BaseClass.Deploy(self)
 end
-
-
 
 function SWEP:CanPrimaryAttack()
 	return IsGood(self) and self.Owner:Health() < self.Owner:GetMaxHealth()

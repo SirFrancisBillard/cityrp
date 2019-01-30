@@ -90,12 +90,4 @@ if SERVER then
 		self:NextThink(CurTime() + 0.1)
 		return true
 	end
-else -- CLIENT
-	function ENT:Draw()
-		--render.SetMaterial(SpriteMat)
-		--render.DrawSprite(self:GetPos(), 64, 64, color_orange)
-
-		-- dont draw the ball, we're a flame
-		-- self:DrawModel()
-	end
 end

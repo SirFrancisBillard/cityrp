@@ -7,6 +7,8 @@ ENT.Category = "Crime+"
 ENT.Spawnable = true
 ENT.Model = "models/props_junk/propane_tank001a.mdl"
 
+ENT.IsStoveGas = true
+
 function ENT:Initialize()
 	self:SetModel(self.Model)
 	self:SetMoveType(MOVETYPE_VPHYSICS)

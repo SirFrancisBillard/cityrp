@@ -1,5 +1,5 @@
 
-BattleRoyale = {}
+BattleRoyale = BattleRoyale or {}
 
 BattleRoyale.GetPlayersWithStatus = function(status)
 	local queued = {}

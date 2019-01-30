@@ -20,7 +20,7 @@ if SERVER then
 	util.AddNetworkString("PlayRadioSong")
 
 	function ENT:PlayRandomSong()
-		local randy = math.random(1, #RadioSongs)
+		local randy = math.random(#RadioSongs)
 
 		net.Start("PlayRadioSong")
 			net.WriteEntity(self)

@@ -59,7 +59,10 @@ if SERVER then
 		if not IsValid(data.HitEntity) then
 			timer.Simple(0, function()
 				if not IsValid(self) then return end
-				self:SetMoveType(MOVETYPE_NONE)
+				local phys = self:GetPhysicsObject()
+				if IsValid(phys) then
+					phys:EnableMotion(false)
+				end
 			end
 		end
 	end
