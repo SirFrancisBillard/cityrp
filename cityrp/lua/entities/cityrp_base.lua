@@ -24,7 +24,7 @@ if SERVER then
 			self:SetColor(self.PermaColor)
 		end
 
-		if self.PermaScale and (self.PermaScale != 1.0) then
+		if isnumber(self.PermaScale) and not self.PermaScale == 1.0 then
 			self:SetModelScale(self.PermaScale)
 		end
 	end

@@ -1,5 +1,8 @@
 AddCSLuaFile()
 
+-- this code has so much fuckin spaghetti in it
+-- i wrote this when i was 12 years old...
+
 SWEP.PrintName = "Car Bomb"
 SWEP.Instructions = [[
 <color=green>[PRIMARY FIRE]</color> Plant bomb.
@@ -26,6 +29,53 @@ SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
 
+local BeepSound = Sound("weapons/c4/c4_beep1.wav")
+local PlantSound = Sound("weapons/c4/c4_plant.wav")
+local BombSound = Sound("Arena.Explosion")
+
+if SERVER then
+	function ExplodeVehicle(car, delay)
+		if not IsValid(car) or not car:IsVehicle() or not car.RiggedToBlow then return end
+
+		local pos = car:GetPos()
+
+		if type(delay) ~= "number" then
+			delay = 0
+		end
+
+		timer.Simple(delay, function()
+			if IsValid(car) then
+				local dmg = DamageInfo()
+				dmg:SetDamage(500)
+				dmg:SetDamageForce(Vector(0, 0, 1000)) -- yeet them upwards
+				dmg:SetDamageType(DMG_BLAST)
+				if IsValid(car.CarBombPlanter) and car.CarBombPlanter:IsPlayer() then
+					dmg:SetAttacker(car.CarBombPlanter)
+					car.CarBombPlanter = nil
+				end
+				for _, v in ipairs(player.GetAll()) do
+					if pos:DistToSqr(v:GetPos()) < 90000 then
+						v:TakeDamageInfo(dmg)
+					end
+				end
+			end
+
+			local boom = EffectData()
+			boom:SetOrigin(car:GetPos())
+			util.Effect("Explode", boom)
+
+			if not IsValid(car) then return end
+
+			car:EmitSound(BombSound)
+			car.RiggedToBlow = nil
+		end)
+	end
+
+	hook.Add("PlayerEnteredVehicle", "CarBombDetonate", function(ply, car)
+		ExplodeVehicle(car, 1)
+	end)
+end
+
 function SWEP:SetupDataTables()
 	self:NetworkVar("Int", 0, "DetonateTime")
 	self:NetworkVar("Int", 1, "ReloadSpamTime")
@@ -43,7 +93,7 @@ function SWEP:CanPrimaryAttack()
 	self.Owner:LagCompensation(true)
 	local trent = self.Owner:GetEyeTrace().Entity
 	self.Owner:LagCompensation(false)
-	return (not self:GetDeploying()) and (not trent.HasCarBombPlanted) and IsValid(trent) and trent:IsVehicle() and (self.Owner:GetPos():Distance(trent:GetPos()) < 512)
+	return (not self:GetDeploying()) and (not trent.RiggedToBlow) and IsValid(trent) and trent:IsVehicle() and (self.Owner:GetPos():Distance(trent:GetPos()) < 512)
 end
 
 function SWEP:Deploy()
@@ -67,7 +117,7 @@ end
 function SWEP:Reload()
 	if (self:GetReloadSpamTime() < CurTime()) then
 		self:SetReloadSpamTime(CurTime() + 1)
-		self:EmitSound(Sound("weapons/c4/c4_beep1.wav"))
+		self:EmitSound(BeepSound)
 		if self:GetDetonateTime() < 26 then
 			self:SetDetonateTime(self:GetDetonateTime() + 5)
 		else
@@ -82,7 +132,7 @@ end
 function SWEP:SecondaryAttack()
 	if (not self:CanSecondaryAttack()) then return end
 	self:SetNextSecondaryFire(CurTime() + 0.5)
-	self:EmitSound(Sound("weapons/c4/c4_beep1.wav"))
+	self:EmitSound(PlantSound)
 	self:SetBombType(not self:GetBombType())
 	if SERVER then
 		self.Owner:ChatPrint(self:GetBombType() and "Bomb type switched to timed." or "Bomb type switched to ignition.")
@@ -110,34 +160,24 @@ function SWEP:PrimaryAttack()
 		end
 		if (not IsValid(self)) then return end
 		if IsValid(self.Owner) and IsValid(self.Owner:GetActiveWeapon()) and (self.Owner:GetActiveWeapon():GetClass() == self.ClassName) then
-			self:EmitSound(Sound("weapons/c4/c4_plant.wav"))
-			if self.Owner:IsPlayer() then
-				self.Owner:LagCompensation(true)
-			end
-			local veh = util.TraceLine(util.GetPlayerTrace(self.Owner)).Entity
-			if self.Owner:IsPlayer() then
-				self.Owner:LagCompensation(false)
-			end
+			self:EmitSound(PlantSound)
 			if SERVER then
+				self.Owner:LagCompensation(true)
+				local car = self.Owner:GetEyeTrace().Entity
+				self.Owner:LagCompensation(false)
+
 				self.Owner:StripWeapon(self.ClassName)
-			end
-			if self:GetBombType() then
-				if self:GetDetonateTime() < 1 then
-					self:SetDetonateTime(5)
-				end
-				timer.Simple(self:GetDetonateTime(), function()
-					if (not IsValid(veh)) or (not SERVER) then return end
-					if IsValid(veh:GetDriver()) then
-						veh:GetDriver():Kill()
+
+				car.CarBombPlanter = self.Owner
+				if self:GetBombType() then
+					if self:GetDetonateTime() < 1 then
+						self:SetDetonateTime(5)
 					end
-					local boom = EffectData()
-					boom:SetOrigin(veh:GetPos())
-					util.Effect("Explosion", boom)
-					veh:EmitSound(Sound("weapons/awp/awp1.wav"))
-					veh:TakeDamage(1337, self, self)
-				end)
-			else
-			veh.HasCarBombPlanted = true
+					ExplodeVehicle(car, self:GetDetonateTime())
+				else
+					-- get out of there, she's gonna blow!
+					car.RiggedToBlow = true
+				end
 			end
 		end
 	end)
@@ -148,7 +188,6 @@ if CLIENT then
 		if self:GetPlanting() then
 			local color_r = math.ceil(((self:GetPlantingProgress() / 100) * -255) + 255)
 			local color_g = math.ceil((self:GetPlantingProgress() / 100) * 255)
-			print(color_r.." - "..color_g)
 			local width = 200
 			local height = 60
 			local border = 5

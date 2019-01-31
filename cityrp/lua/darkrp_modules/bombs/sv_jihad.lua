@@ -1,24 +1,37 @@
 
 -- #NoSimplerr#
 
+util.AddNetworkString("JihadAnimation")
+
+local function SendJihadAnim(ent)
+	net.Start("JihadAnimation")
+	net.WriteEntity(ent)
+	net.Broadcast()
+end
+
+local DefaultDelay = 1
+local DefaultRadius = 400
+local DefaultDamage = 200
+
 local PLAYER = FindMetaTable("Player")
 
 function PLAYER:SuicideBombDelayed(delay, radius, damage)
 	if type(delay) ~= "number" then
-		delay = 1
+		delay = DefaultDelay
 	end
 
 	if type(radius) ~= "number" then
-		radius = 400
+		radius = DefaultRadius
 	end
 
 	if type(damage) ~= "number" then
-		damage = 200
+		damage = DefaultDamage
 	end
 
 	if delay > 0 then
+		-- do it on the server so we update the hitboxes
 		self:AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_GMOD_GESTURE_TAUNT_ZOMBIE, true)
-		BroadcastLua([[Entity(]] .. self:EntIndex() .. [[):AnimRestartGesture(GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_GMOD_GESTURE_TAUNT_ZOMBIE, true)]])
+		SendJihadAnim()
 	end
 
 	self:EmitSound("Jihad.Scream")
@@ -51,11 +64,11 @@ function LargeExplosion(pos, radius, damage)
 	if not pos then return end
 
 	if type(radius) ~= "number" then
-		radius = 400
+		radius = DefaultRadius
 	end
 
 	if type(damage) ~= "number" then
-		damage = 200
+		damage = DefaultDamage
 	end
 
 	ParticleEffect("explosion_huge", pos, vector_up:Angle())

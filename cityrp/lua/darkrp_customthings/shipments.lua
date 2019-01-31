@@ -99,8 +99,8 @@ WeaponShipment(nil, "Fun", "weapon_bbgun", 200)
 WeaponShipment(nil, "Fun", "weapon_tennis", 300)
 WeaponShipment(nil, "Fun", "weapon_guitar", 600)
 
-EntityShipment(nil, "Chemicals", "ent_bleach", "bleach", 20)
-EntityShipment(nil, "Chemicals", "ent_volatile", "volatilewaste", 8000)
+EntityShipment(nil, "Beverages", "ent_bleach", "bleach", 20)
+EntityShipment(nil, "Beverages", "ent_volatile", "volatilewaste", 8000)
 
 --[[
 
