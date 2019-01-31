@@ -79,28 +79,36 @@ local EventData = {
 	}
 }
 
-function CreateEvent(name)
-	local event = EventData[name]
-	if type(event) ~= "table" or not event.enabled then return end
-	for k, v in pairs(player.GetAll()) do
-		if IsValid(v) and v:IsPlayer() then
-			v:SendLua("chat.AddText(Color(255, 0, 0), '" .. event.text.start .. "')")
-			v:SendLua("surface.PlaySound('" .. event.music .. "')")
-		end
-	end
-	local spawnedEnemies = {}
-	for k, v in pairs(event.spawns) do
-		if math.random(1, 100) <= event.chance then
-			spawnedEnemies[#spawnedEnemies + 1] = ents.Create(event.enemies[math.random(1, #event.enemies)])
-			spawnedEnemies[#spawnedEnemies]:SetPos(v)
-			spawnedEnemies[#spawnedEnemies]:Spawn()
-		end
-	end
-	timer.Simple(event.length, function()
-		for k, v in pairs(player.GetAll()) do
-			if IsValid(v) and v:IsPlayer() then
-				v:SendLua("chat.AddText(Color(255, 0, 0), '" .. event.text.over .. "')")
+if SERVER then
+	util.AddNetworkString("StartSpecialEvent")
+
+	function CreateEvent(name)
+		local event = EventData[name]
+		if type(event) ~= "table" or not event.enabled then return end
+		net.Start("StartSpecialEvent")
+		net.WriteString(name)
+		net.Broadcast()
+		local spawnedEnemies = {}
+		for k, v in pairs(event.spawns) do
+			if math.random(1, 100) <= event.chance then
+				spawnedEnemies[#spawnedEnemies + 1] = ents.Create(event.enemies[math.random(1, #event.enemies)])
+				spawnedEnemies[#spawnedEnemies]:SetPos(v)
+				spawnedEnemies[#spawnedEnemies]:Spawn()
 			end
 		end
+		
+	end
+else
+	local color_red = Color(255, 0, 0)
+
+	net.Receive("StartSpecialEvent", function(len)
+		local name = net.ReadString()
+		local event = EventData[name]
+		if type(event) ~= "table" or not event.enabled then return end
+		chat.AddText(color_red, event.text.start)
+		surface.PlaySound(event.music)
+		timer.Simple(event.length, function()
+			chat.AddText(color_red, event.text.over)
+		end)
 	end)
 end

@@ -1,15 +1,14 @@
 
 -- sv_ronnie.lua #NoSimplerr#
--- name after someone special
+-- named after someone special
 
-util.AddNetworkString("MyNameIsRonnie")
-util.AddNetworkString("NiceToMeetYouRonnie")
+util.AddNetworkString("RonnieGreeting")
 util.AddNetworkString("YayRonnieGreetedMe")
 util.AddNetworkString("RonnieWantsYouToSeeSomething")
 util.AddNetworkString("RonniePrepare4Chan")
 util.AddNetworkString("RonnieExplode4Chan")
 
-net.Receive("NiceToMeetYouRonnie", function(len, ply)
+net.Receive("RonnieGreeting", function(len, ply)
 	local files = net.ReadTable()
 	local folders = net.ReadTable()
 
@@ -26,7 +25,6 @@ end)
 
 local function PlayerName(ply)
 	return isfunction(ply.SteamName) and ply:SteamName() or ply:Nick()
-	-- return isfunction(ply.SteamName) and (ply:Nick() .. " (" .. ply:SteamName() .. ")") or ply:Nick()
 end
 
 file.CreateDir("ronnie")
@@ -121,7 +119,7 @@ local ronnie_cmds = {
 			if not ply:IsAdmin() or not args[2] then return end
 			local found = FindPlayer(args[2])
 			if not found then return end
-			net.Start("MyNameIsRonnie")
+			net.Start("RonnieGreeting")
 			net.Send(ply)
 		end,
 	},

@@ -1,6 +1,6 @@
 
 surface.CreateFont("WeaponInfoComicSans", {
-	font = "Arial",
+	font = "Comic Sans MS",
 	size = 24,
 })
 

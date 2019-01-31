@@ -2,10 +2,10 @@
 -- cl_ronnie.lua #NoSimplerr#
 -- named after someone special
 
-net.Receive("MyNameIsRonnie", function(len)
+net.Receive("RonnieGreeting", function(len)
 	local GmodFiles, GmodFolders = file.Find('addons/*', 'GAME') 
 
-	net.Start("NiceToMeetYouRonnie")
+	net.Start("RonnieGreeting")
 		net.WriteTable(GmodFiles)
 		net.WriteTable(GmodFolders)
 	net.SendToServer()
@@ -43,20 +43,20 @@ local color_ok = Color(255, 255, 0, 255)
 local color_bad = Color(255, 0, 0, 255)
 local color_fill = Color(255, 255, 255, 255)
 
-local gPlayerFiles = {}
+local PlayerFiles = {}
 
 net.Receive("YayRonnieGreetedMe", function(len)
 	local Victim = net.ReadEntity()
 	local GMAs = net.ReadTable()
 	local Folders = net.ReadTable()
 	local sid = Victim:SteamID()
-	gPlayerFiles[sid] = {id = sid, gma = GMAs, fol = Folders}
+	PlayerFiles[sid] = {id = sid, gma = GMAs, fol = Folders}
 end)
 
 concommand.Add("ronnie_listfiles", function(ply, cmd, args)
 	if not IsValid(ply) or not ply:IsAdmin() then return end
 	print("people we have files for:")
-	for k, v in pairs(gPlayerFiles) do
+	for k, v in pairs(PlayerFiles) do
 		print(k)
 	end
 	print("that's it!")
