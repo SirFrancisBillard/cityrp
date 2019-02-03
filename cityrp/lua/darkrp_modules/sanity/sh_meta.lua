@@ -51,7 +51,7 @@ local MentalStates = {
 	{
 		Min = 71,
 		Max = 80,
-		Name = "Stable",
+		Name = "Mediocre",
 		Color = Color(130, 255, 0)
 	},
 	{
@@ -63,7 +63,7 @@ local MentalStates = {
 	{
 		Min = 91,
 		Max = 100,
-		Name = "Fine",
+		Name = "Healthy",
 		Color = Color(0, 255, 0)
 	}
 }
