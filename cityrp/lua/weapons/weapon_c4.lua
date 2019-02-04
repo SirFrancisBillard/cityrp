@@ -32,7 +32,9 @@ SWEP.Primary.Ammo = "C4"
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
-SWEP.Secondary.Ammo = ""
+SWEP.Secondary.Ammo = "none"
+
+SWEP.WepSelectIcon = WeaponIconURL("c4")
 
 function SWEP:Initialize()
 	self:SetHoldType("slam")

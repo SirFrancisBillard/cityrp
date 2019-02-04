@@ -37,6 +37,8 @@ SWEP.TorchDistance = 90
 SWEP.TorchAmount = 80
 SWEP.TorchTimeout = 180
 
+SWEP.WepSelectIcon = WeaponIconURL("blowtorch")
+
 local TorchableEnts = {"prop_physics"}
 
 function SWEP:TorchEntity(ent)

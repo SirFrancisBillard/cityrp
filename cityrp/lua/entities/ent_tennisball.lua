@@ -1,18 +1,5 @@
 AddCSLuaFile()
 
-if SERVER then
-	resource.AddFile("sound/tennis/bounce.wav")
-end
-
-sound.Add({
-	name = "Tennis.Bounce",
-	channel = CHAN_AUTO,
-	volume = 1.0,
-	level = 80,
-	pitch = {95, 110},
-	sound = "tennis/bounce.wav"
-})
-
 ENT.Type = "anim"
 ENT.Base = "base_gmodentity"
 
@@ -23,7 +10,7 @@ ENT.Model = "models/Combine_Helicopter/helicopter_bomb01.mdl"
 
 ENT.IsTennisBall = true
 
-local BounceSound = Sound("Tennis.Bounce")
+local BounceSound = "https://sirfrancisbillard.github.io/billard-radio/sound/tennis/bounce.mp3"
 local color_green = Color(0, 255, 0)
 
 if SERVER then
@@ -42,7 +29,7 @@ if SERVER then
 
 	function ENT:PhysicsCollide(data, phys)
 		if data.Speed > 50 then
-			self:EmitSound(BounceSound)
+			self:EmitSoundURL(BounceSound)
 		end
 
 		-- bounce like a crazy bitch

@@ -61,6 +61,8 @@ SWEP.SlotPos = 1
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = false
 
+SWEP.WepSelectIcon = WeaponIconURL("guitar")
+
 local Pluck = Sound("guitar/pluck.wav")
 local Chord = Sound("guitar/chord.wav")
 local Strum = Sound("guitar/strum.wav")

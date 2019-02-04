@@ -1,9 +1,8 @@
 AddCSLuaFile()
 
 SWEP.PrintName = "Pickpocket"
-SWEP.Author = "DarkRP Developers"
-SWEP.Instructions = "Click on a player to steal money."
-SWEP.Purpose = "Theft"
+SWEP.Instructions = [[
+<color=green>[PRIMARY FIRE]</color> Steal money.]]
 
 SWEP.ViewModelFOV = 62
 SWEP.ViewModelFlip = false
@@ -17,12 +16,14 @@ SWEP.AdminSpawnable = true
 SWEP.Primary.ClipSize = -1      
 SWEP.Primary.DefaultClip = 0        
 SWEP.Primary.Automatic = false      
-SWEP.Primary.Ammo = ""
+SWEP.Primary.Ammo = "none"
 
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = 0
 SWEP.Secondary.Automatic = false
-SWEP.Secondary.Ammo = ""
+SWEP.Secondary.Ammo = "none"
+
+SWEP.WepSelectIcon = WeaponIconURL("pickpocket")
 
 CreateConVar("rp_pickpocket_minimumamt", 200, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE})
 CreateConVar("rp_pickpocket_maximumamt", 800, {FCVAR_REPLICATED, FCVAR_ARCHIVE, FCVAR_SERVER_CAN_EXECUTE})

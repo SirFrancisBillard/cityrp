@@ -46,6 +46,8 @@ SWEP.WElements = {
 	["shit"] = { type = "Model", model = "models/Gibs/HGIBS_spine.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.443, 1.988, -1.183), angle = Angle(-16.621, -87.29, 7.149), size = Vector(0.837, 0.837, 0.837), color = Color(102, 57, 0, 255), surpresslightning = false, material = "models/debug/debugwhite", skin = 0, bodygroup = {} }
 }
 
+SWEP.WepSelectIcon = WeaponIconURL("shit")
+
 function SWEP:CanPrimaryAttack()
 	return true
 end

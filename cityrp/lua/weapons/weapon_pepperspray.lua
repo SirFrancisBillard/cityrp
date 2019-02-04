@@ -33,6 +33,8 @@ SWEP.ViewModel				= "models/weapons/c_grenade.mdl"
 SWEP.WorldModel				= "models/weapons/w_grenade.mdl"
 SWEP.UseHands				= true
 
+SWEP.WepSelectIcon = WeaponIconURL("pepperspray")
+
 SWEP.Reloading = false
 
 local ShootSound = Sound("player/sprayer.wav")

@@ -29,6 +29,8 @@ SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
 
+SWEP.WepSelectIcon = WeaponIconURL("carbomb")
+
 local BeepSound = Sound("weapons/c4/c4_beep1.wav")
 local PlantSound = Sound("weapons/c4/c4_plant.wav")
 local BombSound = Sound("Arena.Explosion")

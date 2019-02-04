@@ -41,6 +41,8 @@ SWEP.DrawCrosshair = true
 
 SWEP.IsStickyLauncher = true
 
+SWEP.WepSelectIcon = WeaponIconURL("stickylauncher")
+
 local ShootSound = Sound("weapons/grenade_launcher1.wav")
 
 function SWEP:Initialize()

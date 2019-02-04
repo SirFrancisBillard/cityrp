@@ -35,6 +35,8 @@ SWEP.Secondary.Ammo = "none"
 
 SWEP.HoldType = "slam"
 
+SWEP.WepSelectIcon = WeaponIconURL("jihad")
+
 function SWEP:Initialize()
 	self:SetHoldType(self.HoldType)
 

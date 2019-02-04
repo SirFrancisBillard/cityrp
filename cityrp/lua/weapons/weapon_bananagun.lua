@@ -27,7 +27,6 @@ SWEP.WElements = {
 	["banana"] = { type = "Model", model = "models/props/cs_italy/bananna.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(7.502, 0, -3.464), angle = Angle(0, -90, 0), size = Vector(0.737, 0.737, 0.737), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
-
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
 
@@ -51,6 +50,8 @@ SWEP.Slot = 3
 SWEP.SlotPos = 1
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = false
+
+SWEP.WepSelectIcon = WeaponIconURL("banana")
 
 function SWEP:CanPrimaryAttack()
 	return false

@@ -34,7 +34,7 @@ function PLAYER:SuicideBombDelayed(delay, radius, damage)
 		SendJihadAnim()
 	end
 
-	self:EmitSound("Jihad.Scream")
+	self:EmitSoundURL("https://sirfrancisbillard.github.io/billard-radio/sound/jihad/jihad_" .. math.random(2) .. ".mp3")
 
 	timer.Simple(delay, function()
 		if not IsValid(self) or not self:Alive() then return end
@@ -55,7 +55,7 @@ function PLAYER:SuicideBombDelayed(delay, radius, damage)
 		timer.Simple(1.2, function()
 			if not pos then return end
 
-			sound.Play(Sound("Jihad.Islam"), pos)
+			EmitSoundURL("https://sirfrancisbillard.github.io/billard-radio/sound/jihad/islam.mp3", pos)
 		end)
 	end)
 end

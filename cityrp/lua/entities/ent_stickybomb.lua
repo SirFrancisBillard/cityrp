@@ -63,7 +63,7 @@ if SERVER then
 				if IsValid(phys) then
 					phys:EnableMotion(false)
 				end
-			end
+			end)
 		end
 	end
 

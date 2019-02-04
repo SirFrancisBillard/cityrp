@@ -56,6 +56,8 @@ SWEP.SlotPos = 1
 SWEP.DrawAmmo = true
 SWEP.DrawCrosshair = true
 
+SWEP.WepSelectIcon = WeaponIconURL("bikelock")
+
 local Damage = 30
 local SwingDist = 100
 

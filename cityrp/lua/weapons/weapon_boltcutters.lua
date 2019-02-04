@@ -42,6 +42,8 @@ SWEP.WElements = {
 	["ties"] = {type = "Model", model = "models/Items/CrossbowRounds.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.151, 1.075, -2.597), angle = Angle(106.364, 66.593, -1.293), size = Vector(0.912, 1.029, 0.953), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}}
 }
 
+SWEP.WepSelectIcon = WeaponIconURL("boltcutters")
+
 local function CanFree(us, them, weps)
 	if not IsValid(them) or not them:IsPlayer() or them:GetPos():DistToSqr(us:GetPos()) > 10000 then
 		return false

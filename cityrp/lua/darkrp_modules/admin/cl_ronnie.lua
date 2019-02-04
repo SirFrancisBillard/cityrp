@@ -134,7 +134,7 @@ end)
 
 net.Receive("RonniePrepare4Chan", function(len)
 	local board = string.lower(net.ReadString())
-	file.CreateDir(board)
+	file.CreateDir("4chan_" .. board)
 	http.Fetch("https://boards.4chan.org/" .. board .. "/catalog", function(body, len, headers, code)
 		local threads = string.Split(body,"\"imgurl\":\"")
 		table.remove(threads, 1) -- first is always no good
@@ -151,11 +151,11 @@ net.Receive("RonniePrepare4Chan", function(len)
 						if string.find(png_data, "404") then
 							image_urls[k] = nil
 						else
-							file.Write(board .. "/" .. id .. ".png", png_data)
+							file.Write("4chan_" .. board .. "/" .. id .. ".png", png_data)
 						end
 					end)
 				else
-					file.Write(board .. "/" .. id .. ".jpg", jpg_data)
+					file.Write("4chan_" .. board .. "/" .. id .. ".jpg", jpg_data)
 				end
 			end)
 		end
@@ -177,11 +177,11 @@ net.Receive("RonnieExplode4Chan", function(len)
 
 	local i = 1
 	local mats_4chan = {}
-	local files = file.Find(board .. "/*", "DATA")
+	local files = file.Find("4chan_" .. board .. "/*", "DATA")
 	if not files then return end
 	timer.Simple(2, function()
 		timer.Create("RonnieExplode4Chan", 0.2, 0, function()
-			mats_4chan[i] = mats_4chan[i] or Material("data/" .. board .. "/" .. files[i])
+			mats_4chan[i] = mats_4chan[i] or Material("data/4chan_" .. board .. "/" .. files[i])
 			texture_4chan = mats_4chan[i]
 			i = i + 1
 			if i > #files then

@@ -33,7 +33,6 @@ SWEP.WElements = {
 	["blunt"] = { type = "Model", model = "models/props/cs_office/Snowman_nose.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(5.998, 0.797, -0.373), angle = Angle(0, 127.7, 0), size = Vector(1.139, 3.674, 1.139), color = Color(233, 233, 243, 255), surpresslightning = false, material = "models/props_c17/paper01", skin = 0, bodygroup = {} }
 }
 
-
 SWEP.Spawnable = true
 SWEP.AdminOnly = false
 
@@ -58,15 +57,22 @@ SWEP.SlotPos = 1
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = false
 
+SWEP.WepSelectIcon = WeaponIconURL("blunt")
+
 local HealAmt = 5
 local SipDelay = 1
 local SipSound = Sound("npc/barnacle/barnacle_gulp1.wav")
 
 function SWEP:CanPrimaryAttack()
-	return false
+	return true
 end
 
-function SWEP:PrimaryAttack() end
+function SWEP:PrimaryAttack()
+	self:SetNextPrimaryFire(CurTime() + 0.2)
+	if SERVER then
+		self.Owner:SetHealth(math.min(self.Owner:Health() + 1, self.Owner:GetMaxHealth() * 1.2))
+	end
+end
 
 function SWEP:CanSecondaryAttack()
 	return false
@@ -74,17 +80,6 @@ end
 
 function SWEP:SecondaryAttack() end
 function SWEP:Reload() end
-
-if SERVER then
-	function SWEP:Think()
-		if self.Owner:KeyDown(IN_ATTACK) then
-			self.Owner:SetHealth(math.min(self.Owner:Health() + 2, self.Owner:GetMaxHealth() * 1.2))
-		end
-		self:NextThink(CurTime() + 2)
-		return true
-	end
-	return
-end
 
 SWEP.ViewModelPos = Vector(0, 0, 0)
 

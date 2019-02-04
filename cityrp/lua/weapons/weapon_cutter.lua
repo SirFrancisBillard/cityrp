@@ -59,6 +59,8 @@ SWEP.WElements = {
 	["knife"] = { type = "Model", model = "models/weapons/w_knife_t.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(1.662, -0.353, 1.792), angle = Angle(44.234, -24.695, -180), size = Vector(0.924, 0.924, 0.924), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {} }
 }
 
+SWEP.WepSelectIcon = WeaponIconURL("cutter")
+
 local Damage = 10
 local CutSound = Sound("Weapon_Knife.Hit")
 local PainSounds = {

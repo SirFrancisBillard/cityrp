@@ -4,6 +4,7 @@ if CLIENT then
 	SWEP.PrintName		= "Taser"
 	SWEP.Instructions	= [[
 <color=green>[PRIMARY FIRE]</color> Fire taser.
+
 Targets hit with the taser will be stunned.]]
 	SWEP.Category 		= "Police"
 	SWEP.Slot			= 3
@@ -24,6 +25,8 @@ SWEP.Primary.Sound			= Sound( "weapons/mortar/mortar_fire1.wav" )
 SWEP.Secondary.Sound		= Sound( "ambient/energy/spark5.wav" )
 
 SWEP.HitDistance			= 750
+
+SWEP.WepSelectIcon = WeaponIconURL("taser")
 
 local NextThink = 0	-- Convert the network variables
 local Rate = 0.025

@@ -4,6 +4,8 @@
 -- https://github.com/Exho1/Hitmarkers
 
 if SERVER then
+	resource.AddFile("hitmarkers/mlg.wav")
+
 	util.AddNetworkString("DrawHitMarker")
 	util.AddNetworkString("OpenMixer")
 

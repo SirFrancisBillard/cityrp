@@ -1,7 +1,9 @@
 
 -- modified for ttt, now used in cityrp #NoSimplerr#
 
-file.CreateDir("downloaded_assets")
+local dir = "downloaded_assets"
+
+file.CreateDir(dir)
 
 local exists = file.Exists
 local write = file.Write
@@ -11,7 +13,7 @@ local crc = util.CRC
 function TextureURL(url)
 	if not url then return "error.png" end
 
-	local path = "downloaded_assets/" .. crc(url) .. ".png"
+	local path = dir .. "/" .. crc(url) .. ".png"
 
 	if not exists(path, "DATA") then
 		fetch(url, function(data)
@@ -34,8 +36,8 @@ function MaterialURL(url)
 
 	local crc = crc(url)
 
-	if exists("downloaded_assets/" .. crc .. ".png", "DATA") then
-		mats[url] = Material("data/downloaded_assets/" .. crc .. ".png")
+	if exists(dir .. "/" .. crc .. ".png", "DATA") then
+		mats[url] = Material("data/" .. dir .. "/" .. crc .. ".png")
 
 		return mats[url]
 	end
@@ -43,8 +45,8 @@ function MaterialURL(url)
 	mats[url] = _error
 
 	fetch(url, function(data)
-		write("downloaded_assets/" .. crc .. ".png", data)
-		mats[url] = Material("data/downloaded_assets/" .. crc .. ".png")
+		write(dir .. "/" .. crc .. ".png", data)
+		mats[url] = Material("data/" .. dir .. "/" .. crc .. ".png")
 	end)
 
 	return mats[url]

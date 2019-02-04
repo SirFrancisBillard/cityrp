@@ -49,6 +49,8 @@ SWEP.WElements = {
 	["bandage"] = {type = "Model", model = "models/props/cs_office/Paper_towels.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(2.012, 2.647, -2.123), angle = Angle(-69.766, 5.291, 9.59), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}}
 }
 
+SWEP.WepSelectIcon = WeaponIconURL("bandages")
+
 local function IsGood(ent)
 	return IsValid(ent) and IsValid(ent.Owner) and ent.Owner:IsPlayer() and ent.Owner:Alive() and IsValid(ent.Owner:GetActiveWeapon()) and ent.Owner:GetActiveWeapon():GetClass() == ent.ClassName
 end

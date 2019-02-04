@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 if CLIENT then
-    SWEP.PrintName = "RP"
+    SWEP.PrintName = "Door Ram"
     SWEP.Slot = 5
     SWEP.SlotPos = 1
     SWEP.DrawAmmo = false
@@ -11,10 +11,9 @@ end
 -- Variables that are used on both client and server
 DEFINE_BASECLASS("weapon_cs_base2")
 
-SWEP.Author = "DarkRP Developers"
-SWEP.Instructions = "Left click to break open doors/unfreeze props or get people out of their vehicles\nRight click to raise"
-SWEP.Contact = ""
-SWEP.Purpose = ""
+SWEP.Instructions = [[
+<color=green>[PRIMARY FIRE]</color> Knock down a door or prop.]]
+
 SWEP.IsDarkRPDoorRam = true
 
 SWEP.IconLetter = ""
@@ -36,12 +35,14 @@ SWEP.Sound = Sound("physics/wood/wood_box_impact_hard3.wav")
 SWEP.Primary.ClipSize = -1      -- Size of a clip
 SWEP.Primary.DefaultClip = 0        -- Default number of bullets in a clip
 SWEP.Primary.Automatic = false      -- Automatic/Semi Auto
-SWEP.Primary.Ammo = ""
+SWEP.Primary.Ammo = "none"
 
 SWEP.Secondary.ClipSize = -1        -- Size of a clip
 SWEP.Secondary.DefaultClip = 0     -- Default number of bullets in a clip
 SWEP.Secondary.Automatic = false     -- Automatic/Semi Auto
-SWEP.Secondary.Ammo = ""
+SWEP.Secondary.Ammo = "none"
+
+SWEP.WepSelectIcon = WeaponIconURL("ram")
 
 --[[---------------------------------------------------------
 Name: SWEP:Initialize()

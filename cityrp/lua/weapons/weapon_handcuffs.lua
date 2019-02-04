@@ -1,9 +1,5 @@
 AddCSLuaFile()
 
-if SERVER then
-	resource.AddFile("sound/handcuff.wav")
-end
-
 SWEP.Base = "weapon_sck_base"
 
 SWEP.PrintName = "Handcuffs"
@@ -18,12 +14,12 @@ SWEP.Spawnable = true
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Automatic = false
-SWEP.Primary.Ammo = ""
+SWEP.Primary.Ammo = "none"
 
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
-SWEP.Secondary.Ammo = ""
+SWEP.Secondary.Ammo = "none"
 
 SWEP.HoldType = "normal"
 SWEP.ViewModelFOV = 70
@@ -47,6 +43,7 @@ SWEP.WElements = {
 }
 
 SWEP.HandcuffSWEP = "weapon_handcuffed"
+SWEP.WepSelectIcon = WeaponIconURL("handcuffs")
 
 local function CanCuff(us, them, wep)
 	if not IsValid(them) or not them:IsPlayer() or them:GetPos():DistToSqr(us:GetPos()) > 10000 or them:HasWeapon(wep) then

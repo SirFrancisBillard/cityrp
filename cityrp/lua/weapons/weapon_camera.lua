@@ -60,6 +60,8 @@ SWEP.ViewModelDefAng = Vector (6.0177, 11.7713, -0.8871)
 SWEP.MoveToPos = Vector (12.7306, 17.1875, -6.495)
 SWEP.MoveToAng = Vector (6.0177, 11.7713, -0.8871)
 
+SWEP.WepSelectIcon = WeaponIconURL("camera")
+
 function SWEP:Initialize()
 	self.zoomLevel = 70
 	self.MaxZoomLevel = 70

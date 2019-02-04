@@ -66,6 +66,8 @@ SWEP.LoweredAng = Angle( -17.2767, 28.3565, -0.4145 )
 
 SWEP.IsTranq = true
 
+SWEP.WepSelectIcon = WeaponIconURL("tranq")
+
 if CLIENT then
 	killicon.AddFont( "weapon_tranq", "Trebuchet24", "TRANQUILIZED", Color( 255, 80, 0, 255 ) )
 end

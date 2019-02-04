@@ -39,6 +39,8 @@ SWEP.SlotPos = 1
 SWEP.DrawAmmo = true
 SWEP.DrawCrosshair = true
 
+SWEP.WepSelectIcon = WeaponIconURL("grenadelauncher")
+
 local ShootSound = Sound("weapons/grenade_launcher1.wav")
 
 function SWEP:Initialize()

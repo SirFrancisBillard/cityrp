@@ -45,6 +45,8 @@ SWEP.WElements = {
 	["paper"] = {type = "Model", model = "models/props_junk/garbage_newspaper001a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(3.519, 5.426, -2.177), angle = Angle(93.78, 0, 1.71), size = Vector(0.5, 0.5, 0.5), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}}
 }
 
+SWEP.WepSelectIcon = WeaponIconURL("newspaper")
+
 local Starts = {
 	"Florida man",
 	"Florida woman",

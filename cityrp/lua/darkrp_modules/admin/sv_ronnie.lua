@@ -165,5 +165,6 @@ hook.Add("PlayerSay", "RonnieChatCommand", function(ply, txt)
 	local args = string.Split(txt, " ")
 	if ronnie_cmds[string.lower(args[1])] and isfunction(ronnie_cmds[string.lower(args[1])].func) then
 		ronnie_cmds[string.lower(args[1])].func(ply, args)
+		return ""
 	end
 end)

@@ -55,6 +55,8 @@ SWEP.ViewModelBoneMods = {
 	["ValveBiped.Bip01_L_Hand"] = { scale = Vector(1, 1, 1), pos = Vector(0, 0, 0), angle = Angle(0, -43.7, 0) }
 }
 
+SWEP.WepSelectIcon = WeaponIconURL("heil")
+
 function SWEP:Initialize()
 	self:SetWeaponHoldType("normal")
 end

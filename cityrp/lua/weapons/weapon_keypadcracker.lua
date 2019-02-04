@@ -46,6 +46,8 @@ SWEP.KeyCrackSound = Sound("buttons/blip2.wav")
 
 SWEP.IdleStance = "slam"
 
+SWEP.WepSelectIcon = WeaponIconURL("keypadcracker")
+
 function SWEP:Initialize()
 	self:SetHoldType(self.IdleStance)
 

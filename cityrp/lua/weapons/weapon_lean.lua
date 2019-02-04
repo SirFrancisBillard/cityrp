@@ -54,6 +54,8 @@ SWEP.SlotPos = 1
 SWEP.DrawAmmo = false
 SWEP.DrawCrosshair = false
 
+SWEP.WepSelectIcon = WeaponIconURL("lean")
+
 local HealAmt = 5
 local SipDelay = 1
 local SipSound = Sound("npc/barnacle/barnacle_gulp1.wav")

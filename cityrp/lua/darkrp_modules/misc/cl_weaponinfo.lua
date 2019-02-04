@@ -1,11 +1,20 @@
 
+local settex = settex or surface.SetTexture
+
+surface.SetTexture = function(id)
+	if type(id) == "string" then
+		return surface.SetMaterial(MaterialURL(id))
+	end
+	return settex(id)
+end
+
 surface.CreateFont("WeaponInfoComicSans", {
 	font = "Comic Sans MS",
 	size = 24,
 })
 
-local function FixInfoDrawing()
-	weapons.GetStored("weapon_base").PrintWeaponInfo(x, y, alpha)
+function FixInfoDrawing()
+	weapons.GetStored("weapon_base").PrintWeaponInfo = function(self, x, y, alpha)
 		if self.DrawWeaponInfoBox == false then return end
 
 		if self.InfoMarkup == nil and self.Instructions and self.Instructions ~= "" then
@@ -23,7 +32,8 @@ local function FixInfoDrawing()
 		surface.SetTexture(self.SpeechBubbleLid)
 
 		surface.DrawTexturedRect(x, y - 64 - 5, 128, 64)
-		draw.RoundedBox(8, x - 5, y - 6, 260, self.InfoMarkup:GetHeight() + 18, Color(60, 60, 60, alpha))
+		-- old is 260
+		draw.RoundedBox(8, x - 5, y - 6, self.InfoMarkup:GetWidth() + 18, self.InfoMarkup:GetHeight() + 18, Color(60, 60, 60, alpha))
 
 		if self.Instructions and self.Instructions ~= "" then
 			self.InfoMarkup:Draw(x+5, y+5, nil, nil, alpha)

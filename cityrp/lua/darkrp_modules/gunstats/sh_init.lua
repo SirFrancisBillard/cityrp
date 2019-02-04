@@ -45,10 +45,4 @@ if CLIENT then
 
 	end )
 
-	include( "gunstats/cl_config.lua" )
-	include( "gunstats/cl_util.lua")
-	include( "gunstats/cl_display.lua" )
-
-	MsgC( Color( 241, 196, 15 ), "Gun Stats initialized...\n" )
-
 end

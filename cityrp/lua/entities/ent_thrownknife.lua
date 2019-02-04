@@ -37,7 +37,7 @@ if SERVER then
 				self:SetMoveType(MOVETYPE_NONE)
 				self:EmitSound(StuckSound)
 				SafeRemoveEntityDelayed(self, 10)
-			end
+			end)
 		end
 	end
 

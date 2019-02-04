@@ -38,6 +38,8 @@ SWEP.SlotPos = 1
 SWEP.DrawAmmo = true
 SWEP.DrawCrosshair = true
 
+SWEP.WepSelectIcon = WeaponIconURL("rocketlauncher")
+
 local ShootSound = Sound("Weapon_RPG.Single")
 
 function SWEP:Initialize()

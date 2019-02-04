@@ -1,18 +1,5 @@
 AddCSLuaFile()
 
-if SERVER then
-	resource.AddFile("sound/tennis/hit.wav")
-end
-
-sound.Add({
-	name = "Tennis.Hit",
-	channel = CHAN_AUTO,
-	volume = 1.0,
-	level = 80,
-	pitch = {95, 110},
-	sound = "tennis/hit.wav"
-})
-
 SWEP.PrintName = "Tennis Racket"
 SWEP.Slot = 2
 SWEP.SlotPos = 1
@@ -33,25 +20,27 @@ SWEP.Spawnable = true
 SWEP.Primary.ClipSize = -1
 SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Automatic = false
-SWEP.Primary.Ammo = ""
+SWEP.Primary.Ammo = "none"
 
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
-SWEP.Secondary.Ammo = ""
+SWEP.Secondary.Ammo = "none"
 
-SWEP.HitSound = Sound("tennis/hit.wav")
-SWEP.MissSound = Sound("Weapon_Crowbar.Single")
+local HitSound = "https://sirfrancisbillard.github.io/billard-radio/sound/tennis/hit.mp3"
+local MissSound = Sound("Weapon_Crowbar.Single")
 
 SWEP.Delay = 0.5
 SWEP.HitForce = 6000
+
+SWEP.WepSelectIcon = WeaponIconURL("tennis")
 
 function SWEP:Initialize()
 	self:SetHoldType("slam")
 end
 
 function SWEP:Miss()
-	self.Owner:EmitSound(self.MissSound)
+	self.Owner:EmitSound(MissSound)
 end
 
 function SWEP:Hit(ball)
@@ -61,7 +50,7 @@ function SWEP:Hit(ball)
 	velocity.z = 0.5
 	velocity = velocity * self.HitForce
 	phys:ApplyForceCenter(velocity)
-	self.Owner:EmitSound(self.HitSound)
+	self.Owner:EmitSoundURL(HitSound)
 end
 
 function SWEP:Swing(primary)

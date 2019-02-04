@@ -52,6 +52,8 @@ SWEP.WElements = {
 	["bottle"] = {type = "Model", model = "models/props_junk/GlassBottle01a.mdl", bone = "ValveBiped.Bip01_R_Hand", rel = "", pos = Vector(4.748, 1.988, -2.597), angle = Angle(-174.698, 67.234, -2.013), size = Vector(0.912, 1.029, 0.953), color = Color(255, 255, 255, 255), surpresslightning = false, material = "", skin = 0, bodygroup = {}}
 }
 
+SWEP.WepSelectIcon = WeaponIconURL("molotov")
+
 function SWEP:SetupDataTables()
 	self:NetworkVar("Bool", 0, "Lit")
 	self:NetworkVar("Bool", 1, "ThrowWhenReady")
