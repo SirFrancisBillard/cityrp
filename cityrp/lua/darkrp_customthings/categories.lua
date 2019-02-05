@@ -89,6 +89,7 @@ EasyCategory("weapons", "Assault Rifles", DefaultCategoryColor)
 EasyCategory("weapons", "Sniper Rifles", DefaultCategoryColor)
 EasyCategory("weapons", "Black Market", DefaultCategoryColor)
 EasyCategory("weapons", "Explosives", DefaultCategoryColor)
+EasyCategory("weapons", "Drugs", DefaultCategoryColor)
 EasyCategory("weapons", "Fun", DefaultCategoryColor, 1) -- yeah baby
 EasyCategory("weapons", "Grenades", DefaultCategoryColor)
 EasyCategory("weapons", "Scrap Weapons", DefaultCategoryColor)

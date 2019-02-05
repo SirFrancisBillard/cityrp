@@ -313,6 +313,7 @@ GM.Config.DisallowDrop = {
     ["weapon_physgun"] = true,
     ["weaponchecker"] = true,
 	["weapon_rp_fists"] = true,
+	["weapon_hands"] = true,
 	["weapon_ziptied"] = true
 }
 
@@ -320,12 +321,10 @@ GM.Config.DisallowDrop = {
 GM.Config.DefaultWeapons = {
     "keys",
     "weapon_physcannon",
-    "weapon_camera", -- our camera not the default
     "gmod_tool",
     "pocket",
-    "weapon_physgun",
-    "weapon_lean",
-    "weapon_rp_fists"
+    --"weapon_physgun",
+    "weapon_hands"
 }
 
 -- Override categories.

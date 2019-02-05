@@ -95,9 +95,11 @@ g_DarkRPEntData = {
 	["ent_radio"] = {PrintName = "Radio", Model = "models/props/cs_office/radio.mdl"},
 	["weapon_xbow"] = {PrintName = "Crossbow", Model = "models/weapons/w_crossbow.mdl"},
 	["weapon_tennis"] = {PrintName = "Tennis Racket", Model = "models/weapons/w_crowbar.mdl"},
-	["weapon_boltcutters"] = {PrintName = "Bolt Cutters", Model = ""},
+	["weapon_boltcutters"] = {PrintName = "Bolt Cutters", Model = "models/props_c17/tools_wrench01a.mdl"},
 	["weapon_pipeshotgun"] = {PrintName = "Pipe Shotgun", Model = "models/props_canal/mattpipe.mdl"},
 	["weapon_monkeymilk"] = {PrintName = "Monkey Milk", Model = "models/props_junk/garbage_milkcarton002a.mdl"},
 	["weapon_flamethrower"] = {PrintName = "Flamethrower", Model = "models/weapons/w_shotgun.mdl"},
 	["weapon_guitar"] = {PrintName = "Guitar", Model = "models/props_phx/misc/fender.mdl"},
+	["weapon_lean"] = {PrintName = "Lean", Model = "models/props_junk/garbage_glassbottle002a.mdl"},
+	["weapon_blunt"] = {PrintName = "Blunt", Model = "models/Items/item_item_crate_chunk01.mdl"},
 }

@@ -24,6 +24,9 @@ SWEP.Secondary.DefaultClip = -1
 SWEP.Secondary.Automatic = false
 SWEP.Secondary.Ammo = "none"
 
+SWEP.Slot = 0
+SWEP.SlotPos = 0
+
 SWEP.DrawCrosshair = false
 
 function SWEP:Initialize()
