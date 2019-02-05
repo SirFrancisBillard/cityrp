@@ -1,16 +1,14 @@
 SWEP.Base = "weapon_rp_base"
 
-if CLIENT then
-	SWEP.PrintName		= "Taser"
-	SWEP.Instructions	= [[
+SWEP.PrintName = "Taser"
+SWEP.Instructions = [[
 <color=green>[PRIMARY FIRE]</color> Fire taser.
 
 Targets hit with the taser will be stunned.]]
-	SWEP.Category 		= "Police"
-	SWEP.Slot			= 3
-	SWEP.SlotPos		= 1
-	SWEP.DrawCrosshair	= true
-end
+
+SWEP.Slot = 3
+SWEP.SlotPos = 1
+SWEP.DrawCrosshair = true
 
 SWEP.Spawnable = true
 

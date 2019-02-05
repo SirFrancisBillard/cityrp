@@ -8,16 +8,13 @@ ENT.Spawnable = true
 ENT.Model = "models/props_junk/garbage_bag001a.mdl"
 ENT.IsFertilizer = true
 
-function ENT:Initialize()
-	self:SetModel(self.Model)
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
-	if SERVER then
+if SERVER then
+	function ENT:Initialize()
+		self:SetModel(self.Model)
+		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetSolid(SOLID_VPHYSICS)
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
-	end
-	local phys = self:GetPhysicsObject()
-	if IsValid(phys) then
-		phys:Wake()
+		self:PhysWake()
 	end
 end

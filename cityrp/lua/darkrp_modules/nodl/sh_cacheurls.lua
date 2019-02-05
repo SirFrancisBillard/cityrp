@@ -11,6 +11,7 @@ local SoundURLs = {
 	"jihad/islam", -- salil a sawarim
 	"misc/headshot",
 	"misc/heil",
+	"misc/taser",
 	"memes/roblox",
 	"zoo_of_idiots/ligma",
 	"bullet_time/slowmo_start",

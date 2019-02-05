@@ -99,6 +99,9 @@ WeaponShipment(nil, "Fun", "weapon_bbgun", 200)
 WeaponShipment(nil, "Fun", "weapon_tennis", 300)
 WeaponShipment(nil, "Fun", "weapon_guitar", 600)
 
+WeaponShipment(nil, "Self Defense", "weapon_pepperspray", 400)
+WeaponShipment(nil, "Self Defense", "weapon_stungun", 800)
+
 WeaponShipment(nil, "Drugs", "weapon_blunt", 3000)
 WeaponShipment(nil, "Drugs", "weapon_lean", 1200)
 

@@ -11,7 +11,7 @@ if SERVER then
 
 	hook.Add("EntityTakeDamage", "RandomCrits", function(ply, dmg)
 		local atk = dmg:GetAttacker()
-		if IsValid(atk) and atk:IsPlayer() and ply:IsPlayer() and (atk.NextHitCrit or atk.AlwaysCrit or (math.random(30) == 1)) then
+		if IsValid(atk) and atk:IsPlayer() and ply:IsPlayer() and (atk:GetNWBool("crit_boosted") or atk.NextHitCrit or atk.AlwaysCrit or (math.random(30) == 1)) then
 			atk.NextHitCrit = nil
 			dmg:ScaleDamage(CritDamages[dmg:GetDamageType()] or DefaultCritScale)
 			net.Start("ShowRandomCrit")
@@ -33,6 +33,7 @@ if SERVER then
 		end
 
 		ply.AlwaysCrit = not ply.AlwaysCrit
+		ply:SetNWBool("crit_boosted", ply.AlwaysCrit)
 		ply:ChatPrint("Always crit " .. (ply.AlwaysCrit and "ENABLED." or "DISABLED."))
 	end)
 else
@@ -43,6 +44,13 @@ else
 	surface.CreateFont("RandomCrit", {
 		font = "Comic Sans MS", -- lmao
 		size = 32,
+		weight = 1000,
+		antialias = true,
+	})
+
+	surface.CreateFont("CritBoosted", {
+		font = "Comic Sans MS",
+		size = 64,
 		weight = 1000,
 		antialias = true,
 	})
@@ -82,5 +90,11 @@ else
 				draw.DrawText("CRITICAL HIT", "RandomCrit", 2, 2, Color(frac * 255, 255 - (frac * 255), 0, 255 - (frac * 255)), TEXT_ALIGN_CENTER)
 			cam.End3D2D()
 		end
+	end)
+
+	hook.Add("HUDPaint", "DrawCritBoostEffect", function()
+		if not LocalPlayer():GetNWBool("crit_boosted") then return end
+		local frac = math.sin(CurTime() * 2)
+		draw.DrawText("CRIT BOOSTED", "CritBoosted", ScrW() / 2, ScrH() / 20, Color(frac * 255, 255 - (frac * 255), 0, 255), TEXT_ALIGN_CENTER)
 	end)
 end

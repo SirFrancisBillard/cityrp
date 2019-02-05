@@ -22,7 +22,7 @@ Modules that are not in this list are enabled by default.
 ---------------------------------------------------------------------------]]
 DarkRP.disabledDefaults["modules"] = {
 	["afk"]              = true,
-	["chatsounds"]       = false,
+	["chatsounds"]       = true,
 	["events"]           = false,
 	["fpp"]              = false,
 	["f1menu"]           = false,

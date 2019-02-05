@@ -49,10 +49,18 @@ end
 function SWEP:CanPrimaryAttack() return true end
 
 function SWEP:PrimaryAttack()
-	self:SetNextPrimaryFire(CurTime() + 2)
-	self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
-	if SERVER then
-		self.Owner:SuicideBombDelayed(1, 400 * 6, 300)
+	self:SetNextPrimaryFire(CurTime() + 1.2)
+
+	if CurTime() > self.Owner:GetNWInt("next_jihad") then
+		self.Owner:SetNWInt("next_jihad", CurTime() + 300)
+		self:SendWeaponAnim(ACT_VM_PRIMARYATTACK)
+		if SERVER then
+			self.Owner:SuicideBombDelayed(1, 400 * 6, 300)
+		end
+	elseif CLIENT and IsFirstTimePredicted() then
+		local secs = math.Round(self.Owner:GetNWInt("next_jihad") - CurTime())
+		local time = string.TrimLeft(string.ToMinutesSeconds(secs), "0")
+		chat.AddText(color_white, "You are on Jihad cooldown for ", Color(255, 0, 0), tostring(secs), color_white, " seconds.")
 	end
 end
 

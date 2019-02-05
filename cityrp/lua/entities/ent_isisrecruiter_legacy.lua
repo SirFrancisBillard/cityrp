@@ -22,7 +22,6 @@ function ENT:Initialize()
 		phys:EnableMotion(false)
 	end
 	self:SetPos(self:GetPos() - Vector(0, 0, 10))
-	PrintTable(self:GetSequenceList())
 end
 
 if SERVER then

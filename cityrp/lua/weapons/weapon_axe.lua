@@ -41,7 +41,7 @@ SWEP.Primary.DefaultClip = -1
 SWEP.Primary.Automatic = true
 SWEP.Primary.Ammo = "none"
 
-SWEP.Primary.Delay = 0.5
+SWEP.Primary.Delay = 1.2
 
 SWEP.Secondary.ClipSize = -1
 SWEP.Secondary.DefaultClip = -1
@@ -77,6 +77,18 @@ local doors = {
 	["func_movelinear"] = true,
 }
 
+-- HitBox from TraceResult structure
+local trees = {
+	["rp_downtown_v4c_v2"] = {
+		[451] = true,
+		[452] = true,
+		[470] = true,
+		[476] = true,
+		[477] = true,
+		[469] = true,
+	}
+}
+
 function SWEP:CanPrimaryAttack()
 	return true
 end
@@ -104,6 +116,11 @@ function SWEP:PrimaryAttack()
 	-- i guess they nev- *dies*
 	if IsValid(hitEnt) or tr_main.HitWorld then
 		-- self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
+		if SERVER and trees[game.GetMap()] and trees[game.GetMap()][tr_main.HitBox] then
+			local log = ents.Create("ent_log")
+			log:SetPos(tr_main.HitPos)
+			log:Spawn()
+		end
 
 		if not (CLIENT and (not IsFirstTimePredicted())) then
 			local edata = EffectData()

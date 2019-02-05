@@ -102,4 +102,6 @@ g_DarkRPEntData = {
 	["weapon_guitar"] = {PrintName = "Guitar", Model = "models/props_phx/misc/fender.mdl"},
 	["weapon_lean"] = {PrintName = "Lean", Model = "models/props_junk/garbage_glassbottle002a.mdl"},
 	["weapon_blunt"] = {PrintName = "Blunt", Model = "models/Items/item_item_crate_chunk01.mdl"},
+	["weapon_stungun"] = {PrintName = "Stungun", Model = "models/alyx_emptool_prop.mdl"},
+	["weapon_pepperspray"] = {PrintName = "Pepper Spray", Model = "models/weapons/w_grenade.mdl"},
 }

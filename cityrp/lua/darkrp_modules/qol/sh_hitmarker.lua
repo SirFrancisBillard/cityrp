@@ -26,7 +26,7 @@ if SERVER then
 		if (string.sub(text, 1, 8) == "!hmcolor") then
 				net.Start("OpenMixer")
 				net.Send(ply)
-			return false
+			return ""
 		end
 	end)
 else -- CLIENT

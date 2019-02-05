@@ -1,13 +1,11 @@
+AddCSLuaFile()
+
 ENT.Type = "anim"
 ENT.Base = "base_entity"
 ENT.PrintName = "Pepper Spray Particle"
-ENT.Author = ""
-ENT.Information = ""
 ENT.Spawnable = false
 ENT.AdminSpawnable = false 
 ENT.RenderGroup = RENDERGROUP_BOTH
-
-AddCSLuaFile()
 
 if SERVER then
 	util.AddNetworkString("PepperSpray_StopPepper")
@@ -19,11 +17,8 @@ if SERVER then
 else
 	hook.Add("RenderScreenspaceEffects", "PepperSprayBlindHandler", function()
 		local ply = LocalPlayer()
-		
 		if ply:GetNWBool("IsPeppered") then
-
 			if ply:GetNWInt("PepperAmount") > 0 then
-
 				local Mod = math.Clamp(ply:GetNWInt("PepperAmount"), 0, 1)
 
 				local Settings = {
@@ -51,15 +46,12 @@ end
 
 function ENT:Initialize()
 	if SERVER then
-	
 		local size = 1
 		self:SetModel("models/Items/AR2_Grenade.mdl") 
 		self:PhysicsInitSphere( size, "wood" )
 		self:SetCollisionBounds( Vector( -size, -size, -size ), Vector( size, size, size ) )
 		self:SetCollisionGroup(COLLISION_GROUP_PROJECTILE)
-
 		local phys = self:GetPhysicsObject()
-		
 		if phys:IsValid() then
 			phys:Wake()
 			phys:SetBuoyancyRatio(0)
@@ -67,13 +59,10 @@ function ENT:Initialize()
 			phys:EnableDrag(true)
 			phys:SetMass(1)
 		end
-		
+
 		SafeRemoveEntityDelayed(self, 0.5)
-		
 	end
-	
 	self.SpawnTime = CurTime()
-	
 end
 
 
@@ -97,6 +86,8 @@ function ENT:Think()
 
 	return true
 end
+
+if SERVER then return end
 
 local mat1 = Material( "particle/particle_smokegrenade" )
 

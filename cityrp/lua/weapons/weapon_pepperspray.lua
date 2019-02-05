@@ -1,19 +1,25 @@
-SWEP.PrintName			= "Pepper Spray"
-SWEP.Instructions		= "Primary fire to disorient someone."
+AddCSLuaFile()
 
 game.AddAmmoType({
-	name = "pepperspray_ammo",
+	name = "pepperspray",
 	dmgtype = DMG_BURN,
 	tracer = TRACER_NONE,
 })
 
-SWEP.Category = "RP"
+if CLIENT then
+	language.Add("pepperspray_ammo", "Pepper Spray")
+end
+
+SWEP.PrintName = "Pepper Spray"
+SWEP.Instructions = [[
+<color=green>[PRIMARY FIRE]</color> Disorient someone.]]
+
 SWEP.Spawnable = true
 
 SWEP.Primary.ClipSize		= 1000
 SWEP.Primary.DefaultClip	= 10000
 SWEP.Primary.Automatic		= true
-SWEP.Primary.Ammo			= "pepperspray_ammo"
+SWEP.Primary.Ammo			= "pepperspray"
 
 SWEP.Secondary.ClipSize		= -1
 SWEP.Secondary.DefaultClip	= -1

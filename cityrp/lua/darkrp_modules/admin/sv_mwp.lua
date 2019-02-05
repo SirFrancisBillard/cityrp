@@ -86,5 +86,6 @@ hook.Add("PlayerSay", "BadminChatCommand", function(ply, txt)
 	local args = string.Split(txt, " ")
 	if badmin_cmds[string.lower(args[1])] and isfunction(badmin_cmds[string.lower(args[1])].func) then
 		badmin_cmds[string.lower(args[1])].func(ply, args)
+		return ""
 	end
 end)

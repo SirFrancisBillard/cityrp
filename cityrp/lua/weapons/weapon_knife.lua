@@ -31,7 +31,7 @@ SWEP.Weight = 5
 SWEP.AutoSwitchTo = false
 SWEP.AutoSwitchFrom = false
 
-SWEP.Slot = 3
+SWEP.Slot = 2
 SWEP.SlotPos = 1
 SWEP.DrawAmmo = true
 SWEP.DrawCrosshair = true
@@ -71,7 +71,15 @@ function SWEP:PrimaryAttack()
 	local spos = self.Owner:GetShootPos()
 	local sdest = spos + (self.Owner:GetAimVector() * 70)
 
-	local tr_main = util.TraceLine({start = spos, endpos = sdest, filter = self.Owner, mask = MASK_SHOT_HULL})
+	local tr_main = util.TraceHull({
+		start = spos,
+		endpos = sdest,
+		filter = self.Owner,
+		mask = MASK_SHOT_HULL,
+		mins = Vector( -10, -10, -10 ),
+		maxs = Vector( 10, 10, 10 )
+	})
+
 	local hitEnt = tr_main.Entity
 
 	if IsValid(hitEnt) or tr_main.HitWorld then

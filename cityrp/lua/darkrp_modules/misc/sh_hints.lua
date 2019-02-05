@@ -18,6 +18,7 @@ local ChatMessages = {
 	{White, "We don't have many rules. You can view them by typing ", Magenta, "!rules", White, "."},
 	{White, "Want to disable the headshot sound? You can toggle it by typing ", Magenta, "!headshot", White, "."},
 	{White, "You can change your hitsound by typing ", Magenta, "!hitsound", White, " and typing in a URL."},
+	{White, "There are lots of useful items for sale to anyone in the F4 menu. Check it out sometime!"},
 	{White, "This server currently has ", Magenta, "26,524", White, " different chat sounds."},
 	function()
 		http.Fetch("https://api.codetabs.com/v1/loc?github=sirfrancisbillard/cityrp", function(body, len, headers, code)

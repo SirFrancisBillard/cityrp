@@ -6,8 +6,8 @@ SWEP.PrintName = "Hands"
 SWEP.Instructions = [[
 <color=green>[PRIMARY FIRE]</color> Drag an object.
 <color=green>[RELOAD]</color> Action/surrender.]]
+
 SWEP.Spawnable = true
-SWEP.Category = "Other"
 
 SWEP.ViewModel = "models/weapons/c_medkit.mdl"
 SWEP.WorldModel = ""
@@ -35,6 +35,9 @@ function SWEP:Initialize()
 	self.Time = 0
 	self.Range = 150
 end
+
+function SWEP:CanPrimaryAttack() return true end
+function SWEP:CanSecondaryAttack() return false end
 
 function SWEP:Think()
 	if self.Drag and (not self.Owner:KeyDown(IN_ATTACK) or not IsValid(self.Drag.Entity)) then
@@ -158,7 +161,7 @@ function SWEP:Think()
 				animMenu:Close()
 			end
 			local reset = vgui.Create( "DButton", animMenu )
-			reset:SetText( "Reset Anims!" )
+			reset:SetText( "Reset Animation" )
 			reset:SetTextColor( Color( 255, 255, 255 ) )
 			reset:SetPos( 0, 310 )
 			reset:SetSize( 180, 30 )
