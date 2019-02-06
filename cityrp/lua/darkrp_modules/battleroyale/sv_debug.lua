@@ -27,8 +27,6 @@ local SpawnPoints = {
 
 local PermaEnts = {
 	{class = "prop_physics", mdl = "models/props_c17/furniturefridge001a.mdl", pos = Vector(2144, -5177, -162), ang = Angle(0, 121, 0)},
-	{class = "prop_physics", mdl = "models/props_c17/furniturefridge001a.mdl", pos = Vector(2144, -5177, -162), ang = Angle(0, 121, 0)},
-	{class = "prop_physics", mdl = "models/props_wasteland/laundry_dryer002.mdl", pos = Vector(2731, -5661, -145), ang = Angle(0, 42, 0)},
 	{class = "prop_physics", mdl = "models/props_c17/oildrum001.mdl", pos = Vector(2749, -6060, -199), ang = Angle(0, -54, 0)},
 	{class = "prop_physics", mdl = "models/props_c17/oildrum001.mdl", pos = Vector(2812, -6065, -185), ang = Angle(-55, 102, -90)},
 	{class = "prop_physics", mdl = "models/props_c17/oildrum001.mdl", pos = Vector(2772, -6044, -199), ang = Angle(0, -55, 0)},

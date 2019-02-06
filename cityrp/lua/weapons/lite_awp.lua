@@ -22,9 +22,9 @@ SWEP.SlotPos = 1
 
 SWEP.Primary.Sound = Sound( "Weapon_AWP.Single" )
 SWEP.Primary.Recoil = 6
-SWEP.Primary.Damage = 90
+SWEP.Primary.Damage = 120
 SWEP.Primary.NumShots = 1
-SWEP.Primary.Cone = 0.05
+SWEP.Primary.Cone = 0.01 
 SWEP.Primary.Delay = 1.7
 
 SWEP.Primary.Ammo = "smg1"

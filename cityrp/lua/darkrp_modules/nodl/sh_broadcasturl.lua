@@ -88,6 +88,8 @@ else
 		channel:Play()
 	end
 
+	PlaySoundURL = BroadcastURL.PlayURL
+
 	net.Receive("BroadcastURL", function(len)
 		local url = net.ReadString()
 		local pos = net.ReadVector()

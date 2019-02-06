@@ -28,39 +28,39 @@ if SERVER then
 		net.SendPAS(self:GetPos())
 	end
 else -- CLIENT
-	local function PlayRadio(ent, id)
-		sound.PlayURL(RadioSongs[id], "3d", function(station)
-			if IsValid(station) then
-				if IsValid(ent.radio) then
-					ent.radio:Stop()
-				end
-				ent.radio = station
-				ent.radio:SetPos(ent:GetPos())
-				ent.radio:Play()
-			else
-				LocalPlayer():ChatPrint("Oof! Radio machine broke!")
-			end
-		end)
-	end
-
 	net.Receive("PlayRadioSong", function(len)
 		local ent = net.ReadEntity()
 		local id = math.Clamp(net.ReadInt(6), 1, #RadioSongs)
-		if IsValid(ent) then
-			PlayRadio(ent, id)
+		local station = ent.Stations[id]
+		if not IsValid(station) then return end
+		for k, v in pairs(ent.Stations) do
+			if IsValid(v) then
+				v:Pause()
+			end
 		end
+		ent.radio = station
+		station:SetTime(0)
+		station:Play()
 	end)
 end
 
 function ENT:Initialize()
-	self:SetModel(self.Model)
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_BBOX)
 	if SERVER then
+		self:SetModel(self.Model)
+		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetSolid(SOLID_BBOX)
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetUseType(SIMPLE_USE)
+		self:PhysWake()
+	else
+		self.Stations = {}
+		for k, v in pairs(RadioSongs) do
+			sound.PlayURL(v, "3d noblock noplay", function(station)
+				if not IsValid(station) then return end
+				table.insert(self.Stations, station)
+			end)
+		end
 	end
-	self:PhysWake()
 end
 
 if SERVER then

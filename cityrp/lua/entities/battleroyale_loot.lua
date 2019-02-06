@@ -88,6 +88,7 @@ if SERVER then
 	function ENT:Use(activator, caller)
 		if IsValid(caller) and caller:IsPlayer() then
 			local wep = RandomLoot(self:GetRarity())
+			print(wep)
 			caller:Give(wep)
 			GiveWepAmmo(caller, wep)
 			SafeRemoveEntity(self)

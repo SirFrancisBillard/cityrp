@@ -1,12 +1,17 @@
 
--- entity permanence
+-- entity permanence #NoSimplerr#
 
 local dir = "permanent_ents"
 file.CreateDir(dir)
 
 local PermEnts = {}
 
-local function GetStoredPermanentEntities()
+local function SaveToFile(tab)
+	local path = dir .. "/" .. game.GetMap() .. ".txt"
+	file.Write(path, util.TableToJSON(tab))
+end
+
+local function GetStored()
 	local path = dir .. "/" .. game.GetMap() .. ".txt"
 	if not file.Exists(path, "DATA") then return {} end
 
@@ -15,12 +20,14 @@ local function GetStoredPermanentEntities()
 
 	local tab = util.JSONToTable(data)
 	if not tab then return {} end
+
+	return tab
 end
 
 local function AddPermanentEntity(ent)
 	if not IsValid(ent) or ent:IsPlayer() or ent:IsWorld() then return end
 
-	local tab = GetStoredPermanentEntities()
+	local tab = GetStored()
 	if not tab then return end
 
 	local fr = false
@@ -29,7 +36,29 @@ local function AddPermanentEntity(ent)
 		fr = true
 	end
 
-	table.insert(tab, {class = ent:GetClass(), model = ent:GetModel(), pos = ent:GetPos(), ang = ent:GetAngles(), frozen = fr})
+	ent.PermID = math.random(999999999)
+
+	table.insert(PermEnts, ent)
+
+	table.insert(tab, {class = ent:GetClass(), model = ent:GetModel(), pos = ent:GetPos(), ang = ent:GetAngles(), frozen = fr, id = ent.PermID})
+
+	SaveToFile(tab)
+end
+
+local function RemovePermanentEntity(ent)
+	if not IsValid(ent) or ent:IsPlayer() or ent:IsWorld() then return end
+
+	local tab = GetStored()
+	if not tab then return end
+
+	for k, v in pairs(tab) do -- Brion
+		if v.id == ent.PermID then
+			tab[k] = nil
+			SaveToFile(tab)
+			SafeRemoveEntity(ent)
+			return
+		end
+	end
 end
 
 local function ClearPermanentEntities()
@@ -38,10 +67,11 @@ local function ClearPermanentEntities()
 			SafeRemoveEntity(v)
 		end
 	end
+	PermEnts = {}
 end
 
 local function SpawnPermanentEntities()
-	for k, v in pairs(GetStoredPermanentEntities()) do
+	for k, v in pairs(GetStored()) do
 		local ent = ents.Create(v.class)
 		ent:SetModel(v.model)
 		ent:SetPos(v.pos)
@@ -50,8 +80,10 @@ local function SpawnPermanentEntities()
 
 		local phys = ent:GetPhysicsObject()
 		if IsValid(phys) then
-			phys:EnableMotion(v.frozen)
+			phys:EnableMotion(not v.frozen)
 		end
+
+		ent.PermID = v.id
 
 		table.insert(PermEnts, ent)
 	end
@@ -77,7 +109,7 @@ concommand.Add("perment_remove", function(ply, cmd, args)
 	local tr = ply:GetEyeTrace()
 	local ent = tr.Entity
 
-	AddPermanentEntity(ent)
+	RemovePermanentEntity(ent)
 end)
 
 concommand.Add("perment_reload", function(ply, cmd, args)

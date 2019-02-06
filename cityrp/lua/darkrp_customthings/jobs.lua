@@ -187,7 +187,7 @@ TEAM_GUARD = DarkRP.createJob("Guard", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/barney.mdl",
 	description = [[Guards can be paid to protect certain areas or people.]],
-	weapons = {"lite_beretta", "stunstick"},
+	weapons = {"lite_beretta", "weapon_stungun"},
 	command = "guard",
 	max = 2,
 	salary = GAMEMODE.Config.normalsalary,
@@ -333,7 +333,7 @@ TEAM_GODFATHER = DarkRP.createJob("Godfather", {
 		With his power he coordinates the mafia and forms an efficient crime organization.
 		He has the ability to break into houses by using a lockpick.
 		The Godfather posesses the ability to unarrest you.]],
-	weapons = {"lite_ak47", "lite_beretta", "lockpick", "weapon_pickpocket", "unarrest_stick"},
+	weapons = {"lite_ak47", "lite_beretta", "lockpick", "unarrest_stick"},
 	command = "godfather",
 	max = 1,
 	salary = GAMEMODE.Config.normalsalary * 1.75,
@@ -400,7 +400,7 @@ TEAM_HACKER = DarkRP.createJob("Hacker", {
 	color = g_RegisterJobWithColor,
 	model = "models/player/magnusson.mdl",
 	description = [[Hackers hack keypads to break into peoples homes and steal their possessions.]],
-	weapons = {"keypad_cracker"},
+	weapons = {"keypad_cracker", "weapon_stungun"},
 	command = "hacker",
 	max = 6,
 	salary = GAMEMODE.Config.normalsalary,
@@ -689,7 +689,7 @@ TEAM_POLICE = DarkRP.createJob("Police Officer", {
 		Hit a player with your arrest baton to put them in jail.
 		Bash a player with a stunstick and they may learn to obey the law.
 		The Battering Ram can break down the door of a criminal, with a warrant for their arrest.
-		The Battering Ram can also unfreeze frozen props (if enabled).
+		The Battering Ram can also unfreeze frozen props.
 		Type /wanted <name> to alert the public to the presence of a criminal.]],
 	weapons = {"arrest_stick", "unarrest_stick", "lite_beretta", "weapon_taser", "weapon_pepperspray", "stunstick", "door_ram", "weaponchecker"},
 	command = "police",
@@ -868,15 +868,8 @@ TEAM_DAUGHTER = DarkRP.createJob("Mayor's Daughter", {
 	category = g_RegisterJobWithCategory,
 })
 
---[[---------------------------------------------------------------------------
-Define which team joining players spawn into and what team you change to if demoted
----------------------------------------------------------------------------]]
 GAMEMODE.DefaultTeam = TEAM_CITIZEN
 
---[[---------------------------------------------------------------------------
-Define which teams belong to civil protection
-Civil protection can set warrants, make people wanted and do some other police related things
----------------------------------------------------------------------------]]
 GAMEMODE.CivilProtection = {
 	[TEAM_POLICE] = true,
 	[TEAM_CHIEF] = true,
@@ -884,8 +877,5 @@ GAMEMODE.CivilProtection = {
 	[TEAM_ADMIN] = true,
 }
 
---[[---------------------------------------------------------------------------
-Jobs that are hitmen (enables the hitman menu)
----------------------------------------------------------------------------]]
 DarkRP.addHitmanTeam(TEAM_GODFATHER)
 DarkRP.addHitmanTeam(TEAM_HITMAN)

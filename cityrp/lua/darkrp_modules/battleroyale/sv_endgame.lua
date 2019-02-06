@@ -13,6 +13,16 @@ hook.Add("PostPlayerDeath", "BattleRoyale.CheckForEndGame", function(ply)
 				if IsValid(victor) and victor:IsPlayer() and victor:Alive() and victor:IsBRStatus(BR_STATUS_PLAYING) then
 					victor:Kill() -- just fucking kill them lmao
 				end
+				timer.Simple(10, function()
+					for k, v in pairs(player.GetAll()) do
+						if v:IsBRStatus(BR_STATUS_QUEUE) then
+							v:ChatPrint("Battle Royale is starting in 20 seconds!")
+						end
+					end
+					timer.Simple(20, function()
+						BattleRoyale.Start()
+					end)
+				end)
 			end)
 		end
 	end

@@ -40,7 +40,9 @@ if SERVER then
 				other.NextFireBurn = CurTime() + 1
 				local dmg = DamageInfo()
 				dmg:SetDamage(15)
-				dmg:SetAttacker(self:GetOwner())
+				if IsValid(self:GetOwner()) then
+					dmg:SetAttacker(self:GetOwner())
+				end
 				dmg:SetInflictor(self)
 				dmg:SetDamageType(DMG_BURN)
 				ent:TakeDamageInfo(dmg)

@@ -81,9 +81,11 @@ function SWEP:PrimaryAttack()
 	self.Owner:SetAnimation(PLAYER_ATTACK1)
 	self:SendWeaponAnim(ACT_VM_SECONDARYATTACK)
 
-	if CLIENT then return end
+	if CLIENT and IsFirstTimePredicted() then
+		PlaySoundURL("https://sirfrancisbillard.github.io/billard-radio/sound/misc/taser.mp3", self:GetPos())
+	end
 
-	self.Owner:EmitSoundURL("https://sirfrancisbillard.github.io/billard-radio/sound/misc/taser.mp3")
+	--self.Owner:EmitSoundURL("https://sirfrancisbillard.github.io/billard-radio/sound/misc/taser.mp3")
 
 	self.Owner:LagCompensation(true)
 	local trace = self.Owner:GetEyeTrace()
@@ -91,16 +93,19 @@ function SWEP:PrimaryAttack()
 
 	local ent = trace.Entity
 
-	if IsValid(ent) and ent:IsPlayer() then
-		ent:SetNWBool("IsPeppered", true)
-		ent:SetNWInt("PepperAmount", 1)
-		ent:EmitSound("hostage/hpain/hpain" .. math.random(6) .. ".wav")
-		local dmg = DamageInfo()
-		dmg:SetAttacker(self.Owner)
-		dmg:SetInflictor(self)
-		dmg:SetDamageType(DMG_SHOCK)
-		dmg:SetDamage(5)
-		ent:TakeDamageInfo(dmg)
+	if IsValid(ent) and ent:IsPlayer() and ent:GetPos():DistToSqr(self.Owner:GetPos()) < 10000 then
+		if CLIENT and IsFirstTimePredicted() then
+			ent:EmitSound("hostage/hpain/hpain" .. math.random(6) .. ".wav")
+		elseif SERVER then
+			ent:SetNWBool("IsPeppered", true)
+			ent:SetNWInt("PepperAmount", 5)
+			local dmg = DamageInfo()
+			dmg:SetAttacker(self.Owner)
+			dmg:SetInflictor(self)
+			dmg:SetDamageType(DMG_SHOCK)
+			dmg:SetDamage(5)
+			ent:TakeDamageInfo(dmg)
+		end
 	end
 end
 

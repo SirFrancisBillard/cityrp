@@ -81,7 +81,6 @@ end
 
 function SWEP:Deploy()
 	self:SendWeaponAnim( ACT_VM_DRAW )
-	self.Owner:GetViewModel():SetPlaybackRate( GetConVarNumber( "sv_defaultdeployspeed" ) )
 
 	return true
 end
@@ -119,6 +118,16 @@ end
 function SWEP:PrimaryAttack()
 	if not self:CanShoot() then return end
 
+	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
+	self:SetReloadTime( CurTime() + self.Primary.Delay )
+
+	if self.FireChance then
+		if self.FireChance ~= math.Round(util.SharedRandom(self.ClassName, 1, self.FireChance, CurTime())) then
+			self:EmitSound("Weapon_Pistol.Empty")
+			return
+		end
+	end
+
 	self:TakePrimaryAmmo( 1 )
 
 	self:ShootBullet( self.Primary.Damage, self.Primary.NumShots, self:CalculateSpread() )
@@ -132,12 +141,13 @@ function SWEP:PrimaryAttack()
 		self:EmitSound(self.Primary.Sound)
 	end
 
-	self:SetNextPrimaryFire( CurTime() + self.Primary.Delay )
-	self:SetReloadTime( CurTime() + self.Primary.Delay )
-
-	if SERVER and self.Blowback then
+	if SERVER and self.Blowback and (self.BlowbackJumpingAllowed or self.Owner:OnGround()) then
 		local forward = self.Owner:EyeAngles():Forward()
-		self.Owner:SetVelocity(forward * -self.Blowback)
+		local vec = forward * -self.Blowback
+		if not self.BlowbackJumpingAllowed then
+			vec.z = 0
+		end
+		self.Owner:SetVelocity(vec)
 	end
 end
 

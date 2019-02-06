@@ -15,25 +15,18 @@ function ENT:SetupDataTables()
 	self:NetworkVar("Bool", 0, "Planted")
 end
 
-function ENT:Initialize()
-	self:SetModel(self.Model)
-	self:PhysicsInit(SOLID_VPHYSICS)
-	self:SetMoveType(MOVETYPE_VPHYSICS)
-	self:SetSolid(SOLID_VPHYSICS)
-
-	if SERVER then
-		self:SetUseType(SIMPLE_USE)
-	end
-
-	local phys = self:GetPhysicsObject()
-	if phys:IsValid() then
-		phys:Wake()
-	end
-
-	self:SetPlanted(false)
-end
-
 if SERVER then
+	function ENT:Initialize()
+		self:SetModel(self.Model)
+		self:PhysicsInit(SOLID_VPHYSICS)
+		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetSolid(SOLID_VPHYSICS)
+		self:SetUseType(SIMPLE_USE)
+		self:PhysWake()
+
+		self:SetPlanted(false)
+	end
+
 	local IsDoor = {
 		["func_door"] = true,
 		["func_door_rotating"] = true,
@@ -59,6 +52,7 @@ if SERVER then
 			end
 		end
 		local blaze = ents.Create("ent_fire")
+		blaze:SetOwner()
 		blaze:SetPos(self:GetPos())
 		blaze:Spawn()
 		SafeRemoveEntity(self)

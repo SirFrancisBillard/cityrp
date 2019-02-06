@@ -1,6 +1,11 @@
 
 BattleRoyale = BattleRoyale or {}
 
+BattleRoyale.GetTimer = function()
+	local max = 300
+	return string.TrimLeft(string.ToMinutesSeconds(max - (CurTime() % max)), "0")
+end
+
 BattleRoyale.GetPlayersWithStatus = function(status)
 	local queued = {}
 	for k, v in pairs(player.GetAll()) do

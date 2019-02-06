@@ -30,7 +30,6 @@ end
 
 local DefaultBRWeapons = {
 	"weapon_rp_fists",
-	"battleroyale_compass"
 }
 
 if CLIENT then return end
