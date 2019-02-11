@@ -85,7 +85,7 @@ function SWEP:PrimaryAttack()
 		PlaySoundURL("https://sirfrancisbillard.github.io/billard-radio/sound/misc/taser.mp3", self:GetPos())
 	end
 
-	--self.Owner:EmitSoundURL("https://sirfrancisbillard.github.io/billard-radio/sound/misc/taser.mp3")
+	if CLIENT then return end
 
 	self.Owner:LagCompensation(true)
 	local trace = self.Owner:GetEyeTrace()
@@ -94,9 +94,7 @@ function SWEP:PrimaryAttack()
 	local ent = trace.Entity
 
 	if IsValid(ent) and ent:IsPlayer() and ent:GetPos():DistToSqr(self.Owner:GetPos()) < 10000 then
-		if CLIENT and IsFirstTimePredicted() then
-			ent:EmitSound("hostage/hpain/hpain" .. math.random(6) .. ".wav")
-		elseif SERVER then
+			ent:HostageSound()
 			ent:SetNWBool("IsPeppered", true)
 			ent:SetNWInt("PepperAmount", 5)
 			local dmg = DamageInfo()

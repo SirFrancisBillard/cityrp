@@ -17,3 +17,10 @@ hook.Add("EntityTakeDamage", "PlayerHurtSounds", function(ply, dmg)
 		ply:EmitSound(snd_table[math.random(1, #snd_table)])
 	end
 end)
+
+local PLAYER = FindMetaTable("Player")
+
+function PLAYER:HostageSound()
+	ply.hurtsound_cooldown = CurTime() + 1
+	ply:EmitSound("hostage/hpain/hpain" .. math.random(6) .. ".wav")
+end
